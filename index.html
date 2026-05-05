@@ -1,0 +1,613 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  ArrowRight, CheckCircle2, Play, Phone, Mail, MapPin, 
+  Palette, X, TrendingUp, PieChart, Target, ShieldCheck, 
+  Quote, MessageSquare, Type, Layout, PaintBucket
+} from 'lucide-react';
+
+// --- KONFIGURACE FONTŮ ---
+const FONTS = [
+  { id: 'Inter', name: 'Inter (Čistý & Moderní)' },
+  { id: 'Space Grotesk', name: 'Space Grotesk (Tech & Inovativní)' },
+  { id: 'Plus Jakarta Sans', name: 'Plus Jakarta (Geometrický)' },
+  { id: 'Playfair Display', name: 'Playfair (Elegantní patkový)' },
+  { id: 'Lora', name: 'Lora (Akademický & Důvěryhodný)' },
+  { id: 'Syne', name: 'Syne (Extravagantní & Bold)' },
+  { id: 'Oswald', name: 'Oswald (Úderný & Úzký)' },
+  { id: 'Outfit', name: 'Outfit (Trendy & Kulatý)' },
+  { id: 'DM Sans', name: 'DM Sans (Profesionální)' },
+  { id: 'Cinzel', name: 'Cinzel (Luxusní & Filmový)' }
+];
+
+// --- KONFIGURACE STYLŮ (VARIANT) ---
+const VARIANTS = [
+  { id: 'minimal', name: 'Moderní Minimalismus', desc: 'Zaoblené rohy, jemné stíny, hodně prostoru.' },
+  { id: 'corporate', name: 'Ostrý Korporát', desc: 'Ostré hrany, minimální stíny, seriózní vzhled.' },
+  { id: 'elegant', name: 'Prémiová Elegance', desc: 'Tenké linky, sofistikovaný a luxusní dojem.' },
+  { id: 'creative', name: 'Kreativní & Asymetrický', desc: 'Výrazné tvary, hravost, dynamika.' },
+  { id: 'neobrutal', name: 'Neo-Brutalismus', desc: 'Tlusté černé linky, ostré stíny, vysoký kontrast.' },
+  { id: 'glass', name: 'Skleněný (Glass)', desc: 'Poloprůhledné prvky, rozostřené pozadí.' },
+  { id: 'soft', name: 'Měkký & Pastelový', desc: 'Extrémní zaoblení, velké jemné stíny.' },
+  { id: 'outline', name: 'Technický Nákres', desc: 'Přerušované čáry, čistý wireframe vzhled.' },
+  { id: 'playful', name: 'Hravé Bubliny', desc: 'Organické asymetrické tvary a rotace.' },
+  { id: 'retro', name: 'Retro Pop', desc: 'Posunuté barevné stíny, vintage vibe.' }
+];
+
+const App = () => {
+  // --- STAVY CUSTOMIZERU ---
+  const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('style'); // style, colors, fonts
+  
+  const [theme, setTheme] = useState({
+    primary: '#114a3e', 
+    accent: '#84cc16',  
+    bg: '#f8fafc',      
+    text: '#0f172a',
+    cardBg: '#ffffff'
+  });
+  
+  const [font, setFont] = useState('Plus Jakarta Sans');
+  const [layoutVariant, setLayoutVariant] = useState('minimal');
+
+  // --- LOGIKA STYLŮ PODLE VARIANTY ---
+  const getCardStyle = (highlighted = false) => {
+    const base = 'transition-all duration-300';
+    const defaultBg = 'bg-[var(--color-card)] text-[var(--color-text)]';
+    const highlightBg = 'bg-[var(--color-primary)] text-white';
+
+    switch(layoutVariant) {
+      case 'corporate': 
+        return `${base} rounded-none border border-gray-200 shadow-sm ${highlighted ? highlightBg : defaultBg}`;
+      case 'elegant': 
+        return `${base} rounded-sm shadow-lg border-t-4 ${highlighted ? 'bg-[var(--color-primary)] text-white border-[var(--color-accent)]' : 'bg-[var(--color-card)] text-[var(--color-text)] border-transparent'}`;
+      case 'creative': 
+        return `${base} rounded-[2rem_4rem_2rem_1rem] border-2 border-transparent shadow-2xl hover:-rotate-1 ${highlighted ? highlightBg : defaultBg}`;
+      case 'neobrutal': 
+        return `${base} rounded-none border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${highlighted ? 'bg-[var(--color-accent)] text-black' : 'bg-[var(--color-card)] text-[var(--color-text)]'}`;
+      case 'glass': 
+        return `${base} rounded-3xl border backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] ${highlighted ? 'border-white/20 bg-[var(--color-primary)] text-white' : 'border-white/40 bg-white/30 text-[var(--color-text)]'}`;
+      case 'soft': 
+        return `${base} rounded-[3rem] border-none shadow-[0_20px_50px_-15px_rgba(0,0,0,0.05)] hover:-translate-y-2 ${highlighted ? highlightBg : defaultBg}`;
+      case 'outline': 
+        return `${base} rounded-xl border-2 ${highlighted ? 'border-solid border-[var(--color-primary)] bg-[var(--color-primary)] text-white' : 'border-dashed border-[var(--color-primary)] bg-transparent hover:border-solid hover:bg-black/5 text-[var(--color-text)]'}`;
+      case 'playful': 
+        return `${base} rounded-[3rem_1rem_3rem_1rem] border border-gray-100 shadow-xl hover:rotate-2 ${highlighted ? highlightBg : defaultBg}`;
+      case 'retro': 
+        return `${base} rounded-none border-2 border-[var(--color-text)] hover:translate-x-1 hover:translate-y-1 ${highlighted ? 'bg-[var(--color-primary)] text-white shadow-[6px_6px_0px_0px_var(--color-text)]' : 'bg-[var(--color-card)] text-[var(--color-text)] shadow-[6px_6px_0px_0px_var(--color-accent)] hover:shadow-[2px_2px_0px_0px_var(--color-accent)]'}`;
+      case 'minimal': 
+      default: 
+        return `${base} rounded-3xl border border-gray-50 shadow-xl hover:-translate-y-2 ${highlighted ? highlightBg : defaultBg}`;
+    }
+  };
+
+  const getButtonStyle = (type = 'primary') => {
+    const base = 'font-bold flex items-center justify-center gap-2 transition-all duration-300';
+    
+    const primaryColors = 'bg-[var(--color-primary)] text-white border-2 border-transparent';
+    const secondaryColors = 'bg-transparent text-[var(--color-primary)] border-2 border-[var(--color-primary)]';
+    const accentColors = 'bg-[var(--color-accent)] text-black border-2 border-transparent';
+
+    switch(layoutVariant) {
+      case 'corporate': 
+        return `${base} rounded-sm px-8 py-4 ${type === 'secondary' ? secondaryColors : type === 'accent' ? accentColors : primaryColors} hover:brightness-110`;
+      case 'elegant': 
+        return `${base} rounded-none px-8 py-4 border-b-2 hover:px-10 ${type === 'primary' ? 'border-[var(--color-primary)] text-[var(--color-primary)] bg-transparent' : type === 'accent' ? 'border-[var(--color-accent)] text-[var(--color-accent)] bg-transparent' : 'border-[var(--color-text)] text-[var(--color-text)] bg-transparent'}`;
+      case 'creative': 
+        return `${base} rounded-[1rem_2rem_1rem_0.5rem] px-8 py-4 shadow-lg hover:scale-105 ${type === 'secondary' ? secondaryColors : type === 'accent' ? accentColors : primaryColors}`;
+      case 'neobrutal': 
+        return `${base} rounded-none border-4 border-black px-8 py-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)] ${type === 'secondary' ? 'bg-white text-black' : type === 'accent' ? accentColors : primaryColors}`;
+      case 'glass': 
+        return `${base} rounded-2xl border border-white/40 backdrop-blur-md px-8 py-4 shadow-lg hover:scale-105 ${type === 'secondary' ? 'bg-white/10 text-[var(--color-text)]' : type === 'accent' ? accentColors : 'bg-[var(--color-primary)] text-white'}`;
+      case 'soft': 
+        return `${base} rounded-full px-8 py-4 shadow-[0_10px_20px_-10px_var(--color-primary)] hover:-translate-y-1 hover:shadow-[0_15px_25px_-10px_var(--color-primary)] ${type === 'secondary' ? 'bg-[var(--color-card)] text-[var(--color-primary)] border-none shadow-none hover:bg-[var(--color-primary)]/5' : type === 'accent' ? accentColors : primaryColors}`;
+      case 'outline': 
+        return `${base} rounded-xl border-2 border-dashed px-8 py-4 hover:border-solid transition-all ${type === 'primary' ? 'border-[var(--color-primary)] bg-transparent text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white' : type === 'accent' ? 'border-[var(--color-accent)] bg-[var(--color-accent)] text-black hover:bg-transparent hover:text-[var(--color-accent)]' : 'border-[var(--color-text)] bg-transparent text-[var(--color-text)] hover:bg-[var(--color-text)] hover:text-[var(--color-bg)]'}`;
+      case 'playful': 
+        return `${base} rounded-[2rem_0.5rem_2rem_0.5rem] px-8 py-4 shadow-md hover:scale-110 ${type === 'secondary' ? secondaryColors : type === 'accent' ? accentColors : primaryColors}`;
+      case 'retro': 
+        return `${base} rounded-none border-2 border-[var(--color-text)] px-8 py-4 shadow-[4px_4px_0px_0px_var(--color-accent)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none ${type === 'secondary' ? 'bg-[var(--color-card)] text-[var(--color-text)]' : type === 'accent' ? accentColors : primaryColors}`;
+      case 'minimal': 
+      default: 
+        return `${base} rounded-full px-8 py-4 shadow-xl hover:scale-105 ${type === 'secondary' ? secondaryColors : type === 'accent' ? accentColors : primaryColors}`;
+    }
+  };
+
+  const getImageStyle = () => {
+    switch(layoutVariant) {
+      case 'corporate': return 'rounded-none';
+      case 'elegant': return 'rounded-t-full rounded-b-md';
+      case 'creative': return 'rounded-[40%_60%_70%_30%/40%_50%_60%_50%]';
+      case 'neobrutal': return 'rounded-none border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] bg-white';
+      case 'glass': return 'rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.15)] bg-white/30 backdrop-blur-sm border border-white/40';
+      case 'soft': return 'rounded-[4rem]';
+      case 'outline': return 'rounded-3xl border-2 border-dashed border-[var(--color-primary)] p-2 !bg-transparent';
+      case 'playful': return 'rounded-[50%_50%_50%_50%/60%_60%_40%_40%] shadow-2xl';
+      case 'retro': return 'rounded-none border-2 border-[var(--color-text)] shadow-[12px_12px_0px_0px_var(--color-accent)] bg-white';
+      case 'minimal': 
+      default: return 'rounded-[2.5rem]';
+    }
+  };
+
+  // --- POMOCNÉ FUNKCE PRO CUSTOMIZER ---
+  const setPreset = (presetName) => {
+    const presets = {
+      default: { primary: '#114a3e', accent: '#84cc16', bg: '#f8fafc', text: '#0f172a', cardBg: '#ffffff' },
+      dark: { primary: '#0ea5e9', accent: '#38bdf8', bg: '#0f172a', text: '#f8fafc', cardBg: '#1e293b' },
+      elegant: { primary: '#18181b', accent: '#d4af37', bg: '#fafafa', text: '#18181b', cardBg: '#ffffff' },
+      vibrant: { primary: '#4f46e5', accent: '#f43f5e', bg: '#f5f3ff', text: '#1e1b4b', cardBg: '#ffffff' },
+      neon: { primary: '#09090b', accent: '#a3e635', bg: '#09090b', text: '#fafafa', cardBg: '#18181b' }
+    };
+    if (presets[presetName]) setTheme(presets[presetName]);
+  };
+
+  const handleColorChange = (key, value) => {
+    setTheme(prev => ({ ...prev, [key]: value }));
+  };
+
+  // CSS Proměnné pro plynulou změnu barev napříč aplikací
+  const cssVariables = {
+    '--color-primary': theme.primary,
+    '--color-accent': theme.accent,
+    '--color-bg': theme.bg,
+    '--color-text': theme.text,
+    '--color-card': theme.cardBg,
+    'fontFamily': `"${font}", sans-serif`,
+  };
+
+  return (
+    <div style={{ ...cssVariables, backgroundColor: 'var(--color-bg)', color: 'var(--color-text)' }} className="min-h-screen transition-colors duration-500 overflow-x-hidden selection:bg-[var(--color-accent)] selection:text-black">
+      
+      {/* Natažení Google Fontů */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=DM+Sans:wght@400;500;700&family=Inter:wght@300;400;600;800&family=Lora:ital,wght@0,400;0,700;1,400&family=Oswald:wght@400;600;700&family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;600;700&family=Syne:wght@400;600;800&display=swap');
+        
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+
+        @keyframes fadeInUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}} />
+
+      {/* --- THEME CUSTOMIZER (Pro klienta) --- */}
+      <div className={`fixed right-0 top-1/4 z-50 transition-transform duration-500 ease-in-out ${isCustomizerOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="bg-white/95 backdrop-blur-xl text-gray-800 rounded-l-3xl shadow-2xl w-80 md:w-96 border border-gray-200 overflow-hidden flex flex-col h-[70vh]">
+          
+          {/* Customizer Header */}
+          <div className="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+            <div>
+              <h3 className="font-bold text-lg leading-none">Design Studio</h3>
+              <p className="text-xs text-gray-500 mt-1">Vyzkoušejte si varianty webu</p>
+            </div>
+            <button onClick={() => setIsCustomizerOpen(false)} className="bg-white p-2 rounded-full shadow-sm text-gray-500 hover:text-red-500 hover:scale-110 transition-all"><X size={16}/></button>
+          </div>
+
+          {/* Customizer Tabs */}
+          <div className="flex text-xs font-semibold bg-gray-100/50 p-2 gap-1 border-b border-gray-100">
+            <button onClick={() => setActiveTab('style')} className={`flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all ${activeTab === 'style' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:bg-gray-200/50'}`}><Layout size={14}/> Styl</button>
+            <button onClick={() => setActiveTab('colors')} className={`flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all ${activeTab === 'colors' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:bg-gray-200/50'}`}><PaintBucket size={14}/> Barvy</button>
+            <button onClick={() => setActiveTab('fonts')} className={`flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all ${activeTab === 'fonts' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:bg-gray-200/50'}`}><Type size={14}/> Písmo</button>
+          </div>
+          
+          {/* Customizer Content (Scrollable) */}
+          <div className="p-5 overflow-y-auto flex-1">
+            
+            {/* TAB: STYL */}
+            {activeTab === 'style' && (
+              <div className="space-y-3">
+                <p className="text-xs text-gray-500 mb-4">Změňte celkové rozložení a pocit z webu jediným kliknutím.</p>
+                {VARIANTS.map(v => (
+                  <button 
+                    key={v.id} 
+                    onClick={() => setLayoutVariant(v.id)}
+                    className={`w-full text-left p-3 rounded-xl border transition-all ${layoutVariant === v.id ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500/20' : 'border-gray-200 hover:border-blue-300'}`}
+                  >
+                    <div className="font-bold text-sm">{v.name}</div>
+                    <div className="text-[10px] text-gray-500 mt-1">{v.desc}</div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* TAB: BARVY */}
+            {activeTab === 'colors' && (
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-xs font-semibold mb-2">Hlavní barva (Značka)</label>
+                  <div className="flex items-center gap-3 bg-gray-50 p-2 rounded-lg border border-gray-100">
+                    <input type="color" value={theme.primary} onChange={(e) => handleColorChange('primary', e.target.value)} className="w-10 h-10 rounded cursor-pointer border-0 p-0 shadow-sm" />
+                    <span className="text-sm font-mono text-gray-600 uppercase">{theme.primary}</span>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold mb-2">Zvýrazňovací barva (Akcent)</label>
+                  <div className="flex items-center gap-3 bg-gray-50 p-2 rounded-lg border border-gray-100">
+                    <input type="color" value={theme.accent} onChange={(e) => handleColorChange('accent', e.target.value)} className="w-10 h-10 rounded cursor-pointer border-0 p-0 shadow-sm" />
+                    <span className="text-sm font-mono text-gray-600 uppercase">{theme.accent}</span>
+                  </div>
+                </div>
+                <div className="pt-4 border-t border-gray-100">
+                  <label className="block text-xs font-semibold mb-3">Rychlé palety</label>
+                  <div className="grid grid-cols-5 gap-2">
+                    <button onClick={() => setPreset('default')} className="aspect-square rounded-full bg-gradient-to-br from-[#114a3e] to-[#84cc16] shadow-sm hover:scale-110 transition-transform" title="Forest"></button>
+                    <button onClick={() => setPreset('elegant')} className="aspect-square rounded-full bg-gradient-to-br from-[#18181b] to-[#d4af37] shadow-sm hover:scale-110 transition-transform" title="Dark Gold"></button>
+                    <button onClick={() => setPreset('vibrant')} className="aspect-square rounded-full bg-gradient-to-br from-[#4f46e5] to-[#f43f5e] shadow-sm hover:scale-110 transition-transform" title="Vibrant"></button>
+                    <button onClick={() => setPreset('neon')} className="aspect-square rounded-full bg-gradient-to-br from-[#09090b] to-[#a3e635] shadow-sm hover:scale-110 transition-transform" title="Neon Dark"></button>
+                    <button onClick={() => setPreset('dark')} className="aspect-square rounded-full bg-gradient-to-br from-[#0f172a] to-[#38bdf8] shadow-sm hover:scale-110 transition-transform" title="Midnight Blue"></button>
+                  </div>
+                </div>
+                <div className="pt-4 border-t border-gray-100">
+                  <label className="block text-xs font-semibold mb-2">Pozadí a Karty</label>
+                  <div className="flex gap-2">
+                    <input type="color" value={theme.bg} onChange={(e) => handleColorChange('bg', e.target.value)} className="w-8 h-8 cursor-pointer" title="Barva pozadí" />
+                    <input type="color" value={theme.cardBg} onChange={(e) => handleColorChange('cardBg', e.target.value)} className="w-8 h-8 cursor-pointer" title="Barva karet" />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB: PÍSMO */}
+            {activeTab === 'fonts' && (
+              <div className="space-y-2">
+                {FONTS.map(f => (
+                  <button 
+                    key={f.id} 
+                    onClick={() => setFont(f.id)}
+                    style={{ fontFamily: `"${f.id}", sans-serif` }}
+                    className={`w-full text-left p-3 rounded-xl border transition-all text-sm ${font === f.id ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500/20 text-blue-800' : 'border-gray-200 hover:bg-gray-50 text-gray-700'}`}
+                  >
+                    {f.name}
+                  </button>
+                ))}
+              </div>
+            )}
+
+          </div>
+        </div>
+      </div>
+      
+      {/* Tlačítko pro otevření Customizeru */}
+      <button 
+        onClick={() => setIsCustomizerOpen(true)}
+        style={{ backgroundColor: 'var(--color-primary)' }}
+        className={`fixed right-0 top-1/3 z-50 p-4 rounded-l-2xl text-white shadow-[0_8px_30px_rgb(0,0,0,0.3)] hover:pr-6 hover:scale-105 transition-all flex items-center gap-3 ${isCustomizerOpen ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100'}`}
+      >
+        <Palette size={24} className="animate-pulse" />
+        <span className="font-bold text-sm tracking-wide writing-vertical hidden md:block" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>DESIGN STUDIO</span>
+      </button>
+
+      {/* --- NAVBAR --- */}
+      <div className="fixed top-0 w-full z-40 transition-all duration-300 bg-[var(--color-bg)]/80 backdrop-blur-lg border-b border-[var(--color-text)]/5">
+        <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-3 group cursor-pointer">
+            <div style={{ backgroundColor: 'var(--color-accent)' }} className={`w-10 h-10 flex items-center justify-center font-bold text-black text-xl transition-transform group-hover:rotate-12 ${layoutVariant === 'neobrutal' ? 'border-2 border-black' : layoutVariant === 'corporate' ? 'rounded-none' : 'rounded-xl'}`}>M</div>
+            <span style={{ color: 'var(--color-primary)' }} className="text-2xl font-black tracking-tight">Michal.</span>
+          </div>
+          <div className="hidden md:flex gap-10 text-sm font-bold opacity-80">
+            <a href="#sluzby" className="hover:text-[var(--color-accent)] hover:opacity-100 transition-all">Služby</a>
+            <a href="#poslani" className="hover:text-[var(--color-accent)] hover:opacity-100 transition-all">Moje poslání</a>
+            <a href="#cenik" className="hover:text-[var(--color-accent)] hover:opacity-100 transition-all">Ceník</a>
+          </div>
+          <a href="#kontakt" style={{ backgroundColor: 'var(--color-primary)', borderColor: layoutVariant === 'elegant' ? 'var(--color-accent)' : 'black' }} className={`hidden md:flex items-center gap-2 text-white px-6 py-2.5 text-sm font-bold transition-all ${layoutVariant === 'neobrutal' ? 'border-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none' : layoutVariant === 'corporate' ? 'rounded-sm' : layoutVariant === 'elegant' ? 'border rounded-full' : 'rounded-full hover:shadow-lg hover:-translate-y-0.5'}`}>
+            Sjednat schůzku <ArrowRight size={16} />
+          </a>
+        </nav>
+      </div>
+
+      {/* --- HERO SECTION --- */}
+      <header className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+        {/* Glow efekt na pozadí */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-20 blur-[100px] pointer-events-none rounded-full" style={{ background: 'radial-gradient(circle, var(--color-accent) 0%, transparent 70%)' }}></div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            
+            {/* Textová část */}
+            <div className="text-left animate-fade-in-up">
+              <div style={{ color: 'var(--color-accent)' }} className="font-bold tracking-widest uppercase text-sm mb-4 flex items-center gap-2">
+                <span className="w-8 h-0.5 bg-current"></span> Váš průvodce byznysem
+              </div>
+              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]" style={{ color: 'var(--color-text)' }}>
+                Finance a <span style={{ color: 'var(--color-primary)' }}>strategie</span> <br/>
+                s jasným cílem.
+              </h1>
+              <p className="text-lg md:text-xl opacity-70 mb-10 max-w-lg leading-relaxed">
+                Podnikání má být radost, ne boj o přežití. Pomohu vám nastavit finance a procesy tak, abyste mohli v klidu spát a váš byznys rostl.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-12">
+                <a href="#kontakt" className={`${getButtonStyle('primary')} sm:w-auto w-full`}>
+                  Nezávazná konzultace <ArrowRight size={20} />
+                </a>
+                <a href="#poslani" className="font-bold flex items-center gap-3 opacity-80 hover:opacity-100 hover:text-[var(--color-accent)] transition-all group">
+                  <div className="w-12 h-12 rounded-full border-2 border-current flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Play size={18} className="ml-1" />
+                  </div>
+                  Jak pracuji
+                </a>
+              </div>
+              
+              {/* Trust Indicators */}
+              <div className="flex items-center gap-6 opacity-60">
+                <div className="flex -space-x-3">
+                  {[1,2,3,4].map(i => <div key={i} className="w-10 h-10 rounded-full border-2 border-[var(--color-bg)] bg-gray-300 overflow-hidden"><img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="avatar" /></div>)}
+                </div>
+                <div className="text-sm font-semibold">
+                  <span style={{ color: 'var(--color-primary)' }}>+250</span> spokojených klientů
+                </div>
+              </div>
+            </div>
+
+            {/* Obrazová část - Průhledné PNG a karty */}
+            <div className="relative h-[600px] w-full flex justify-center items-end animate-fade-in-up delay-200">
+              {/* Dekorativní pozadí za fotkou (přizpůsobuje se variantě) */}
+              <div 
+                className={`absolute inset-0 max-w-md mx-auto bottom-0 h-4/5 z-0 ${getImageStyle()}`} 
+                style={{ backgroundColor: 'var(--color-primary)', opacity: layoutVariant === 'neobrutal' ? 1 : 0.1 }}
+              ></div>
+              
+              {/* Samotný PNG transparentní obrázek - Použití spolehlivého zdroje */}
+              <img 
+                src="https://michalvyhnalek.cz/wp-content/uploads/2023/11/o_mne-800x883.png" 
+                alt="Michal Konzultant" 
+                className={`relative z-10 w-auto h-full object-contain object-bottom drop-shadow-2xl transition-transform duration-700 hover:scale-[1.02]`}
+              />
+              
+              {/* Floating Card 1 */}
+              <div className={`absolute left-0 top-1/4 p-5 z-20 flex items-center gap-4 animate-bounce ${getCardStyle(false)}`} style={{ animationDuration: '4s' }}>
+                <div style={{ backgroundColor: 'var(--color-accent)' }} className="p-3 rounded-full text-black">
+                  <TrendingUp size={24} />
+                </div>
+                <div className="text-left">
+                  <p className="text-xs opacity-60 font-bold uppercase">Růst zisku</p>
+                  <p className="font-extrabold text-2xl" style={{ color: 'var(--color-primary)' }}>+42 %</p>
+                </div>
+              </div>
+
+              {/* Floating Card 2 */}
+              <div className={`absolute right-0 bottom-1/4 p-6 max-w-[220px] text-left z-20 hidden md:block ${getCardStyle(false)}`}>
+                <div className="flex gap-1 mb-3">
+                  {[1,2,3,4,5].map(i => <div key={i} style={{ color: 'var(--color-accent)' }}>★</div>)}
+                </div>
+                <p className="text-sm font-semibold opacity-90 leading-tight">"Michal nám ukázal cestu ven z chaosu."</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </header>
+
+      {/* --- CO TRÁPÍ PODNIKATELE --- */}
+      <section className="py-24 relative">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="order-2 lg:order-1 relative animate-fade-in-up delay-100">
+              <div style={{ backgroundColor: 'var(--color-accent)' }} className={`absolute inset-0 transform rotate-3 scale-105 opacity-20 ${getImageStyle()}`}></div>
+              <img 
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                alt="Strategy Meeting" 
+                className={`relative z-10 w-full object-cover h-[500px] shadow-2xl ${getImageStyle()}`}
+              />
+            </div>
+            
+            <div className="space-y-8 order-1 lg:order-2 animate-fade-in-up delay-200">
+              <div>
+                <div style={{ color: 'var(--color-accent)' }} className="font-bold tracking-widest uppercase text-sm mb-4">Problémy, které znáte</div>
+                <h2 style={{ color: 'var(--color-primary)' }} className="text-4xl md:text-5xl font-extrabold leading-tight">
+                  Převezměte kontrolu nad svým byznysem.
+                </h2>
+              </div>
+              <p className="opacity-70 text-lg leading-relaxed">
+                Úspěch nestojí jen na dobrém produktu, ale na pevných základech. Poznávate se v některém z těchto scénářů?
+              </p>
+              
+              <div className="space-y-5 pt-4">
+                {[
+                  { icon: PieChart, title: "Chaos v cashflow", desc: "Peníze mizí a vy nevíte kam. Nastavíme jasná pravidla." },
+                  { icon: Target, title: "Chybějící strategie", desc: "Rozhodujete se intuitivně. Zavedeme rozhodování na základě dat." },
+                  { icon: ShieldCheck, title: "Vyhoření a stres", desc: "Pracujete pořád, ale firma neroste. Optimalizujeme procesy." }
+                ].map((item, idx) => (
+                  <div key={idx} className={`p-6 flex gap-5 items-start group ${getCardStyle(false)}`}>
+                    <div className={`p-4 shrink-0 shadow-md group-hover:scale-110 group-hover:bg-[var(--color-primary)] group-hover:text-white transition-all bg-[var(--color-card)] text-[var(--color-accent)] ${layoutVariant === 'neobrutal' ? 'border-2 border-black rounded-none' : 'rounded-2xl'}`}>
+                      <item.icon size={28} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-xl mb-1">{item.title}</h4>
+                      <p className="opacity-70 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- MOJE POSLÁNÍ (Dark Section) --- */}
+      <section id="poslani" style={{ backgroundColor: 'var(--color-primary)' }} className="py-32 text-white relative overflow-hidden">
+        {/* Dekorativní prvky */}
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] opacity-10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" style={{ backgroundColor: 'var(--color-accent)' }}></div>
+        <div className="absolute bottom-0 left-0 w-full h-px opacity-20" style={{ background: 'linear-gradient(90deg, transparent, var(--color-accent), transparent)' }}></div>
+
+        <div className="container mx-auto px-6 relative z-10 text-center">
+          <Quote size={80} style={{ color: 'var(--color-accent)' }} className="mx-auto mb-10 opacity-80 animate-pulse" />
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-[1.2] mb-10 max-w-5xl mx-auto">
+            "Dělám to pro vás. Mým posláním je, aby vaše podnikání vzkvétalo, a udělejme tak společně svět lepším místem."
+          </h2>
+          <p className="text-xl md:text-2xl opacity-80 font-light mb-16 max-w-3xl mx-auto leading-relaxed">
+            Nejsem teoretik od tabulí. Jsem váš parťák. Věřím, že zdravé firmy tvoří zdravou společnost. Pojďme ten váš nápad přetavit ve stabilní podnik.
+          </p>
+          <div className="inline-flex items-center gap-6 text-left bg-white/5 p-4 pr-10 rounded-full border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer">
+            <div className="w-20 h-20 rounded-full overflow-hidden border-4" style={{ borderColor: 'var(--color-accent)' }}>
+              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Michal" className="w-full h-full object-cover" />
+            </div>
+            <div>
+              <div className="font-extrabold text-2xl tracking-wide">Michal</div>
+              <div style={{ color: 'var(--color-accent)' }} className="font-bold tracking-widest uppercase text-xs mt-1">Konzultant & Stratég</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- CENÍK --- */}
+      <section id="cenik" className="py-32 relative">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-20 animate-fade-in-up">
+            <div style={{ color: 'var(--color-accent)' }} className="font-bold tracking-widest uppercase text-sm mb-4">Investice do rozvoje</div>
+            <h2 style={{ color: 'var(--color-primary)' }} className="text-4xl md:text-5xl font-extrabold">Férová cenovka, jasná hodnota</h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+            {/* Karta 1 */}
+            <div className={`p-10 flex flex-col justify-between group ${getCardStyle(false)}`}>
+              <div>
+                <h3 className="text-2xl font-bold mb-3">Konzultace</h3>
+                <p className="opacity-60 mb-8">Rychlá pomoc a nasměrování.</p>
+                <div className="text-5xl font-black mb-8" style={{ color: 'var(--color-primary)' }}>3 000 <span className="text-xl font-medium opacity-50">Kč/h</span></div>
+                <ul className="space-y-4 mb-10">
+                  {['Analýza aktuální situace', 'Okamžitá zpětná vazba', 'Tipy na rychlá zlepšení'].map((item, i) => (
+                    <li key={i} className="flex gap-4 font-medium"><CheckCircle2 style={{ color: 'var(--color-accent)' }} size={24} className="shrink-0" /> {item}</li>
+                  ))}
+                </ul>
+              </div>
+              <a href="#kontakt" className={`${getButtonStyle('secondary')} w-full text-center`}>Mám zájem</a>
+            </div>
+
+            {/* Karta 2 (Zvýrazněná) */}
+            <div className={`p-10 flex flex-col justify-between relative transform md:-translate-y-6 ${getCardStyle(true)}`}>
+              <div className="absolute top-0 right-8 transform -translate-y-1/2 px-5 py-2 font-black tracking-widest text-xs uppercase shadow-lg" style={{ backgroundColor: 'var(--color-accent)', color: 'black', borderRadius: layoutVariant === 'neobrutal' || layoutVariant === 'corporate' ? '0' : '999px' }}>Nejžádanější</div>
+              <div>
+                <h3 className="text-2xl font-bold mb-3">Byznys Plán</h3>
+                <p className="opacity-80 mb-8">Komplexní strategie pro růst.</p>
+                <div className="text-5xl font-black mb-8">25 000 <span className="text-xl font-medium opacity-50">Kč</span></div>
+                <ul className="space-y-4 mb-10">
+                  {['Hloubkový finanční model', 'Strategie rozvoje na 3 roky', 'Risk management', '2 follow-up schůzky'].map((item, i) => (
+                    <li key={i} className="flex gap-4 font-medium"><CheckCircle2 style={{ color: 'var(--color-accent)' }} size={24} className="shrink-0" /> {item}</li>
+                  ))}
+                </ul>
+              </div>
+              <a href="#kontakt" className={`${getButtonStyle('accent')} w-full text-center`}>Začít tvořit plán</a>
+            </div>
+
+            {/* Karta 3 */}
+            <div className={`p-10 flex flex-col justify-between group ${getCardStyle(false)}`}>
+              <div>
+                <h3 className="text-2xl font-bold mb-3">Mentoring</h3>
+                <p className="opacity-60 mb-8">Dlouhodobý dohled a růst.</p>
+                <div className="text-4xl font-black mb-8" style={{ color: 'var(--color-primary)' }}>Individuálně</div>
+                <ul className="space-y-4 mb-10">
+                  {['Pravidelné status schůzky', 'Kontrola plnění cílů', 'Prioritní podpora', 'Úprava strategie'].map((item, i) => (
+                    <li key={i} className="flex gap-4 font-medium"><CheckCircle2 style={{ color: 'var(--color-accent)' }} size={24} className="shrink-0" /> {item}</li>
+                  ))}
+                </ul>
+              </div>
+              <a href="#kontakt" className={`${getButtonStyle('secondary')} w-full text-center`}>Napsat zprávu</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- KONTAKT --- */}
+      <section id="kontakt" className="py-24 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <div className={`grid md:grid-cols-2 overflow-hidden ${getCardStyle(false)}`}>
+            
+            <div className="p-12 md:p-16 lg:p-20">
+              <div style={{ color: 'var(--color-accent)' }} className="font-bold tracking-widest uppercase text-sm mb-4">Udělejte první krok</div>
+              <h2 style={{ color: 'var(--color-primary)' }} className="text-4xl font-extrabold mb-4">Pojďme do toho.</h2>
+              <p className="opacity-70 mb-10 text-lg">Napište mi, co vás pálí. První nezávazná 30min konzultace je na mě.</p>
+              
+              <form className="space-y-8">
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="relative">
+                    <input type="text" id="name" placeholder=" " className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors placeholder-transparent" />
+                    <label htmlFor="name" className="absolute left-0 -top-3 text-sm font-bold opacity-60 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-[var(--color-primary)] peer-focus:opacity-100">Jméno a příjmení</label>
+                  </div>
+                  <div className="relative">
+                    <input type="email" id="email" placeholder=" " className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors placeholder-transparent" />
+                    <label htmlFor="email" className="absolute left-0 -top-3 text-sm font-bold opacity-60 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-[var(--color-primary)] peer-focus:opacity-100">E-mail</label>
+                  </div>
+                </div>
+                <div className="relative mt-8">
+                  <textarea id="message" rows="3" placeholder=" " className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors resize-none placeholder-transparent"></textarea>
+                  <label htmlFor="message" className="absolute left-0 -top-3 text-sm font-bold opacity-60 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-[var(--color-primary)] peer-focus:opacity-100">S čím potřebujete pomoct?</label>
+                </div>
+                <button type="button" className={`${getButtonStyle('primary')} w-full sm:w-auto mt-4`}>
+                  Odeslat zprávu <MessageSquare size={18} />
+                </button>
+              </form>
+            </div>
+            
+            <div style={{ backgroundColor: 'var(--color-primary)' }} className="p-12 md:p-16 lg:p-20 text-white flex flex-col justify-center relative">
+               <div className="absolute inset-0 opacity-30">
+                 <div className="w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at bottom right, var(--color-accent) 0%, transparent 60%)' }}></div>
+               </div>
+               <div className="relative z-10 space-y-12">
+                 <h3 className="text-3xl font-extrabold mb-8">Kontaktní údaje</h3>
+                 
+                 <div className="flex items-start gap-6 group cursor-pointer">
+                   <div style={{ backgroundColor: 'var(--color-accent)' }} className={`p-4 text-black group-hover:scale-110 transition-transform shadow-lg ${layoutVariant === 'neobrutal' ? 'border-2 border-black rounded-none' : 'rounded-2xl'}`}><Phone size={28} /></div>
+                   <div>
+                     <p className="text-sm font-bold tracking-widest uppercase opacity-70 mb-1">Zavolejte mi</p>
+                     <p className="font-extrabold text-2xl group-hover:text-[var(--color-accent)] transition-colors">+420 123 456 789</p>
+                   </div>
+                 </div>
+                 
+                 <div className="flex items-start gap-6 group cursor-pointer">
+                   <div style={{ backgroundColor: 'var(--color-accent)' }} className={`p-4 text-black group-hover:scale-110 transition-transform shadow-lg ${layoutVariant === 'neobrutal' ? 'border-2 border-black rounded-none' : 'rounded-2xl'}`}><Mail size={28} /></div>
+                   <div>
+                     <p className="text-sm font-bold tracking-widest uppercase opacity-70 mb-1">Napište e-mail</p>
+                     <p className="font-extrabold text-2xl group-hover:text-[var(--color-accent)] transition-colors">michal@byznys.cz</p>
+                   </div>
+                 </div>
+                 
+                 <div className="flex items-start gap-6 group">
+                   <div style={{ backgroundColor: 'var(--color-accent)' }} className={`p-4 text-black group-hover:scale-110 transition-transform shadow-lg ${layoutVariant === 'neobrutal' ? 'border-2 border-black rounded-none' : 'rounded-2xl'}`}><MapPin size={28} /></div>
+                   <div>
+                     <p className="text-sm font-bold tracking-widest uppercase opacity-70 mb-1">Kancelář</p>
+                     <p className="font-extrabold text-2xl leading-tight">Praha, ČR<br/><span className="text-base font-medium opacity-80 mt-1 block">(Schůzky i online)</span></p>
+                   </div>
+                 </div>
+               </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* --- FOOTER --- */}
+      <footer style={{ backgroundColor: 'var(--color-primary)' }} className="text-white pt-20 pb-10 border-t border-white/10">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
+            <div className="flex items-center gap-3">
+              <div style={{ backgroundColor: 'var(--color-accent)' }} className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-black text-xl">M</div>
+              <span className="text-3xl font-black tracking-tight">Michal.</span>
+            </div>
+            <div className="flex flex-wrap justify-center gap-8 text-sm font-bold uppercase tracking-widest opacity-80">
+              <a href="#sluzby" className="hover:text-[var(--color-accent)] hover:opacity-100 transition-colors">Služby</a>
+              <a href="#poslani" className="hover:text-[var(--color-accent)] hover:opacity-100 transition-colors">Poslání</a>
+              <a href="#cenik" className="hover:text-[var(--color-accent)] hover:opacity-100 transition-colors">Ceník</a>
+            </div>
+          </div>
+          <div className="text-center font-medium opacity-50 border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; {new Date().getFullYear()} Michal - Podnikatelský konzultant.</p>
+            <p>Design pro růst.</p>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  );
+};
+
+export default App;
