@@ -283,7 +283,7 @@
     </section>
 
     <!-- --- KOMPLEXNÍ PÉČE & NABÍDKA --- -->
-    <section id="manazer" class="py-24 relative overflow-hidden border-y border-white/5" style="background: linear-gradient(to bottom, var(--color-bg), var(--color-card));">
+    <section id="manazer" class="pt-24 pb-12 relative overflow-hidden border-y border-white/5" style="background: linear-gradient(to bottom, var(--color-bg), var(--color-card));">
         <div class="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-5 blur-[100px] rounded-full pointer-events-none" style="background-color: var(--color-accent)"></div>
         
         <div class="container mx-auto px-6 relative z-10">
@@ -324,7 +324,7 @@
             </div>
 
             <!-- EXKLUZIVNÍ NABÍDKA BANNER -->
-            <div class="max-w-5xl mx-auto mb-16 relative rounded-3xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-transform duration-500" style="background: linear-gradient(135deg, var(--color-accent), #f59e0b);">
+            <div data-ui="banner" data-base-class="max-w-5xl mx-auto mb-16 relative overflow-hidden transform transition-all duration-500" class="" style="background: linear-gradient(135deg, var(--color-accent), #f59e0b);">
                 <!-- Dekorativní vzor na pozadí banneru -->
                 <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, black 1px, transparent 0); background-size: 24px 24px;"></div>
                 <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-12">
@@ -336,7 +336,7 @@
                     <div class="text-center md:text-right shrink-0 bg-black/10 backdrop-blur-md p-6 rounded-2xl border border-black/10">
                         <div class="text-xl line-through opacity-70 font-bold text-black/60 mb-1">5 000&nbsp;Kč /&nbsp;měs.</div>
                         <div class="text-5xl md:text-6xl font-black text-black mb-6">2 500&nbsp;Kč<span class="text-xl md:text-2xl font-medium opacity-80"> /&nbsp;měs.</span></div>
-                        <a href="#kontakt" class="bg-black text-[var(--color-accent)] px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-colors inline-flex items-center gap-2 shadow-xl">
+                        <a href="#kontakt" data-ui="btn-banner" data-base-class="bg-black text-[var(--color-accent)] px-8 py-4 font-bold hover:bg-gray-800 transition-colors inline-flex items-center gap-2" class="">
                             Získat místo <i data-lucide="arrow-right" class="w-5 h-5"></i>
                         </a>
                     </div>
@@ -355,7 +355,7 @@
     </section>
 
     <!-- --- NAJDĚTE SVŮJ BRILIANT --- -->
-    <section class="py-24 relative overflow-hidden bg-[var(--color-card)]">
+    <section class="pt-12 pb-24 relative overflow-hidden bg-[var(--color-card)]">
         <div class="container mx-auto px-6 relative z-10 text-center">
             <i data-lucide="diamond" class="mx-auto mb-8 text-[var(--color-accent)] animate-pulse w-16 h-16"></i>
             <h2 class="text-4xl md:text-5xl font-extrabold mb-8 uppercase tracking-wider">
@@ -752,6 +752,36 @@
             return base + ' rounded-full hover:shadow-[0_0_15px_var(--color-accent)]';
         }
 
+        function getBannerStyle(variant) {
+            switch(variant) {
+                case 'corporate': return 'rounded-none shadow-sm';
+                case 'elegant': return 'rounded-sm shadow-2xl';
+                case 'creative': return 'rounded-[2rem_4rem_2rem_1rem] shadow-2xl hover:-rotate-1';
+                case 'neobrutal': return 'rounded-none border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]';
+                case 'glass': return 'rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] backdrop-blur-xl border border-white/20';
+                case 'soft': return 'rounded-[3rem] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)]';
+                case 'outline': return 'rounded-xl border-4 border-dashed border-black shadow-none';
+                case 'playful': return 'rounded-[3rem_1rem_3rem_1rem] shadow-2xl hover:rotate-1';
+                case 'retro': return 'rounded-none border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none';
+                case 'minimal': default: return 'rounded-3xl shadow-2xl hover:-translate-y-1';
+            }
+        }
+
+        function getBtnBannerStyle(variant) {
+            switch(variant) {
+                case 'corporate': return 'rounded-none shadow-sm';
+                case 'elegant': return 'rounded-sm shadow-md';
+                case 'creative': return 'rounded-[1rem_2rem_1rem_0.5rem] shadow-lg';
+                case 'neobrutal': return 'rounded-none border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none';
+                case 'glass': return 'rounded-2xl shadow-lg border border-white/20';
+                case 'soft': return 'rounded-full shadow-lg';
+                case 'outline': return 'rounded-xl border-2 border-dashed border-white shadow-none';
+                case 'playful': return 'rounded-[2rem_0.5rem_2rem_0.5rem] shadow-md';
+                case 'retro': return 'rounded-none border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none';
+                case 'minimal': default: return 'rounded-full shadow-xl';
+            }
+        }
+
         // 3. APLIKACE STYLŮ NA DOM
         function applyStyles() {
             // Aplikace fontu
@@ -771,6 +801,8 @@
                 if (type === 'image-bg') newClass = getImageStyle(currentVariant);
                 if (type === 'logo') newClass = getLogoNavStyle(currentVariant);
                 if (type === 'btn-nav') newClass = getBtnNavStyle(currentVariant);
+                if (type === 'banner') newClass = getBannerStyle(currentVariant);
+                if (type === 'btn-banner') newClass = getBtnBannerStyle(currentVariant);
 
                 el.className = `${baseClass} ${newClass}`;
             });
