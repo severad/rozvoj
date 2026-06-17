@@ -138,14 +138,14 @@
     <!-- --- NAVBAR --- -->
     <div class="fixed top-0 w-full z-40 transition-all duration-300 bg-[var(--color-bg)]/90 backdrop-blur-lg border-b border-white/5">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3 group cursor-pointer">
-                <div data-ui="logo" data-base-class="w-10 h-10 flex items-center justify-center font-bold text-black text-xl transition-transform group-hover:rotate-12 bg-[var(--color-accent)]" class="">M</div>
-                <span class="text-2xl font-black tracking-tight text-white">Michal.</span>
-            </div>
+            <a href="#" class="flex items-center gap-4 group cursor-pointer">
+                <!-- VLOŽENÉ LOGO DO MENU -->
+                <img src="logo-menu.png" alt="Michal Vyhnálek" class="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+            </a>
             <div class="hidden lg:flex gap-10 text-sm font-bold opacity-90">
                 <a href="#manazer" class="hover:text-[var(--color-accent)] transition-all">Externí manažer</a>
-                <a href="#kurzy" class="hover:text-[var(--color-accent)] transition-all">Kurzy</a>
-                <a href="#klub" class="hover:text-[var(--color-accent)] transition-all">Klub</a>
+                <a href="#program" class="hover:text-[var(--color-accent)] transition-all">Roční program</a>
+                <a href="#kurzy" class="hover:text-[var(--color-accent)] transition-all">Kurzy a Klub</a>
             </div>
             <a href="#kontakt" data-ui="btn-nav" data-base-class="hidden md:flex items-center gap-2 px-6 py-2.5 text-sm font-bold transition-all bg-[var(--color-accent)] text-black" class="">
                 Domluvit schůzku <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -291,7 +291,8 @@
                 <div class="text-[var(--color-accent)] font-bold tracking-widest uppercase text-sm mb-4">Hlavní služba</div>
                 <h2 class="text-4xl md:text-6xl font-extrabold mb-6">Váš Externí Manažer</h2>
                 <p class="text-xl opacity-80 leading-relaxed">
-                    Nejsem jen poradce, jsem Vaše pravá ruka. Prostřednictvím <strong>koučinku a&nbsp;mentoringu</strong> propojuji Váš osobní růst s&nbsp;tvrdým byznysem. Získáte nejen můj osobní přístup, ale také expertízu a&nbsp;zázemí celého mého týmu.
+                    Externí služba pro všechny podnikavce a manažery, <strong>kteří jsou na vše sami</strong>. 
+                    Pomocí osobního přístupu, koučinku a mentoringu (podloženého tvrdými zkušenostmi z praxe) vás provedeme nástrahami byznysu. Získáte nejen mé know-how, ale i expertízu celého mého týmu, abyste na svá rozhodnutí už nikdy nebyli sami.
                 </p>
             </div>
 
@@ -305,41 +306,21 @@
                         <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Řízení externích příjmů a&nbsp;výnosů</li>
                         <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Optimalizace nákladů a&nbsp;ziskovosti</li>
                         <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Nalezení správného směru a&nbsp;vize</li>
-                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Těžká strategická a&nbsp;byznys rozhodování</li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Výuka time managementu a řízení financí</li>
                     </ul>
                 </div>
 
                 <div data-ui="card" data-base-class="p-10" class="">
                     <div class="flex items-center gap-4 mb-6">
                         <i data-lucide="brain-circuit" class="text-[var(--color-accent)] w-8 h-8"></i>
-                        <h3 class="text-2xl font-bold">Certifikovaný Koučink</h3>
+                        <h3 class="text-2xl font-bold">Osobní rozvoj &&nbsp;Podpora</h3>
                     </div>
                     <ul class="space-y-4 opacity-80 font-medium">
-                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Změna mindsetu a&nbsp;profesní vedení</li>
-                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Osobní čas, stabilita a&nbsp;<span class="whitespace-nowrap">time-management</span></li>
-                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Podpora pro teamleadery a&nbsp;manažery</li>
-                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Zvyšování výkonnosti Vás i&nbsp;Vašeho týmu</li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Zapojení celého našeho týmu do řešení</li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Pomoc s dosahováním vašich cílů a plánů</li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Hledání "osobního briliantu" u jednotlivců</li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Osobní i podnikatelský kontinuální rozvoj</li>
                     </ul>
-                </div>
-            </div>
-
-            <!-- EXKLUZIVNÍ NABÍDKA BANNER -->
-            <div data-ui="banner" data-base-class="max-w-5xl mx-auto mb-16 relative overflow-hidden transform transition-all duration-500" class="" style="background: linear-gradient(135deg, var(--color-accent), #f59e0b);">
-                <!-- Dekorativní vzor na pozadí banneru -->
-                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, black 1px, transparent 0); background-size: 24px 24px;"></div>
-                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-12">
-                    <div class="text-black">
-                        <div class="text-sm font-black tracking-widest uppercase mb-3 opacity-80 flex items-center gap-2"><i data-lucide="rocket" class="w-5 h-5"></i> Limitovaná příležitost</div>
-                        <h3 class="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">Mentoringový program <br>pro prvních 10&nbsp;zájemců</h3>
-                        <p class="font-medium opacity-90 max-w-lg text-lg">Intenzivní vedení, kombinace mých zkušeností a&nbsp;podpory mého týmu za exkluzivní zaváděcí cenu. Nastartujte svůj růst s&nbsp;profesionály.</p>
-                    </div>
-                    <div class="text-center md:text-right shrink-0 bg-black/10 backdrop-blur-md p-6 rounded-2xl border border-black/10">
-                        <div class="text-xl line-through opacity-70 font-bold text-black/60 mb-1">5 000&nbsp;Kč /&nbsp;měs.</div>
-                        <div class="text-5xl md:text-6xl font-black text-black mb-6">2 500&nbsp;Kč<span class="text-xl md:text-2xl font-medium opacity-80"> /&nbsp;měs.</span></div>
-                        <a href="#kontakt" data-ui="btn-banner" data-base-class="bg-black text-[var(--color-accent)] px-8 py-4 font-bold hover:bg-gray-800 transition-colors inline-flex items-center gap-2" class="">
-                            Získat místo <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
 
@@ -357,9 +338,11 @@
     <!-- --- NAJDĚTE SVŮJ BRILIANT --- -->
     <section class="pt-12 pb-24 relative overflow-hidden bg-[var(--color-card)]">
         <div class="container mx-auto px-6 relative z-10 text-center">
-            <i data-lucide="diamond" class="mx-auto mb-8 text-[var(--color-accent)] animate-pulse w-16 h-16"></i>
+            <!-- VLOŽENÉ MALÉ LOGO DIAMANTU -->
+            <img src="logo-small.png" alt="Briliant" class="mx-auto mb-8 h-20 md:h-24 w-auto object-contain animate-pulse hover:scale-105 transition-transform duration-500" />
+            
             <h2 class="text-4xl md:text-5xl font-extrabold mb-8 uppercase tracking-wider">
-                Najděte svůj briliant
+                Hledání osobního briliantu
             </h2>
             <p class="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto leading-relaxed font-light mb-12">
                 "Každý z&nbsp;nás má obrovský potenciál. Většina ho ale neumí <span class="whitespace-nowrap">naplno využít</span>. Pomohu Vám Váš skrytý potenciál objevit a&nbsp;přetavit ho v&nbsp;reálný příjem, růst a&nbsp;osobní spokojenost."
@@ -372,9 +355,9 @@
         <div class="container mx-auto px-6">
             <div class="max-w-4xl mx-auto text-center mb-16 animate-fade-in-up">
                 <div class="text-[var(--color-accent)] font-bold tracking-widest uppercase text-sm mb-4">Růstový program pro podnikatele</div>
-                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Business Mentoring 12</h2>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Jednoduchý roční program, který vás posune o úroveň výš.</h2>
                 <p class="text-xl opacity-80 leading-relaxed max-w-3xl mx-auto">
-                    „Pomáhám podnikatelům růst, stabilizovat finance a vybudovat tým, který funguje.“ <br>Jednoduchý roční program, který vás posune o úroveň výš.
+                    „Pomáhám podnikatelům růst, stabilizovat finance a vybudovat tým, který funguje. Jsem tu, abyste už na nic nebyli sami.“
                 </p>
             </div>
 
@@ -385,15 +368,14 @@
                         Jasný plán. Reálné kroky. Podpora, která vás nenechá spadnout.
                     </p>
                     <p class="opacity-70 leading-relaxed mb-8">
-                        Jednoduchý a dostupný roční program pro podnikatele, kteří chtějí růst, ale nechtějí v tom být sami. Za menší měsíční investici získáte vedení, kontrolu nad financemi, jasný plán a podporu při rozšiřování podnikání i týmu.
+                        Externí služba navržená speciálně pro podnikavce, kteří chtějí růst, chtějí se rozvíjet, ale nechtějí v tom být sami. Získáte vedení, kontrolu nad financemi, time management a pevný bod opory na cestě za svými plány.
                     </p>
                     <div class="space-y-3">
                         <div class="font-bold text-lg mb-4 text-[var(--color-primary)]">Pro koho je program určený? Pro ty, kteří:</div>
-                        <div class="flex items-start gap-3"><i data-lucide="check" class="text-[var(--color-accent)] w-5 h-5 mt-1 shrink-0"></i><span class="opacity-80">chtějí růst, ale neví, kde začít</span></div>
-                        <div class="flex items-start gap-3"><i data-lucide="check" class="text-[var(--color-accent)] w-5 h-5 mt-1 shrink-0"></i><span class="opacity-80">mají chaos v prioritách nebo financích</span></div>
-                        <div class="flex items-start gap-3"><i data-lucide="check" class="text-[var(--color-accent)] w-5 h-5 mt-1 shrink-0"></i><span class="opacity-80">potřebují někoho, kdo je povede a zkontroluje</span></div>
-                        <div class="flex items-start gap-3"><i data-lucide="check" class="text-[var(--color-accent)] w-5 h-5 mt-1 shrink-0"></i><span class="opacity-80">chtějí rozšířit tým, ale bojí se udělat chybu</span></div>
-                        <div class="flex items-start gap-3"><i data-lucide="check" class="text-[var(--color-accent)] w-5 h-5 mt-1 shrink-0"></i><span class="opacity-80">chtějí podnikání, které je živí, ne vyčerpává</span></div>
+                        <div class="flex items-start gap-3"><i data-lucide="check" class="text-[var(--color-accent)] w-5 h-5 mt-1 shrink-0"></i><span class="opacity-80">jsou na vše v podnikání sami a potřebují partnera pro diskusi</span></div>
+                        <div class="flex items-start gap-3"><i data-lucide="check" class="text-[var(--color-accent)] w-5 h-5 mt-1 shrink-0"></i><span class="opacity-80">mají chaos v time managementu nebo financích</span></div>
+                        <div class="flex items-start gap-3"><i data-lucide="check" class="text-[var(--color-accent)] w-5 h-5 mt-1 shrink-0"></i><span class="opacity-80">potřebují někoho, kdo jim ukáže slepá místa z praxe</span></div>
+                        <div class="flex items-start gap-3"><i data-lucide="check" class="text-[var(--color-accent)] w-5 h-5 mt-1 shrink-0"></i><span class="opacity-80">chtějí růst a rozvíjet se kontinuálně v osobní i byznys rovině</span></div>
                     </div>
                 </div>
                 
@@ -412,26 +394,26 @@
                         </div>
                         <div class="flex items-center gap-4 bg-[var(--color-bg)] p-3 rounded-lg border border-white/5">
                             <span class="text-[var(--color-accent)] font-bold">03</span>
-                            <span class="font-medium opacity-90">Plán růstu na 12 měsíců</span>
+                            <span class="font-medium opacity-90">Plán růstu a osobní cíle</span>
                         </div>
                         <div class="flex items-center gap-4 bg-[var(--color-bg)] p-3 rounded-lg border border-white/5">
                             <span class="text-[var(--color-accent)] font-bold">04</span>
-                            <span class="font-medium opacity-90">Stabilizace provozu</span>
+                            <span class="font-medium opacity-90">Time management a stabilizace provozu</span>
                         </div>
                         <div class="flex items-center gap-4 bg-[var(--color-bg)] p-3 rounded-lg border border-white/5">
                             <span class="text-[var(--color-accent)] font-bold">05</span>
-                            <span class="font-medium opacity-90">Budování týmu</span>
+                            <span class="font-medium opacity-90">Budování týmu a zapojení našeho týmu</span>
                         </div>
                         <div class="flex items-center gap-4 bg-[var(--color-bg)] p-3 rounded-lg border border-white/5">
                             <span class="text-[var(--color-accent)] font-bold">06</span>
-                            <span class="font-medium opacity-90">Kontrola výsledků a úprava strategie</span>
+                            <span class="font-medium opacity-90">Hledání a broušení vašeho osobního briliantu</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Struktura -->
-            <h3 class="text-3xl font-bold text-center mb-10">Jak program funguje</h3>
+            <h3 class="text-3xl font-bold text-center mb-10">Jak program funguje – Co vás s námi čeká</h3>
             <div class="grid md:grid-cols-4 gap-6 mb-20 relative">
                 <!-- Spojovací linka (viditelná jen na větších obrazovkách) -->
                 <div class="hidden md:block absolute top-8 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent opacity-30 z-0"></div>
@@ -439,34 +421,34 @@
                 <div data-ui="card" data-base-class="p-6 relative z-10 text-center" class="">
                     <div class="w-16 h-16 mx-auto rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center font-bold text-xl mb-4 border border-[var(--color-accent)]/20 shadow-lg shadow-[var(--color-accent)]/10">1</div>
                     <h4 class="font-bold text-lg mb-2">Startovní analýza</h4>
-                    <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">0.–1. měsíc</p>
+                    <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Dle dohody</p>
                     <ul class="text-sm opacity-70 space-y-2 text-left">
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Audit podnikání</li>
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Finanční rozvaha</li>
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Identifikace slabých míst</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Definice cíle na 12 měs.</li>
+                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Definice vašich cílů</li>
                     </ul>
                 </div>
 
                 <div data-ui="card" data-base-class="p-6 relative z-10 text-center" class="">
                     <div class="w-16 h-16 mx-auto rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center font-bold text-xl mb-4 border border-[var(--color-accent)]/20 shadow-lg shadow-[var(--color-accent)]/10">2</div>
                     <h4 class="font-bold text-lg mb-2">Plán růstu</h4>
-                    <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">1.–2. měsíc</p>
+                    <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Orientačně</p>
                     <ul class="text-sm opacity-70 space-y-2 text-left">
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Konkrétní kroky</li>
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Časový a finanční plán</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Strategie budování týmu</li>
+                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Strategie pro váš vývoj</li>
                     </ul>
                 </div>
 
                 <div data-ui="card" data-base-class="p-6 relative z-10 text-center" class="">
                     <div class="w-16 h-16 mx-auto rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center font-bold text-xl mb-4 border border-[var(--color-accent)]/20 shadow-lg shadow-[var(--color-accent)]/10">3</div>
                     <h4 class="font-bold text-lg mb-2">Pravidelná podpora</h4>
-                    <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Měsíčně</p>
+                    <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Kontinuálně</p>
                     <ul class="text-sm opacity-70 space-y-2 text-left">
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Online setkání</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Kontrola výsledků</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Úprava strategie</li>
+                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Pravidelná setkání</li>
+                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Osobní přístup a know-how</li>
+                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Zapojení našeho týmu</li>
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Mentoring + koučink</li>
                     </ul>
                 </div>
@@ -474,52 +456,20 @@
                 <div data-ui="card-highlight" data-base-class="p-6 relative z-10 text-center" class="">
                     <div class="w-16 h-16 mx-auto rounded-full bg-white/20 flex items-center justify-center font-bold text-xl mb-4 text-white">4</div>
                     <h4 class="font-bold text-lg mb-2 text-white">Výsledky</h4>
-                    <p class="text-xs font-bold text-white/70 uppercase tracking-wider mb-4">Za 12 měsíců</p>
+                    <p class="text-xs font-bold text-white/70 uppercase tracking-wider mb-4">Váš cíl</p>
                     <ul class="text-sm opacity-90 space-y-3 text-left text-white font-medium">
-                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Stabilnější podnikání</li>
-                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Jasná čísla</li>
-                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Růst obratu/kapacity</li>
-                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Méně chaosu, jistota</li>
-                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Víte, co děláte a proč</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Proč to funguje & Co získáte -->
-            <div class="grid md:grid-cols-2 gap-12 bg-[var(--color-card)] rounded-3xl p-10 lg:p-16 border border-white/5">
-                <div>
-                    <h3 class="text-2xl font-bold mb-6">Proč to funguje?</h3>
-                    <p class="text-lg opacity-80 font-medium mb-6 text-[var(--color-accent)]">
-                        Protože podnikatelé často nepotřebují další kurz. Potřebují vedení.
-                    </p>
-                    <p class="opacity-70 mb-6">Potřebují někoho, kdo jim pomůže:</p>
-                    <ul class="space-y-3 opacity-80">
-                        <li class="flex items-center gap-3"><i data-lucide="arrow-right" class="w-4 h-4 text-[var(--color-accent)]"></i> Ujasnit směr</li>
-                        <li class="flex items-center gap-3"><i data-lucide="arrow-right" class="w-4 h-4 text-[var(--color-accent)]"></i> Držet tempo</li>
-                        <li class="flex items-center gap-3"><i data-lucide="arrow-right" class="w-4 h-4 text-[var(--color-accent)]"></i> Hlídat finance</li>
-                        <li class="flex items-center gap-3"><i data-lucide="arrow-right" class="w-4 h-4 text-[var(--color-accent)]"></i> Vyhnout se chybám</li>
-                        <li class="flex items-center gap-3"><i data-lucide="arrow-right" class="w-4 h-4 text-[var(--color-accent)]"></i> Posouvat se krok za krokem</li>
-                    </ul>
-                </div>
-                
-                <div class="bg-[var(--color-bg)] p-8 rounded-2xl border border-white/5">
-                    <h3 class="text-xl font-bold mb-6 border-b border-white/10 pb-4">Co získáte za malý měsíční poplatek</h3>
-                    <ul class="space-y-4 font-medium opacity-90">
-                        <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0 mt-0.5"></i> Osobní vedení</li>
-                        <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0 mt-0.5"></i> Finanční plán a kontrolu</li>
-                        <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0 mt-0.5"></i> Jasné úkoly na každý měsíc</li>
-                        <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0 mt-0.5"></i> Přístup k know-how</li>
-                        <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0 mt-0.5"></i> Podporu při budování týmu</li>
-                        <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0 mt-0.5"></i> Možnost konzultací</li>
-                        <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0 mt-0.5"></i> Přístup do komunity podnikatelů</li>
+                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Nebudete na to už sami</li>
+                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Odhalíte svůj briliant</li>
+                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Růst obratu a osobní klid</li>
+                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Stabilní time management</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Program CTA -->
             <div class="mt-16 text-center">
-                <h3 class="text-3xl font-extrabold mb-6">Chcete posunout své podnikání během 12 měsíců?</h3>
-                <p class="text-xl opacity-80 mb-8 max-w-2xl mx-auto">Napište si o úvodní konzultaci zdarma.</p>
+                <h3 class="text-3xl font-extrabold mb-6">Chcete posunout své podnikání a nebýt na to sami?</h3>
+                <p class="text-xl opacity-80 mb-8 max-w-2xl mx-auto">Napište si o úvodní konzultaci zdarma a pojďme zjistit váš potenciál.</p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
                     <a href="#kontakt" data-ui="btn-primary" data-base-class="" class="px-10 py-5 text-lg shadow-xl shadow-[var(--color-accent)]/20 hover:-translate-y-1">
                         Domluvit konzultaci zdarma
@@ -537,10 +487,10 @@
                 <div data-ui="card" data-base-class="p-10 md:p-14 flex flex-col" class="">
                     <div class="flex justify-between items-start mb-8">
                         <i data-lucide="book-open" class="text-[var(--color-accent)] w-10 h-10"></i>
-                        <span class="text-xs font-black tracking-widest uppercase bg-[var(--color-accent)] text-black px-3 py-1 rounded-full">Připravujeme</span>
+                        <span class="text-xs font-black tracking-widest uppercase bg-[var(--color-accent)] text-black px-3 py-1 rounded-full">Plánujeme rozvinout</span>
                     </div>
-                    <h2 class="text-3xl font-extrabold mb-4">Vzdělávání &&nbsp;Kurzy</h2>
-                    <p class="opacity-70 mb-8">Od úplných základů až po pokročilé řízení firmy a&nbsp;leadership. Praktické videokurzy a&nbsp;materiály z&nbsp;reálné praxe.</p>
+                    <h2 class="text-3xl font-extrabold mb-4">Online a osobní Kurzy</h2>
+                    <p class="opacity-70 mb-8">Plánujeme rozvinout komplexní vzdělávání. Od úplných základů až po pokročilé řízení firmy a leadership. Praktické online kurzy i osobní workshopy z reálné praxe.</p>
                     
                     <div class="space-y-4 mb-8">
                         <div class="p-4 border border-white/10 rounded-xl bg-white/5">
@@ -552,24 +502,24 @@
                             <p class="text-sm opacity-70">Obchod, systém, řízení lidí, delegování pro manažery.</p>
                         </div>
                     </div>
-                    <button data-ui="btn-outline" data-base-class="w-full mt-auto" class="">Chci vědět jako první</button>
+                    <button data-ui="btn-outline" data-base-class="w-full mt-auto" class="">Chci vědět o spuštění jako první</button>
                 </div>
 
                 <div data-ui="card" data-base-class="p-10 md:p-14 flex flex-col" class="">
                     <div class="flex justify-between items-start mb-8">
                         <i data-lucide="users" class="text-[var(--color-accent)] w-10 h-10"></i>
-                        <span class="text-xs font-black tracking-widest uppercase bg-[var(--color-accent)] text-black px-3 py-1 rounded-full">Připravujeme</span>
+                        <span class="text-xs font-black tracking-widest uppercase bg-[var(--color-accent)] text-black px-3 py-1 rounded-full">Připravujeme otevření</span>
                     </div>
-                    <h2 class="text-3xl font-extrabold mb-4">Obchodní Klub</h2>
-                    <p class="opacity-70 mb-8">Komunita lidí, kteří chtějí růst. Osobní setkání, sdílení tvrdých zkušeností z&nbsp;trhu, nové kontakty a&nbsp;byznys příležitosti.</p>
+                    <h2 class="text-3xl font-extrabold mb-4">Byznys a Networking Klub</h2>
+                    <p class="opacity-70 mb-8">Rozvíjíme komunitu lidí, kteří chtějí růst. Plánujeme vytvořit networkingové a obchodní skupiny pro sdílení zkušeností, kontakty a byznys příležitosti.</p>
                     
                     <ul class="space-y-4 mb-12 opacity-80 font-medium">
                         <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Exkluzivní osobní setkání s&nbsp;lídry</li>
-                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Networking na vysoké úrovni</li>
-                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Pro klienty v&nbsp;mentoringu zdarma</li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Cílené networkingové a obchodní skupiny</li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Vzájemná pomoc nebýt na věci sám</li>
                     </ul>
                     
-                    <button data-ui="btn-outline" data-base-class="w-full mt-auto" class="">Předběžná registrace</button>
+                    <button data-ui="btn-outline" data-base-class="w-full mt-auto" class="">Předběžná registrace do klubu</button>
                 </div>
 
             </div>
@@ -631,14 +581,14 @@
     <footer class="pt-20 pb-10 border-t border-white/10 bg-[var(--color-bg)]">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-black text-xl bg-[var(--color-accent)]">M</div>
-                    <span class="text-3xl font-black tracking-tight text-white">Michal.</span>
-                </div>
+                <a href="#" class="flex items-center gap-3 group">
+                    <!-- VLOŽENÉ LOGO DO PATIČKY -->
+                    <img src="logo-menu.png" alt="Michal Vyhnálek" class="h-14 md:h-16 w-auto object-contain transition-transform group-hover:scale-105" />
+                </a>
                 <div class="flex flex-wrap justify-center gap-8 text-sm font-bold uppercase tracking-widest opacity-80">
                     <a href="#manazer" class="hover:text-[var(--color-accent)] transition-colors">Externí manažer</a>
-                    <a href="#kurzy" class="hover:text-[var(--color-accent)] transition-colors">Kurzy</a>
-                    <a href="#klub" class="hover:text-[var(--color-accent)] transition-colors">Klub</a>
+                    <a href="#program" class="hover:text-[var(--color-accent)] transition-colors">Roční program</a>
+                    <a href="#kurzy" class="hover:text-[var(--color-accent)] transition-colors">Kurzy a Klub</a>
                 </div>
             </div>
             <div class="text-center font-medium opacity-50 border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
