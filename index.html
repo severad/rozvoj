@@ -165,10 +165,9 @@
 
     <!-- --- HERO SECTION --- -->
     <header class="relative pt-32 pb-32 md:pt-48 md:pb-40 overflow-hidden flex items-center justify-center min-h-[80vh]">
-        <!-- Videa na pozadí (Rozdělené na 2 poloviny) -->
-        <div class="absolute inset-0 z-0 flex w-full h-full opacity-60">
-            <video src="video1.mp4" autoplay loop muted playsinline class="w-1/2 h-full object-cover"></video>
-            <video src="video2.mp4" autoplay loop muted playsinline class="w-1/2 h-full object-cover"></video>
+        <!-- Videa na pozadí (Přehrávají se za sebou) -->
+        <div class="absolute inset-0 z-0 w-full h-full opacity-60">
+            <video id="hero-video" src="video1.mp4" autoplay muted playsinline class="w-full h-full object-cover"></video>
         </div>
         <!-- Tmavý překryv pro čitelnost textu -->
         <div class="absolute inset-0 z-0 bg-gradient-to-b from-[var(--color-bg)]/90 via-[var(--color-bg)]/60 to-[var(--color-bg)]"></div>
@@ -213,7 +212,7 @@
                         <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-card)] to-[var(--color-bg)]"></div>
                         
                         <!-- Zde vložíte vaši fotografii. object-cover zajistí, že vyplní celý čtverec. object-top ji zarovná nahoru. -->
-                        <img src="https://michalvyhnalek.cz/wp-content/uploads/2023/11/o_mne-800x883.png" alt="Michal Vyhnálek" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+                        <img src="michal-vyhnalek.jfif" alt="Michal Vyhnálek" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
                         
                         <!-- Jemný stín přes spodní část fotky pro hezčí zasazení do stránky -->
                         <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-transparent opacity-80 pointer-events-none"></div>
@@ -700,6 +699,21 @@
 
     <!-- --- JAVASCRIPT PRO INTERAKCI A CUSTOMIZER --- -->
     <script>
+        // Sekvenční přehrávání videí v hlavičce
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroVideo = document.getElementById('hero-video');
+            if (heroVideo) {
+                const playlist = ['video1.mp4', 'video2.mp4'];
+                let currentVideoIndex = 0;
+
+                heroVideo.addEventListener('ended', () => {
+                    currentVideoIndex = (currentVideoIndex + 1) % playlist.length;
+                    heroVideo.src = playlist[currentVideoIndex];
+                    heroVideo.play().catch(e => console.log("Automatické přehrávání bylo zablokováno prohlížečem", e));
+                });
+            }
+        });
+
         // Inicializace Lucide ikon pro statický obsah
         lucide.createIcons();
 
