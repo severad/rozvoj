@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Michal Vyhnálek | Certifikovaný mentor, kouč a rozvoj podnikatele</title>
     
-    <!-- Tailwind CSS (přes CDN) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts -->
@@ -26,23 +26,52 @@
             font-family: "Plus Jakarta Sans", sans-serif;
             background-color: var(--color-bg);
             color: var(--color-text);
-            transition: background-color 0.5s, color 0.5s;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
         }
 
-        .animate-fade-in-up {
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        /* Vlastní posuvník */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--color-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--color-card); border-radius: 5px; border: 1px solid rgba(255,255,255,0.1); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+
+        /* Magická záře za kurzorem */
+        #cursor-glow {
+            position: fixed;
+            top: 0; left: 0;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            opacity: 0.08;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Animace při scrollování (Živý web) */
+        .reveal {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .delay-100 { animation-delay: 100ms; }
-        .delay-200 { animation-delay: 200ms; }
-        .delay-300 { animation-delay: 300ms; }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .reveal.reveal-left { transform: translateX(-50px); }
+        .reveal.reveal-right { transform: translateX(50px); }
+        .reveal.reveal-scale { transform: scale(0.9); }
         
-        /* Zlatý gradient text pro prémiový vzhled s plynulým přeléváním */
+        .reveal.active {
+            opacity: 1;
+            transform: translate(0) scale(1);
+        }
+
+        /* Zpoždění pro kaskádové efekty */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+
+        /* Zlatý dýchající text */
         .text-gold-gradient {
             background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             -webkit-background-clip: text;
@@ -50,77 +79,99 @@
             background-size: 200% auto;
             animation: shine 8s ease-in-out infinite alternate;
         }
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
+        @keyframes shine { to { background-position: 200% center; } }
 
-        /* Skrývání záložek v customizeru */
+        /* Vynucení bílé barvy textů pro lepší čitelnost */
+        .text-white { color: #ffffff !important; }
+
+        /* Scroll Spy Menu Linky */
+        .nav-link { position: relative; padding-bottom: 4px; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 2px;
+            bottom: -2px; left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--color-accent);
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link.active::after, .nav-link:hover::after { width: 100%; }
+
+        /* Customizer UI */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+        .writing-vertical { writing-mode: vertical-rl; transform: rotate(180deg); }
 
-        .writing-vertical {
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-        }
+        /* Koncept Switcher CSS */
+        .concept-layer { display: none; opacity: 0; transition: opacity 0.5s ease; }
+        .concept-layer.active { display: block; opacity: 1; }
 
-        /* 3D Flip karta pro Variantu 2 interaktivity */
+        /* 3D Flip Karty (Pro Koncept 1 a interakci) */
         .perspective-1000 { perspective: 1000px; }
         .transform-style-3d { transform-style: preserve-3d; }
         .backface-hidden { backface-visibility: hidden; }
         .rotate-y-180 { transform: rotateY(180deg); }
         .group:hover .group-hover\:rotate-y-180 { transform: rotateY(180deg); }
 
-        /* Vynucení bílé barvy místo průhlednosti */
-        .text-white { color: #ffffff !important; }
+        /* Marquee animace pro Koncept 3 */
+        .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; }
+        .marquee-content { display: inline-block; animation: marquee 30s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Elegantní podtržení pro navigaci (Scroll Spy) */
-        .nav-link {
-            position: relative;
-            padding-bottom: 4px;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--color-accent);
-            transition: width 0.3s ease-in-out;
-        }
-        .nav-link.active::after, .nav-link:hover::after {
-            width: 100%;
+        /* Sticky sekce pro Koncept 1 */
+        @media (min-width: 1024px) {
+            .sticky-element {
+                position: sticky;
+                top: 120px; /* Výška menu + padding */
+            }
         }
     </style>
-
-    <!-- Ikony Lucide -->
+    <!-- Ikony -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="min-h-screen overflow-x-hidden selection:bg-[var(--color-accent)] selection:text-black text-white">
+<body class="selection:bg-[var(--color-accent)] selection:text-black text-white antialiased">
 
-    <!-- --- THEME CUSTOMIZER --- -->
+    <div id="cursor-glow"></div>
+
+    <!-- DESIGN STUDIO -->
     <div id="customizer-panel" class="fixed right-0 top-20 z-50 transition-transform duration-500 ease-in-out translate-x-full">
         <div class="bg-white text-gray-800 rounded-l-3xl shadow-2xl w-80 md:w-96 border border-gray-200 overflow-hidden flex flex-col h-[80vh] max-h-[800px]">
             <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                 <div>
-                    <h3 class="font-bold text-lg leading-none">Design Studio</h3>
-                    <p class="text-xs text-gray-500 mt-1">Vyzkoušejte si varianty webu</p>
+                    <h3 class="font-bold text-lg leading-none text-blue-600">Design Studio</h3>
+                    <p class="text-xs text-gray-500 mt-1">Změňte celkovou tvář webu</p>
                 </div>
                 <button onclick="toggleCustomizer()" class="bg-white p-2 rounded-full shadow-sm text-gray-500 hover:text-red-500 hover:scale-110 transition-all"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
 
             <div class="flex text-xs font-semibold bg-gray-100/50 p-2 gap-1 border-b border-gray-100">
-                <button onclick="switchTab('style')" id="tab-btn-style" class="flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all bg-white shadow-sm text-blue-600"><i data-lucide="layout" class="w-3.5 h-3.5"></i> Styl</button>
-                <button onclick="switchTab('colors')" id="tab-btn-colors" class="flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-gray-500 hover:bg-gray-200/50"><i data-lucide="paint-bucket" class="w-3.5 h-3.5"></i> Barvy</button>
+                <button onclick="switchTab('concepts')" id="tab-btn-concepts" class="flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all bg-white shadow-sm text-blue-600"><i data-lucide="layout-template" class="w-3.5 h-3.5"></i> Koncepty</button>
+                <button onclick="switchTab('colors')" id="tab-btn-colors" class="flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-gray-500 hover:bg-gray-200/50"><i data-lucide="palette" class="w-3.5 h-3.5"></i> Barvy</button>
                 <button onclick="switchTab('fonts')" id="tab-btn-fonts" class="flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-gray-500 hover:bg-gray-200/50"><i data-lucide="type" class="w-3.5 h-3.5"></i> Písmo</button>
             </div>
             
             <div class="p-5 overflow-y-auto flex-1">
-                <!-- TAB STYL -->
-                <div id="tab-style" class="tab-content active space-y-3">
-                    <p class="text-xs text-gray-500 mb-4">Změňte celkové rozložení a pocit z webu.</p>
-                    <div id="style-buttons-container"></div>
+                <!-- TAB KONCEPTY -->
+                <div id="tab-concepts" class="tab-content active space-y-4">
+                    <p class="text-xs text-gray-500 mb-2">Vyberte si architektonické rozložení celého webu. Každý koncept nabízí zcela jiný zážitek.</p>
+                    
+                    <button onclick="setConcept(1)" id="btn-concept-1" class="w-full text-left p-4 rounded-xl border-2 transition-all border-blue-500 bg-blue-50 relative overflow-hidden group">
+                        <div class="absolute right-0 top-0 bottom-0 w-12 bg-blue-100 flex items-center justify-center"><i data-lucide="check" class="text-blue-500 opacity-100 transition-opacity" id="icon-concept-1"></i></div>
+                        <h4 class="font-bold text-blue-800 text-sm mb-1">1. Prémiová Elegance</h4>
+                        <p class="text-[10px] text-gray-500 pr-10">Plynulé scrollování, sticky prvky, asymetrická vyváženost a "Glassmorphism" karty. Luxusní dojem.</p>
+                    </button>
+
+                    <button onclick="setConcept(2)" id="btn-concept-2" class="w-full text-left p-4 rounded-xl border-2 transition-all border-gray-200 hover:border-blue-300 relative overflow-hidden group">
+                        <div class="absolute right-0 top-0 bottom-0 w-12 bg-gray-50 flex items-center justify-center group-hover:bg-blue-50"><i data-lucide="check" class="text-blue-500 opacity-0 transition-opacity" id="icon-concept-2"></i></div>
+                        <h4 class="font-bold text-gray-700 text-sm mb-1">2. Bento Box (Tech styl)</h4>
+                        <p class="text-[10px] text-gray-500 pr-10">Strukturované dlaždice ve stylu Apple. Vysoce moderní, čisté, modulární a přehledné rozvržení.</p>
+                    </button>
+
+                    <button onclick="setConcept(3)" id="btn-concept-3" class="w-full text-left p-4 rounded-xl border-2 transition-all border-gray-200 hover:border-blue-300 relative overflow-hidden group">
+                        <div class="absolute right-0 top-0 bottom-0 w-12 bg-gray-50 flex items-center justify-center group-hover:bg-blue-50"><i data-lucide="check" class="text-blue-500 opacity-0 transition-opacity" id="icon-concept-3"></i></div>
+                        <h4 class="font-bold text-gray-700 text-sm mb-1">3. Kreativní Editorial</h4>
+                        <p class="text-[10px] text-gray-500 pr-10">Magazínový styl. Obrovská typografie, nečekané přesahy, silný kontrast a posuvné texty.</p>
+                    </button>
                 </div>
 
                 <!-- TAB BARVY -->
@@ -146,7 +197,7 @@
                             <button onclick="setPreset('sapphire')" class="aspect-square rounded-full bg-gradient-to-br from-[#020617] to-[#38bdf8] shadow-sm hover:scale-110 transition-transform border border-gray-200" title="Sapphire"></button>
                             <button onclick="setPreset('emerald')" class="aspect-square rounded-full bg-gradient-to-br from-[#022c22] to-[#34d399] shadow-sm hover:scale-110 transition-transform border border-gray-200" title="Emerald"></button>
                             <button onclick="setPreset('monochrome')" class="aspect-square rounded-full bg-gradient-to-br from-[#000000] to-[#ffffff] shadow-sm hover:scale-110 transition-transform border border-gray-200" title="Black & White"></button>
-                            <button onclick="setPreset('light')" class="aspect-square rounded-full bg-gradient-to-br from-[#ffffff] to-[#d4af37] shadow-sm hover:scale-110 transition-transform border border-gray-200" title="Light Gold"></button>
+                            <button onclick="setPreset('purple')" class="aspect-square rounded-full bg-gradient-to-br from-[#170229] to-[#a855f7] shadow-sm hover:scale-110 transition-transform border border-gray-200" title="Deep Purple"></button>
                         </div>
                     </div>
                 </div>
@@ -159,60 +210,64 @@
         </div>
     </div>
     
-    <!-- Tlačítko Customizeru -->
     <button id="customizer-toggle-btn" onclick="toggleCustomizer()" style="background-color: var(--color-accent);" class="fixed right-0 top-1/3 z-50 p-3 md:p-4 rounded-l-xl md:rounded-l-2xl text-black shadow-2xl hover:pr-5 md:hover:pr-6 hover:scale-105 transition-all flex items-center gap-3 translate-x-0 opacity-100">
         <i data-lucide="palette" class="w-5 h-5 animate-pulse"></i>
         <span class="font-bold text-xs md:text-sm tracking-wide writing-vertical hidden md:block">DESIGN STUDIO</span>
     </button>
 
-    <!-- --- NAVBAR --- -->
-    <div class="fixed top-0 w-full z-40 transition-all duration-300 bg-[var(--color-bg)]/90 backdrop-blur-lg border-b border-white/5" id="navbar">
+    <!-- NAVBAR (Společný) -->
+    <div class="fixed top-0 w-full z-40 transition-all duration-300 bg-[var(--color-bg)]/80 backdrop-blur-xl border-b border-white/5" id="navbar">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-4 group cursor-pointer">
-                <!-- VLOŽENÉ LOGO DO MENU -->
-                <img src="logo-menu.png" alt="Michal Vyhnálek" class="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+            <a href="#" class="flex items-center gap-4 group cursor-pointer relative z-50">
+                <img src="logo-menu.png" alt="Michal Vyhnálek" class="h-10 md:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
             </a>
             <div class="hidden lg:flex gap-10 text-sm font-bold text-white tracking-wide">
                 <a href="#manazer" class="nav-link transition-all">Externí manažer</a>
                 <a href="#program" class="nav-link transition-all">Růstový program</a>
                 <a href="#kurzy" class="nav-link transition-all">Kurzy a Klub</a>
             </div>
-            <a href="#kontakt" data-ui="btn-nav" data-base-class="hidden md:flex items-center gap-2 px-6 py-2.5 text-sm font-bold transition-all bg-[var(--color-accent)] text-black" class="">
+            <a href="#kontakt" class="hidden md:flex items-center gap-2 px-6 py-2.5 text-sm font-bold transition-all bg-[var(--color-accent)] text-black rounded-full hover:shadow-[0_0_20px_var(--color-accent)] hover:scale-105">
                 Domluvit schůzku <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
         </nav>
     </div>
 
-    <!-- --- HERO SECTION --- -->
-    <header class="relative pt-32 pb-24 md:pt-48 md:pb-36 overflow-hidden min-h-[80vh] flex items-center justify-center text-center">
-        <!-- Video 1 na pozadí ve smyčce -->
-        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
-            <source src="video1.mp4" type="video/mp4">
-        </video>
+    <!-- HERO SECTION (Společná, 1 video) -->
+    <header class="relative pt-40 pb-32 md:pt-56 md:pb-48 overflow-hidden min-h-[90vh] flex items-center justify-center">
+        <!-- Video Pozadí -->
+        <div class="absolute inset-0 w-full h-full z-0 overflow-hidden">
+            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover scale-105" style="filter: brightness(0.7) contrast(1.1);">
+                <source src="video1.mp4" type="video/mp4">
+            </video>
+            <!-- Fade overlay pro splynutí se zbytkem webu -->
+            <div class="absolute inset-0 bg-gradient-to-b from-[var(--color-bg)]/40 via-transparent to-[var(--color-bg)]"></div>
+            <!-- Zlatý odlesk nahoře -->
+            <div class="absolute top-0 right-0 w-[800px] h-[800px] opacity-20 blur-[150px] pointer-events-none rounded-full" style="background-color: var(--color-accent)"></div>
+        </div>
         
-        <!-- Překryv pro zajištění čitelnosti textu -->
-        <div class="absolute inset-0 z-0 bg-black/60 backdrop-blur-[2px]"></div>
-        
-        <!-- Dekorativní odlesk -->
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] opacity-20 blur-[120px] pointer-events-none rounded-full" style="background-color: var(--color-accent)"></div>
-        
-        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center">
-            <div class="animate-fade-in-up flex flex-col items-center max-w-4xl">
-                <div class="font-bold tracking-widest uppercase text-xs md:text-sm mb-6 flex items-center gap-3 text-[var(--color-accent)]">
-                    <span class="w-8 h-0.5 bg-current"></span> Váš Externí manažer <span class="w-8 h-0.5 bg-current"></span>
+        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+            <div class="reveal max-w-5xl flex flex-col items-center">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-[var(--color-accent)] text-xs md:text-sm font-bold uppercase tracking-widest mb-8">
+                    <span class="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
+                    Váš Externí manažer
                 </div>
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1] text-white">
-                    Srovnejte si&nbsp;směr. <br/>
-                    <span id="hero-highlight" class="text-gold-gradient">Začněte vydělávat&nbsp;více.</span>
+                
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-6 leading-[1.1] text-white">
+                    Srovnejte si směr. <br/>
+                    <span id="hero-highlight" class="text-gold-gradient relative inline-block mt-2">
+                        Začněte vydělávat více.
+                    </span>
                 </h1>
-                <p class="text-lg md:text-xl text-white mb-10 max-w-2xl leading-relaxed font-light">
-                    Pomáhám lidem začít, podnikatelům stabilizovat finance a&nbsp;manažerům s&nbsp;řízením týmů. Jsem Váš externí manažer, který spojuje tvrdá data s&nbsp;certifikovaným koučinkem a&nbsp;mentoringem.
+                
+                <p class="text-lg md:text-2xl text-white mb-12 max-w-3xl leading-relaxed font-light drop-shadow-lg">
+                    Pomáhám lidem začít, podnikatelům stabilizovat finance a manažerům s řízením týmů. Jsem Váš externí manažer, který spojuje tvrdá data s certifikovaným koučinkem.
                 </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-                    <a href="#kontakt" data-ui="btn-primary" data-base-class="" class="px-8 py-4">
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    <a href="#kontakt" class="px-10 py-5 font-bold text-lg rounded-full bg-[var(--color-accent)] text-black shadow-[0_0_30px_var(--color-accent)] hover:scale-105 transition-all flex items-center gap-3">
                         Domluvit schůzku <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </a>
-                    <a href="#manazer" data-ui="btn-outline" data-base-class="" class="px-8 py-4">
+                    <a href="#manazer" class="px-10 py-5 font-bold text-lg rounded-full bg-white/5 text-white border border-white/20 hover:bg-white/10 hover:border-white/50 backdrop-blur-md transition-all">
                         Zobrazit možnosti
                     </a>
                 </div>
@@ -220,442 +275,722 @@
         </div>
     </header>
 
-    <!-- --- VÁŠ EXTERNÍ MANAŽER (FOTKA + OBSAH) --- -->
-    <section id="manazer" class="py-24 relative border-t border-white/5 bg-[var(--color-bg)]">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                
-                <!-- Levý sloupec: Profilová fotka ve čtverci -->
-                <div class="relative animate-fade-in-up">
-                    <div class="absolute inset-0 bg-[var(--color-accent)] opacity-10 blur-[50px] rounded-full"></div>
-                    <div class="relative aspect-square max-w-md mx-auto lg:mx-0 overflow-hidden rounded-[2.5rem] border border-white/10 bg-[var(--color-card)] shadow-2xl group">
-                        <!-- ZDE VLOŽTE FOTKU MICHALA -->
-                        <img src="michal-vyhnalek.jfif" alt="Michal Vyhnálek" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    </div>
-                </div>
-
-                <!-- Pravý sloupec: Texty -->
-                <div class="animate-fade-in-up delay-200">
-                    <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-white">Váš Externí Manažer</h2>
-                    <p class="text-lg text-white mb-8 leading-relaxed">
-                        Externí služba pro všechny podnikavce a manažery, <strong>kteří jsou na vše sami</strong>. 
-                        Pomocí osobního přístupu, koučinku a mentoringu (podloženého tvrdými zkušenostmi z praxe) vás provedeme nástrahami byznysu. Získáte nejen mé know-how, ale i expertízu celého mého týmu, abyste na svá rozhodnutí už nikdy nebyli sami.
-                    </p>
-
-                    <div class="space-y-8">
-                        <div>
-                            <h3 class="text-2xl font-bold mb-4 flex items-center gap-3 text-[var(--color-accent)]"><i data-lucide="briefcase"></i> Mentoring & Byznys</h3>
-                            <ul class="space-y-3 font-medium text-white">
-                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Řízení externích příjmů a výnosů</li>
-                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Optimalizace nákladů a ziskovosti</li>
-                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Nalezení správného směru a vize</li>
-                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Výuka time managementu a řízení financí</li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h3 class="text-2xl font-bold mb-4 flex items-center gap-3 text-[var(--color-accent)]"><i data-lucide="brain-circuit"></i> Osobní rozvoj & Podpora</h3>
-                            <ul class="space-y-3 font-medium text-white">
-                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Zapojení celého našeho týmu do řešení</li>
-                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Pomoc s dosahováním vašich cílů a plánů</li>
-                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Hledání "osobního briliantu" u jednotlivců</li>
-                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Osobní i podnikatelský kontinuální rozvoj</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="mt-10 p-6 bg-[var(--color-card)] rounded-2xl border border-white/10">
-                        <p class="text-sm font-bold uppercase tracking-widest text-white mb-4">Klienti v individuální spolupráci mají automaticky:</p>
-                        <div class="flex flex-wrap gap-4">
-                            <span class="px-4 py-2 rounded-lg bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-semibold text-sm">Přístup ke kurzům</span>
-                            <span class="px-4 py-2 rounded-lg bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-semibold text-sm">Přístup do klubu</span>
-                            <span class="px-4 py-2 rounded-lg bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-semibold text-sm">VIP Knihovna</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- --- INTERAKTIVNÍ SEKCE --- -->
-    <section class="py-20 relative border-t border-white/5 bg-[var(--color-card)]">
-        <div class="container mx-auto px-6">
+    <!-- ========================================================================================= -->
+    <!-- KONCEPT 1: PRÉMIOVÁ ELEGANCE (Výchozí, Plynulá, Asymetricky vyvážená) -->
+    <!-- ========================================================================================= -->
+    <div id="concept-1" class="concept-layer active relative z-20 bg-[var(--color-bg)]">
+        
+        <!-- O Mně / Manažer (Sticky Layout) -->
+        <section id="manazer" class="py-24 relative overflow-hidden border-t border-white/5">
+            <div class="absolute left-[-10%] top-1/4 w-[500px] h-[500px] opacity-[0.03] blur-[120px] rounded-full pointer-events-none" style="background-color: var(--color-accent)"></div>
             
-            <!-- Tlačítka pro přepínání variant (Zrušte, až vyberete favorita) -->
-            <div class="flex flex-wrap justify-center gap-4 mb-16">
-                <button onclick="switchInteractiveVariant(1)" id="btn-var-1" class="px-6 py-3 rounded-xl font-bold bg-[var(--color-accent)] text-black shadow-lg transition-all">Varianta 1: Prémiová mapa</button>
-                <button onclick="switchInteractiveVariant(2)" id="btn-var-2" class="px-6 py-3 rounded-xl font-bold bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all">Varianta 2: Flip Karty</button>
-            </div>
-
-            <!-- VARIANTA 1: Prémiová interaktivní mapa -->
-            <div id="interactive-variant-1" class="block animate-fade-in-up">
-                <div class="grid md:grid-cols-12 gap-8 lg:gap-12 items-stretch rounded-3xl relative">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="grid lg:grid-cols-12 gap-16">
                     
-                    <!-- Levý sloupec: Problémy (Minimalistický seznam s linkami) -->
-                    <div class="md:col-span-5 flex flex-col justify-center space-y-4 md:space-y-6">
-                        <button onclick="setInteractiveMap(0)" id="int-btn-0" class="int-btn w-full text-left p-4 relative group focus:outline-none">
-                            <div class="line-indicator absolute left-0 top-0 bottom-0 w-1 bg-[var(--color-accent)] shadow-[0_0_12px_var(--color-accent)] transition-all duration-500"></div>
-                            <p class="btn-text font-light text-xl md:text-2xl text-white pl-6 translate-x-2 transition-transform duration-500">Nemáte v podnikání řád a jasný systém.</p>
-                        </button>
-                        <button onclick="setInteractiveMap(1)" id="int-btn-1" class="int-btn opacity-50 hover:opacity-100 w-full text-left p-4 relative group focus:outline-none transition-opacity duration-300">
-                            <div class="line-indicator absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-white/20 group-hover:bg-white/50 group-hover:top-0 group-hover:bottom-0 transition-all duration-500"></div>
-                            <p class="btn-text font-light text-xl md:text-2xl text-white pl-6 group-hover:translate-x-1 transition-transform duration-500">Nevíte přesně, kolik vyděláváte a jaké jsou náklady.</p>
-                        </button>
-                        <button onclick="setInteractiveMap(2)" id="int-btn-2" class="int-btn opacity-50 hover:opacity-100 w-full text-left p-4 relative group focus:outline-none transition-opacity duration-300">
-                            <div class="line-indicator absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-white/20 group-hover:bg-white/50 group-hover:top-0 group-hover:bottom-0 transition-all duration-500"></div>
-                            <p class="btn-text font-light text-xl md:text-2xl text-white pl-6 group-hover:translate-x-1 transition-transform duration-500">Řešíte vše sami a nestíháte (manažeři/leadři).</p>
-                        </button>
-                        <button onclick="setInteractiveMap(3)" id="int-btn-3" class="int-btn opacity-50 hover:opacity-100 w-full text-left p-4 relative group focus:outline-none transition-opacity duration-300">
-                            <div class="line-indicator absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-white/20 group-hover:bg-white/50 group-hover:top-0 group-hover:bottom-0 transition-all duration-500"></div>
-                            <p class="btn-text font-light text-xl md:text-2xl text-white pl-6 group-hover:translate-x-1 transition-transform duration-500">Chcete více růst, ale nevíte kudy dál.</p>
-                        </button>
-                    </div>
-                    
-                    <!-- Střední sloupec: Prémiová tenká spojka -->
-                    <div class="md:col-span-2 flex justify-center items-center py-6 hidden md:flex">
-                        <div class="w-24 h-24 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center relative shadow-[0_0_30px_rgba(255,255,255,0.05)]">
-                            <div class="absolute inset-0 rounded-full border border-[var(--color-accent)]/30 animate-[spin_10s_linear_infinite]"></div>
-                            <div id="icon-center-container" class="relative z-10 transition-transform duration-700">
-                                <i data-lucide="workflow" class="w-8 h-8 text-[var(--color-accent)] drop-shadow-[0_0_10px_var(--color-accent)]"></i>
+                    <!-- Levý sloupec (Sticky Fotka) -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="sticky-element reveal reveal-left">
+                            <div class="relative aspect-[3/4] md:aspect-square lg:aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 z-10 shadow-2xl group bg-[var(--color-card)]">
+                                <!-- Fotka Michala -->
+                                <img src="michal-vyhnalek.jfif" alt="Michal Vyhnálek" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#050814]/80 via-transparent to-transparent opacity-90 pointer-events-none"></div>
+                                
+                                <!-- Štítek uvnitř fotky -->
+                                <div class="absolute bottom-8 left-8 right-8 bg-[var(--color-card)]/80 backdrop-blur-xl border border-white/10 p-5 rounded-2xl shadow-xl flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-[var(--color-accent)] flex items-center justify-center text-black shrink-0">
+                                        <i data-lucide="award" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-bold leading-tight text-lg">Michal Vyhnálek</div>
+                                        <div class="text-[var(--color-accent)] text-xs font-bold uppercase tracking-widest mt-1">Kouč & Mentor</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Pravý sloupec: Glassmorphism Karta řešení -->
-                    <div class="md:col-span-5 bg-black/40 backdrop-blur-xl border border-white/10 p-10 md:p-14 rounded-[2.5rem] relative overflow-hidden flex flex-col justify-center min-h-[350px] shadow-2xl">
-                        <!-- Zlatý odlesk v rohu -->
-                        <div class="absolute -top-24 -right-24 w-48 h-48 bg-[var(--color-accent)]/20 blur-[50px] rounded-full pointer-events-none transition-all duration-1000" id="glow-effect"></div>
-                        
-                        <div class="relative z-10">
-                            <!-- Elegantní štítek -->
-                            <div class="inline-flex items-center gap-2 border border-[var(--color-accent)]/50 rounded-full px-4 py-1.5 mb-6 bg-[var(--color-accent)]/5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
-                                <span class="text-[var(--color-accent)] font-bold uppercase tracking-widest text-xs">
-                                    Řešení: <span id="int-title" class="text-white ml-1 font-medium">Podnikání</span>
-                                </span>
-                            </div>
-                            
-                            <h3 id="int-heading" class="text-3xl md:text-4xl font-light text-white mb-6 leading-tight">Nastavíme tvrdá data a směr</h3>
-                            <p id="int-desc" class="text-white text-lg leading-relaxed font-light">
-                                Nekreslím pouze hezké grafy. Podíváme se na vaši vizi a nastavíme funkční procesy a řád, aby firma pracovala pro vás, ne vy pro ni.
+                    <!-- Pravý sloupec (Rolující texty) -->
+                    <div class="lg:col-span-7 flex flex-col justify-center">
+                        <div class="reveal delay-100 mb-12">
+                            <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-white leading-tight">Váš Externí Manažer</h2>
+                            <p class="text-xl text-white leading-relaxed font-light mb-8">
+                                Externí služba pro všechny podnikavce a manažery, <strong>kteří jsou na vše sami</strong>. 
+                                Pomocí osobního přístupu, koučinku a mentoringu vás provedeme nástrahami byznysu. Získáte nejen mé know-how, ale i expertízu celého týmu.
                             </p>
                         </div>
+
+                        <!-- Karty pod sebou -->
+                        <div class="flex flex-col gap-8 reveal delay-200">
+                            <!-- Karta 1 -->
+                            <div class="bg-white/5 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-white/5 hover:border-[var(--color-accent)]/30 transition-all group">
+                                <h3 class="text-2xl font-bold mb-6 flex items-center gap-4 text-white">
+                                    <div class="p-3 rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] group-hover:bg-[var(--color-accent)] group-hover:text-black transition-colors"><i data-lucide="briefcase" class="w-6 h-6"></i></div>
+                                    Mentoring & Byznys
+                                </h3>
+                                <ul class="space-y-4 text-white text-lg font-light">
+                                    <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Řízení externích příjmů a výnosů</li>
+                                    <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Optimalizace nákladů a ziskovosti</li>
+                                    <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Nalezení správného směru a vize</li>
+                                    <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Výuka time managementu a řízení financí</li>
+                                </ul>
+                            </div>
+
+                            <!-- Karta 2 -->
+                            <div class="bg-white/5 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-white/5 hover:border-[var(--color-accent)]/30 transition-all group">
+                                <h3 class="text-2xl font-bold mb-6 flex items-center gap-4 text-white">
+                                    <div class="p-3 rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] group-hover:bg-[var(--color-accent)] group-hover:text-black transition-colors"><i data-lucide="brain-circuit" class="w-6 h-6"></i></div>
+                                    Osobní rozvoj & Podpora
+                                </h3>
+                                <ul class="space-y-4 text-white text-lg font-light">
+                                    <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Zapojení celého našeho týmu do řešení</li>
+                                    <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Pomoc s dosahováním vašich cílů a plánů</li>
+                                    <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Hledání "osobního briliantu" u jednotlivců</li>
+                                    <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Osobní i podnikatelský kontinuální rozvoj</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIP Box na celou šířku pod sloupcem -->
+                <div class="mt-20 w-full p-8 md:p-12 bg-[var(--color-card)]/50 backdrop-blur-xl rounded-[2.5rem] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-8 reveal delay-300 relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-accent)]/10 via-transparent to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative z-10 flex items-center gap-6">
+                        <div class="w-16 h-16 rounded-full bg-[var(--color-accent)] flex items-center justify-center text-black shrink-0 shadow-[0_0_20px_var(--color-accent)]">
+                            <i data-lucide="diamond" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)] mb-1 block">Exkluzivně</span>
+                            <span class="text-2xl font-bold text-white tracking-wide">Klienti v individuální spolupráci získají:</span>
+                        </div>
+                    </div>
+                    <div class="relative z-10 flex flex-wrap justify-center gap-4">
+                        <span class="px-6 py-3 rounded-xl bg-[var(--color-bg)] text-white text-sm font-bold border border-white/10 hover:border-[var(--color-accent)] transition-colors shadow-lg">Přístup ke kurzům</span>
+                        <span class="px-6 py-3 rounded-xl bg-[var(--color-bg)] text-white text-sm font-bold border border-white/10 hover:border-[var(--color-accent)] transition-colors shadow-lg">Přístup do klubu</span>
+                        <span class="px-6 py-3 rounded-xl bg-[var(--color-bg)] text-white text-sm font-bold border border-white/10 hover:border-[var(--color-accent)] transition-colors shadow-lg">VIP Knihovna</span>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- VARIANTA 2: Flip Karty (Skrytá defaultně) -->
-            <div id="interactive-variant-2" class="hidden animate-fade-in-up">
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Karta 1 -->
-                    <div class="group perspective-1000 h-[350px] cursor-pointer">
-                        <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
-                            <!-- Přední strana -->
-                            <div class="absolute inset-0 backface-hidden bg-[var(--color-bg)] border border-white/5 p-8 rounded-2xl flex flex-col justify-center items-center text-center shadow-lg">
-                                <i data-lucide="alert-circle" class="text-[var(--color-accent)] w-12 h-12 mb-6"></i>
-                                <h3 class="text-xl font-bold text-white mb-4">Nemáte v podnikání řád a jasný systém.</h3>
-                                <span class="mt-4 text-sm font-bold text-[var(--color-accent)] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Odhalit řešení</span>
-                            </div>
-                            <!-- Zadní strana -->
-                            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] p-8 rounded-2xl flex flex-col justify-center shadow-2xl overflow-hidden">
-                                <div class="absolute -right-10 -bottom-10 opacity-10"><i data-lucide="workflow" class="w-40 h-40 text-black"></i></div>
-                                <div class="relative z-10">
-                                    <div class="text-xs font-black tracking-widest uppercase text-black/60 mb-2">Podnikání</div>
-                                    <h3 class="text-2xl font-bold text-black mb-4">Nastavíme tvrdá data a směr</h3>
-                                    <p class="text-black font-medium leading-relaxed">Nekreslím pouze hezké grafy. Nastavíme procesy, aby firma pracovala pro vás.</p>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Znáte tento pocit? (Interaktivní) -->
+        <section class="py-24 relative bg-[var(--color-card)] border-y border-white/5 overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">Znáte tento pocit?</h2>
+                    <p class="text-xl text-white font-light">Vyberte situaci, kterou aktuálně řešíte, a podívejte se na náš přístup.</p>
+                </div>
+                
+                <!-- Interaktivní mapa (Rozložení s tenkými linkami a Glassmorphism) -->
+                <div class="grid md:grid-cols-12 gap-8 lg:gap-12 items-stretch reveal delay-100">
+                    
+                    <!-- Levý sloupec (Problémy) -->
+                    <div class="md:col-span-5 flex flex-col justify-center space-y-4">
+                        <button onclick="setInteractiveMapC1(0)" id="c1-btn-0" class="c1-int-btn w-full text-left p-6 relative group focus:outline-none rounded-2xl transition-all duration-300">
+                            <div class="c1-bg-highlight absolute inset-0 bg-[var(--color-accent)]/5 rounded-2xl opacity-100 transition-opacity"></div>
+                            <div class="c1-line absolute left-0 top-1/4 bottom-1/4 w-1 rounded-full bg-[var(--color-accent)] shadow-[0_0_15px_var(--color-accent)] transition-all duration-500"></div>
+                            <p class="c1-text relative z-10 font-light text-xl text-white pl-6 translate-x-2 transition-transform duration-500">Nemáte v podnikání řád a jasný systém.</p>
+                        </button>
+                        <button onclick="setInteractiveMapC1(1)" id="c1-btn-1" class="c1-int-btn w-full text-left p-6 relative group focus:outline-none rounded-2xl transition-all duration-300">
+                            <div class="c1-bg-highlight absolute inset-0 bg-[var(--color-accent)]/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="c1-line absolute left-0 top-1/3 bottom-1/3 w-0.5 rounded-full bg-white/20 group-hover:bg-white/50 transition-all duration-500"></div>
+                            <p class="c1-text relative z-10 font-light text-xl text-white/50 group-hover:text-white pl-6 transition-all duration-500">Nevíte přesně, kolik vyděláváte a jaké jsou náklady.</p>
+                        </button>
+                        <button onclick="setInteractiveMapC1(2)" id="c1-btn-2" class="c1-int-btn w-full text-left p-6 relative group focus:outline-none rounded-2xl transition-all duration-300">
+                            <div class="c1-bg-highlight absolute inset-0 bg-[var(--color-accent)]/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="c1-line absolute left-0 top-1/3 bottom-1/3 w-0.5 rounded-full bg-white/20 group-hover:bg-white/50 transition-all duration-500"></div>
+                            <p class="c1-text relative z-10 font-light text-xl text-white/50 group-hover:text-white pl-6 transition-all duration-500">Řešíte vše sami a nestíháte (manažeři/leadři).</p>
+                        </button>
+                        <button onclick="setInteractiveMapC1(3)" id="c1-btn-3" class="c1-int-btn w-full text-left p-6 relative group focus:outline-none rounded-2xl transition-all duration-300">
+                            <div class="c1-bg-highlight absolute inset-0 bg-[var(--color-accent)]/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="c1-line absolute left-0 top-1/3 bottom-1/3 w-0.5 rounded-full bg-white/20 group-hover:bg-white/50 transition-all duration-500"></div>
+                            <p class="c1-text relative z-10 font-light text-xl text-white/50 group-hover:text-white pl-6 transition-all duration-500">Chcete více růst, ale nevíte kudy dál.</p>
+                        </button>
                     </div>
                     
-                    <!-- Karta 2 -->
-                    <div class="group perspective-1000 h-[350px] cursor-pointer">
-                        <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
-                            <div class="absolute inset-0 backface-hidden bg-[var(--color-bg)] border border-white/5 p-8 rounded-2xl flex flex-col justify-center items-center text-center shadow-lg">
-                                <i data-lucide="alert-circle" class="text-[var(--color-accent)] w-12 h-12 mb-6"></i>
-                                <h3 class="text-xl font-bold text-white mb-4">Nevíte přesně, kolik vyděláváte a jaké jsou náklady.</h3>
-                            </div>
-                            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] p-8 rounded-2xl flex flex-col justify-center shadow-2xl overflow-hidden">
-                                <div class="absolute -right-10 -bottom-10 opacity-10"><i data-lucide="pie-chart" class="w-40 h-40 text-black"></i></div>
-                                <div class="relative z-10">
-                                    <div class="text-xs font-black tracking-widest uppercase text-black/60 mb-2">Peníze</div>
-                                    <h3 class="text-2xl font-bold text-black mb-4">Optimalizace a ziskovost</h3>
-                                    <p class="text-black font-medium leading-relaxed">Zoptimalizujeme náklady a ukážeme si reálnou ziskovost vašeho podnikání.</p>
-                                </div>
+                    <!-- Střední sloupec (Ikona animovaná) -->
+                    <div class="md:col-span-2 hidden md:flex justify-center items-center py-6">
+                        <div class="w-24 h-24 rounded-full border border-white/10 bg-[var(--color-bg)] flex items-center justify-center relative shadow-[0_0_30px_rgba(255,255,255,0.02)]">
+                            <div class="absolute inset-0 rounded-full border border-[var(--color-accent)]/20 animate-[spin_10s_linear_infinite]"></div>
+                            <div id="c1-icon-container" class="relative z-10 transition-all duration-500 text-[var(--color-accent)] drop-shadow-[0_0_10px_var(--color-accent)]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Karta 3 -->
-                    <div class="group perspective-1000 h-[350px] cursor-pointer">
-                        <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
-                            <div class="absolute inset-0 backface-hidden bg-[var(--color-bg)] border border-white/5 p-8 rounded-2xl flex flex-col justify-center items-center text-center shadow-lg">
-                                <i data-lucide="alert-circle" class="text-[var(--color-accent)] w-12 h-12 mb-6"></i>
-                                <h3 class="text-xl font-bold text-white mb-4">Řešíte vše sami a nestíháte (manažeři/leadři).</h3>
-                            </div>
-                            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] p-8 rounded-2xl flex flex-col justify-center shadow-2xl overflow-hidden">
-                                <div class="absolute -right-10 -bottom-10 opacity-10"><i data-lucide="users" class="w-40 h-40 text-black"></i></div>
-                                <div class="relative z-10">
-                                    <div class="text-xs font-black tracking-widest uppercase text-black/60 mb-2">Výkonnost</div>
-                                    <h3 class="text-2xl font-bold text-black mb-4">Delegování a efektivita</h3>
-                                    <p class="text-black font-medium leading-relaxed">Time management. Naučíme vás, jak řídit lidi efektivně, abyste nebyli na vše sami.</p>
+                    <!-- Pravý sloupec (Glassmorphism Řešení) -->
+                    <div class="md:col-span-5 relative flex items-center">
+                        <div class="w-full bg-[var(--color-bg)]/60 backdrop-blur-2xl border border-white/10 p-10 md:p-14 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
+                            <!-- Zlatý odlesk v rohu - ZMENŠENÝ -->
+                            <div class="absolute -top-10 -right-10 w-32 h-32 bg-[var(--color-accent)]/20 blur-[40px] rounded-full pointer-events-none transition-all duration-1000" id="c1-glow"></div>
+                            
+                            <div class="relative z-10">
+                                <div class="inline-flex items-center gap-2 border border-[var(--color-accent)]/30 rounded-full px-5 py-2 mb-8 bg-[var(--color-accent)]/5 backdrop-blur-sm">
+                                    <span class="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
+                                    <span class="text-[var(--color-accent)] font-bold uppercase tracking-widest text-xs">
+                                        Pilíř: <span id="c1-title" class="text-white ml-1 font-black">Podnikání</span>
+                                    </span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Karta 4 -->
-                    <div class="group perspective-1000 h-[350px] cursor-pointer">
-                        <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
-                            <div class="absolute inset-0 backface-hidden bg-[var(--color-bg)] border border-white/5 p-8 rounded-2xl flex flex-col justify-center items-center text-center shadow-lg">
-                                <i data-lucide="alert-circle" class="text-[var(--color-accent)] w-12 h-12 mb-6"></i>
-                                <h3 class="text-xl font-bold text-white mb-4">Chcete více růst, ale nevíte kudy dál.</h3>
-                            </div>
-                            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] p-8 rounded-2xl flex flex-col justify-center shadow-2xl overflow-hidden">
-                                <div class="absolute -right-10 -bottom-10 opacity-10"><i data-lucide="compass" class="w-40 h-40 text-black"></i></div>
-                                <div class="relative z-10">
-                                    <div class="text-xs font-black tracking-widest uppercase text-black/60 mb-2">Rozhodování</div>
-                                    <h3 class="text-2xl font-bold text-black mb-4">Osobní briliant</h3>
-                                    <p class="text-black font-medium leading-relaxed">Pomocí koučinku nastavíme kroky a najdeme váš skrytý potenciál.</p>
-                                </div>
+                                
+                                <h3 id="c1-heading" class="text-3xl md:text-4xl font-semibold text-white mb-6 leading-tight transition-opacity duration-300">Nastavíme tvrdá data a směr</h3>
+                                <p id="c1-desc" class="text-white text-lg leading-relaxed font-light transition-opacity duration-300">
+                                    Nekreslím pouze hezké grafy. Podíváme se na vaši vizi a nastavíme funkční procesy a řád, aby firma pracovala pro vás, ne vy pro ni.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
 
+        <!-- Rozcestník / S čím mohu pomoci -->
+        <section id="rozcestnik" class="py-24 relative overflow-hidden">
+            <!-- Video pozadí s opraveným překryvem -->
+            <div class="absolute inset-0 w-full h-full z-0">
+                <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-30 mix-blend-screen" style="filter: grayscale(50%);">
+                    <source src="video2.mp4" type="video/mp4">
+                </video>
+            </div>
+            <!-- Pevný gradient z barvy pozadí pro 100% jistotu čitelnosti -->
+            <div class="absolute inset-0 z-0 pointer-events-none" style="background: radial-gradient(circle, transparent 0%, var(--color-bg) 100%), linear-gradient(to bottom, var(--color-bg) 0%, rgba(5,8,20,0.85) 50%, var(--color-bg) 100%);"></div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-white">S čím Vám mohu pomoci?</h2>
+                    <p class="text-white mt-4 text-xl font-light">Vyberte si fázi, ve které se právě nacházíte.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <!-- Karty rozcestníku s čistým vzhledem -->
+                    <div class="p-10 rounded-[2rem] bg-white/5 border border-white/10 hover:border-[var(--color-accent)] hover:-translate-y-2 transition-all flex flex-col gap-6 group cursor-pointer reveal delay-100 backdrop-blur-sm">
+                        <div class="w-14 h-14 rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center group-hover:bg-[var(--color-accent)] group-hover:text-black transition-colors"><i data-lucide="compass" class="w-7 h-7"></i></div>
+                        <h3 class="text-2xl font-bold text-white">Chci začít</h3>
+                        <p class="text-white text-lg leading-relaxed font-light flex-1">Začínáte podnikat nebo měníte směr. Správný a bezpečný start je klíčový pro budoucí úspěch.</p>
+                        <div class="mt-auto flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                    </div>
+                    
+                    <div class="p-10 rounded-[2rem] bg-white/5 border border-white/10 hover:border-[var(--color-accent)] hover:-translate-y-2 transition-all flex flex-col gap-6 group cursor-pointer reveal delay-200 backdrop-blur-sm">
+                        <div class="w-14 h-14 rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center group-hover:bg-[var(--color-accent)] group-hover:text-black transition-colors"><i data-lucide="trending-up" class="w-7 h-7"></i></div>
+                        <h3 class="text-2xl font-bold text-white">Už podnikám</h3>
+                        <p class="text-white text-lg leading-relaxed font-light flex-1">Potřebujete navést v oblastech financí, řízení externích příjmů a optimalizace nákladů. Vytvoříme stabilní systém.</p>
+                        <div class="mt-auto flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                    </div>
+                    
+                    <div class="p-10 rounded-[2rem] bg-white/5 border border-white/10 hover:border-[var(--color-accent)] hover:-translate-y-2 transition-all flex flex-col gap-6 group cursor-pointer reveal delay-300 backdrop-blur-sm">
+                        <div class="w-14 h-14 rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center group-hover:bg-[var(--color-accent)] group-hover:text-black transition-colors"><i data-lucide="users" class="w-7 h-7"></i></div>
+                        <h3 class="text-2xl font-bold text-white">Řídím lidi</h3>
+                        <p class="text-white text-lg leading-relaxed font-light flex-1">Podpora pro manažery a teamleadery. Budování týmu, delegování odpovědnosti a efektivní zvyšování výkonu.</p>
+                        <div class="mt-auto flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                    </div>
+                    
+                    <div class="p-10 rounded-[2rem] bg-[var(--color-accent)] border border-[var(--color-accent)] hover:-translate-y-2 transition-all flex flex-col gap-6 group cursor-pointer reveal delay-100 lg:col-span-2 shadow-[0_20px_50px_rgba(212,175,55,0.2)]">
+                        <div class="w-14 h-14 rounded-2xl bg-black text-[var(--color-accent)] flex items-center justify-center"><i data-lucide="briefcase" class="w-7 h-7"></i></div>
+                        <h3 class="text-3xl font-bold text-black">Chci pomoc přímo</h3>
+                        <p class="text-black text-lg leading-relaxed font-medium flex-1 max-w-xl">Služba Externí manažer. Osobní a byznys mentoring pro maximální urychlení Vašeho postupu a nalezení briliantu.</p>
+                        <div class="mt-auto flex items-center gap-2 font-black text-sm uppercase tracking-wider text-black group-hover:gap-4 transition-all">Zobrazit program <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                    </div>
+                    
+                    <div class="p-10 rounded-[2rem] bg-white/5 border border-white/10 hover:border-[var(--color-accent)] hover:-translate-y-2 transition-all flex flex-col gap-6 group cursor-pointer reveal delay-200 backdrop-blur-sm">
+                        <div class="w-14 h-14 rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center group-hover:bg-[var(--color-accent)] group-hover:text-black transition-colors"><i data-lucide="layers" class="w-7 h-7"></i></div>
+                        <h3 class="text-2xl font-bold text-white">Chci komunitu</h3>
+                        <p class="text-white text-lg leading-relaxed font-light flex-1">Obchodní klub, sdílení zkušeností s ostatními lídry a budování nových byznys kontaktů.</p>
+                        <div class="mt-auto flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diamant Sekce -->
+        <section class="py-32 relative overflow-hidden bg-[var(--color-card)] border-y border-white/5">
+            <div class="container mx-auto px-6 relative z-10 text-center reveal reveal-scale">
+                <img src="logo-small.png" alt="Briliant" class="mx-auto mb-10 h-24 md:h-32 w-auto object-contain animate-pulse" />
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-black mb-10 uppercase tracking-widest text-white">
+                    Hledání osobního briliantu
+                </h2>
+                <p class="text-2xl md:text-3xl text-white max-w-4xl mx-auto leading-relaxed font-light">
+                    "Každý z nás má obrovský potenciál. Většina ho ale neumí naplno využít. Pomohu Vám Váš skrytý potenciál objevit a přetavit ho v reálný příjem, růst a osobní spokojenost."
+                </p>
+            </div>
+        </section>
+
+        <!-- Růstový Program -->
+        <section id="program" class="py-24 relative bg-[var(--color-bg)]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20 reveal">
+                    <div class="text-[var(--color-accent)] font-bold tracking-widest uppercase text-sm mb-4">Růstový program pro podnikatele</div>
+                    <h3 class="text-4xl md:text-5xl font-extrabold text-white">Jak program funguje – Co vás s námi čeká</h3>
+                </div>
+
+                <!-- Moderní Timeline pro program -->
+                <div class="relative max-w-5xl mx-auto reveal delay-200">
+                    <!-- Spojovací čára -->
+                    <div class="absolute left-1/2 top-0 bottom-0 w-px bg-white/10 hidden md:block -translate-x-1/2"></div>
+                    
+                    <div class="space-y-12 relative">
+                        <!-- Krok 1 -->
+                        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+                            <div class="md:text-right">
+                                <div class="text-[var(--color-accent)] font-black text-6xl mb-2 opacity-20">01</div>
+                                <h4 class="font-bold text-3xl mb-2 text-white">Startovní analýza</h4>
+                                <p class="text-sm font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Dle dohody</p>
+                                <ul class="text-lg text-white space-y-2 font-light inline-block text-left md:text-right">
+                                    <li>Audit podnikání a financí</li>
+                                    <li>Identifikace slabých míst</li>
+                                    <li>Definice vašich cílů</li>
+                                </ul>
+                            </div>
+                            <div class="hidden md:flex justify-center absolute left-1/2 top-12 -translate-x-1/2 -translate-y-1/2">
+                                <div class="w-6 h-6 rounded-full bg-[var(--color-accent)] border-4 border-[var(--color-bg)] shadow-[0_0_20px_var(--color-accent)]"></div>
+                            </div>
+                            <div class="bg-[var(--color-card)] p-8 rounded-3xl border border-white/5 shadow-2xl">
+                                <i data-lucide="search" class="w-12 h-12 text-[var(--color-accent)] mb-4"></i>
+                                <p class="text-white font-light">Začneme hloubkovou analýzou současného stavu. Zjistíme, kde přesně vám utíkají peníze nebo energie, a nastavíme jasný bod nula.</p>
+                            </div>
+                        </div>
+
+                        <!-- Krok 2 -->
+                        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+                            <div class="order-2 md:order-1 bg-[var(--color-card)] p-8 rounded-3xl border border-white/5 shadow-2xl">
+                                <i data-lucide="map" class="w-12 h-12 text-[var(--color-accent)] mb-4"></i>
+                                <p class="text-white font-light">Kreslení vizí nestačí. Vytvoříme konkrétní roadmapu s finančním a časovým plánem, podle které se budeme řídit. Cílem je stabilita a růst.</p>
+                            </div>
+                            <div class="hidden md:flex justify-center absolute left-1/2 top-[33%] -translate-x-1/2 -translate-y-1/2 z-10">
+                                <div class="w-6 h-6 rounded-full bg-[var(--color-accent)] border-4 border-[var(--color-bg)] shadow-[0_0_20px_var(--color-accent)]"></div>
+                            </div>
+                            <div class="order-1 md:order-2">
+                                <div class="text-[var(--color-accent)] font-black text-6xl mb-2 opacity-20">02</div>
+                                <h4 class="font-bold text-3xl mb-2 text-white">Plán růstu</h4>
+                                <p class="text-sm font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Orientačně</p>
+                                <ul class="text-lg text-white space-y-2 font-light">
+                                    <li>Konkrétní kroky</li>
+                                    <li>Časový a finanční plán</li>
+                                    <li>Strategie pro váš vývoj</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Krok 3 -->
+                        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+                            <div class="md:text-right">
+                                <div class="text-[var(--color-accent)] font-black text-6xl mb-2 opacity-20">03</div>
+                                <h4 class="font-bold text-3xl mb-2 text-white">Pravidelná podpora</h4>
+                                <p class="text-sm font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Kontinuálně</p>
+                                <ul class="text-lg text-white space-y-2 font-light inline-block text-left md:text-right">
+                                    <li>Osobní setkání a mentoring</li>
+                                    <li>Zapojení expertízy týmu</li>
+                                    <li>Koučink a posun k cíli</li>
+                                </ul>
+                            </div>
+                            <div class="hidden md:flex justify-center absolute left-1/2 top-[66%] -translate-x-1/2 -translate-y-1/2 z-10">
+                                <div class="w-6 h-6 rounded-full bg-[var(--color-accent)] border-4 border-[var(--color-bg)] shadow-[0_0_20px_var(--color-accent)]"></div>
+                            </div>
+                            <div class="bg-[var(--color-card)] p-8 rounded-3xl border border-white/5 shadow-2xl">
+                                <i data-lucide="handshake" class="w-12 h-12 text-[var(--color-accent)] mb-4"></i>
+                                <p class="text-white font-light">Nejste na to sami. Během realizace jsme vám po boku jako váš externí manažer. Hlídáme směr, korigujeme chyby a dodáváme know-how.</p>
+                            </div>
+                        </div>
+
+                        <!-- Krok 4 -->
+                        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+                            <div class="order-2 md:order-1 bg-gradient-to-br from-[var(--color-accent)] to-[#aa771c] p-8 rounded-3xl shadow-[0_0_40px_var(--color-accent)]">
+                                <i data-lucide="trophy" class="w-12 h-12 text-black mb-4"></i>
+                                <p class="text-black font-semibold text-lg">Výsledkem je fungující systém, rostoucí ziskovost a především váš osobní klid a čas na to, co je pro vás důležité.</p>
+                            </div>
+                            <div class="hidden md:flex justify-center absolute left-1/2 top-full -translate-x-1/2 -translate-y-1/2 z-10">
+                                <div class="w-8 h-8 rounded-full bg-white border-4 border-[var(--color-bg)] flex items-center justify-center shadow-[0_0_30px_white]"><div class="w-3 h-3 bg-black rounded-full"></div></div>
+                            </div>
+                            <div class="order-1 md:order-2">
+                                <div class="text-[var(--color-accent)] font-black text-6xl mb-2 opacity-20">04</div>
+                                <h4 class="font-bold text-3xl mb-2 text-white">Výsledky</h4>
+                                <p class="text-sm font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Váš cíl</p>
+                                <ul class="text-lg text-white space-y-2 font-medium">
+                                    <li class="flex gap-2 items-center"><i data-lucide="check-circle" class="w-5 h-5 text-[var(--color-accent)]"></i> Růst obratu a zisku</li>
+                                    <li class="flex gap-2 items-center"><i data-lucide="check-circle" class="w-5 h-5 text-[var(--color-accent)]"></i> Nalezení briliantu</li>
+                                    <li class="flex gap-2 items-center"><i data-lucide="check-circle" class="w-5 h-5 text-[var(--color-accent)]"></i> Čas pro sebe</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kurzy a Klub -->
+        <section id="kurzy" class="py-24 relative bg-[var(--color-card)] border-t border-white/5">
+            <div class="container mx-auto px-6 reveal">
+                <div class="grid lg:grid-cols-2 gap-8 md:gap-12">
+                    
+                    <div class="bg-[var(--color-bg)] p-10 md:p-14 rounded-[3rem] flex flex-col border border-white/5 hover:border-[var(--color-accent)]/50 transition-all group">
+                        <div class="flex justify-between items-start mb-10">
+                            <div class="w-16 h-16 rounded-2xl bg-[var(--color-accent)]/10 flex items-center justify-center text-[var(--color-accent)]"><i data-lucide="book-open" class="w-8 h-8"></i></div>
+                            <span class="text-xs font-black tracking-widest uppercase bg-[var(--color-accent)] text-black px-4 py-2 rounded-full shadow-[0_0_15px_var(--color-accent)]">Připravujeme</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-extrabold mb-6 text-white group-hover:text-[var(--color-accent)] transition-colors">Vzdělávání a Kurzy</h2>
+                        <p class="text-white text-lg mb-10 font-light leading-relaxed">Od úplných základů až po pokročilé řízení firmy a leadership. Praktické online kurzy i osobní workshopy sestavené z tvrdé reálné praxe.</p>
+                        
+                        <div class="space-y-4 mb-10">
+                            <div class="p-5 border border-white/10 rounded-2xl bg-white/5 flex gap-4 items-center">
+                                <div class="w-2 h-12 bg-[var(--color-accent)] rounded-full"></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-lg">Startovní & Základní</h4>
+                                    <p class="text-sm text-white font-light">Cashflow, začátky, time-management.</p>
+                                </div>
+                            </div>
+                            <div class="p-5 border border-white/10 rounded-2xl bg-white/5 flex gap-4 items-center">
+                                <div class="w-2 h-12 bg-[var(--color-accent)] rounded-full opacity-50"></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-lg">Pokročilé & Manažerské</h4>
+                                    <p class="text-sm text-white font-light">Obchod, systém, řízení a delegování.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full mt-auto py-5 rounded-full border-2 border-white/20 text-white font-bold hover:border-white transition-colors">Chci vědět o spuštění jako první</button>
+                    </div>
+
+                    <div class="bg-[var(--color-bg)] p-10 md:p-14 rounded-[3rem] flex flex-col border border-white/5 hover:border-[var(--color-accent)]/50 transition-all group">
+                        <div class="flex justify-between items-start mb-10">
+                            <div class="w-16 h-16 rounded-2xl bg-[var(--color-accent)]/10 flex items-center justify-center text-[var(--color-accent)]"><i data-lucide="users" class="w-8 h-8"></i></div>
+                            <span class="text-xs font-black tracking-widest uppercase bg-[var(--color-accent)] text-black px-4 py-2 rounded-full shadow-[0_0_15px_var(--color-accent)]">Připravujeme</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-extrabold mb-6 text-white group-hover:text-[var(--color-accent)] transition-colors">Byznys a Networking Klub</h2>
+                        <p class="text-white text-lg mb-10 font-light leading-relaxed">Rozvíjíme komunitu lidí, kteří chtějí růst. Networkingové a obchodní skupiny pro sdílení tvrdých zkušeností, nové kontakty a byznys příležitosti.</p>
+                        
+                        <ul class="space-y-6 mb-12 text-white font-medium text-lg">
+                            <li class="flex gap-4 items-center"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-6 h-6 shrink-0"></i> Exkluzivní osobní setkání s lídry</li>
+                            <li class="flex gap-4 items-center"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-6 h-6 shrink-0"></i> Cílené obchodní skupiny a růst</li>
+                            <li class="flex gap-4 items-center"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-6 h-6 shrink-0"></i> Vzájemná pomoc nebýt na věci sám</li>
+                        </ul>
+                        
+                        <button class="w-full mt-auto py-5 rounded-full bg-[var(--color-accent)] text-black font-bold hover:scale-105 transition-transform shadow-[0_0_20px_rgba(212,175,55,0.3)]">Předběžná registrace do klubu</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================================================================= -->
+    <!-- KONCEPT 2: BENTO BOX (Modulární, Tech, Zcela jiný styl sekcí) -->
+    <!-- ========================================================================================= -->
+    <div id="concept-2" class="concept-layer relative z-20 bg-[var(--color-bg)]">
+        
+        <section id="manazer-2" class="py-24 container mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-5xl font-black text-white tracking-tight mb-4">Váš Externí Manažer</h2>
+                <p class="text-xl text-white font-light max-w-2xl">Získáte nejen mé know-how, ale i expertízu celého týmu, abyste na svá rozhodnutí už nikdy nebyli sami.</p>
+            </div>
+
+            <!-- Bento Mřížka -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[250px]">
+                <!-- Fotka - 2 řádky -->
+                <div class="md:col-span-2 lg:col-span-2 row-span-2 rounded-[2rem] bg-[var(--color-card)] overflow-hidden relative group">
+                    <img src="michal-vyhnalek.jfif" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Michal" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <div class="text-[var(--color-accent)] font-bold text-sm tracking-widest uppercase mb-1">Mentor & Kouč</div>
+                        <div class="text-4xl font-bold text-white">Michal Vyhnálek</div>
+                    </div>
+                </div>
+
+                <!-- Info Box 1 -->
+                <div class="md:col-span-1 lg:col-span-2 rounded-[2rem] bg-[var(--color-card)] p-8 flex flex-col justify-between border border-white/5 hover:border-[var(--color-accent)] transition-colors">
+                    <i data-lucide="briefcase" class="w-10 h-10 text-[var(--color-accent)]"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Mentoring & Byznys</h3>
+                        <p class="text-white text-sm font-light">Řízení financí, optimalizace nákladů a ziskovosti, hledání správné vize.</p>
+                    </div>
+                </div>
+
+                <!-- Info Box 2 -->
+                <div class="md:col-span-1 lg:col-span-2 rounded-[2rem] bg-[var(--color-card)] p-8 flex flex-col justify-between border border-white/5 hover:border-[var(--color-accent)] transition-colors">
+                    <i data-lucide="brain-circuit" class="w-10 h-10 text-[var(--color-accent)]"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Rozvoj & Podpora</h3>
+                        <p class="text-white text-sm font-light">Zapojení týmu, time management, hledání osobního briliantu a kontinuální růst.</p>
+                    </div>
+                </div>
+
+                <!-- VIP Long Box -->
+                <div class="md:col-span-3 lg:col-span-4 rounded-[2rem] bg-[var(--color-accent)] p-8 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative">
+                    <div class="absolute right-0 top-0 opacity-10 scale-150"><i data-lucide="diamond" class="w-64 h-64 text-black"></i></div>
+                    <div class="relative z-10 text-black">
+                        <div class="font-black tracking-widest uppercase text-sm mb-1">Exkluzivně pro klienty</div>
+                        <div class="text-3xl font-bold">Získáte navíc plný přístup</div>
+                    </div>
+                    <div class="relative z-10 flex gap-3">
+                        <span class="px-5 py-2 bg-black text-white rounded-full text-sm font-bold">Kurzy</span>
+                        <span class="px-5 py-2 bg-black text-white rounded-full text-sm font-bold">Klub</span>
+                        <span class="px-5 py-2 bg-black text-white rounded-full text-sm font-bold">Knihovna</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interaktivní Bento (Znáte tento pocit) -->
+        <section class="py-24 container mx-auto px-6">
+            <h2 class="text-4xl font-extrabold text-white mb-10">Vyberte situaci, kterou řešíte:</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Karta 1 -->
+                <div class="group perspective-1000 h-[350px] cursor-pointer">
+                    <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 backface-hidden bg-[var(--color-card)] rounded-[2rem] p-8 flex flex-col items-center justify-center text-center border border-white/5">
+                            <i data-lucide="layout-grid" class="w-12 h-12 text-[var(--color-accent)] mb-6"></i>
+                            <h3 class="text-xl font-bold text-white">Nemáte v podnikání řád a systém.</h3>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] text-black rounded-[2rem] p-8 flex flex-col justify-center">
+                            <div class="text-xs font-black uppercase tracking-widest mb-2 opacity-60">Podnikání</div>
+                            <h3 class="text-2xl font-bold mb-4">Tvrdá data a směr</h3>
+                            <p class="font-medium text-sm">Nastavíme funkční procesy a řád, aby firma pracovala pro vás, ne vy pro ni.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Karta 2 -->
+                <div class="group perspective-1000 h-[350px] cursor-pointer">
+                    <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 backface-hidden bg-[var(--color-card)] rounded-[2rem] p-8 flex flex-col items-center justify-center text-center border border-white/5">
+                            <i data-lucide="pie-chart" class="w-12 h-12 text-[var(--color-accent)] mb-6"></i>
+                            <h3 class="text-xl font-bold text-white">Nevíte, kolik vyděláváte.</h3>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] text-black rounded-[2rem] p-8 flex flex-col justify-center">
+                            <div class="text-xs font-black uppercase tracking-widest mb-2 opacity-60">Peníze</div>
+                            <h3 class="text-2xl font-bold mb-4">Reálná ziskovost</h3>
+                            <p class="font-medium text-sm">Opřeme se o finanční rozvahu. Zoptimalizujeme náklady a zjistíme skutečný zisk.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Karta 3 -->
+                <div class="group perspective-1000 h-[350px] cursor-pointer">
+                    <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 backface-hidden bg-[var(--color-card)] rounded-[2rem] p-8 flex flex-col items-center justify-center text-center border border-white/5">
+                            <i data-lucide="users" class="w-12 h-12 text-[var(--color-accent)] mb-6"></i>
+                            <h3 class="text-xl font-bold text-white">Řešíte vše sami a nestíháte.</h3>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] text-black rounded-[2rem] p-8 flex flex-col justify-center">
+                            <div class="text-xs font-black uppercase tracking-widest mb-2 opacity-60">Výkonnost</div>
+                            <h3 class="text-2xl font-bold mb-4">Delegování</h3>
+                            <p class="font-medium text-sm">Naučíme vás řídit lidi efektivně, time management a jak předávat zodpovědnost.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Karta 4 -->
+                <div class="group perspective-1000 h-[350px] cursor-pointer">
+                    <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 backface-hidden bg-[var(--color-card)] rounded-[2rem] p-8 flex flex-col items-center justify-center text-center border border-white/5">
+                            <i data-lucide="compass" class="w-12 h-12 text-[var(--color-accent)] mb-6"></i>
+                            <h3 class="text-xl font-bold text-white">Chcete růst, ale nevíte kudy dál.</h3>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] text-black rounded-[2rem] p-8 flex flex-col justify-center">
+                            <div class="text-xs font-black uppercase tracking-widest mb-2 opacity-60">Rozhodování</div>
+                            <h3 class="text-2xl font-bold mb-4">Osobní briliant</h3>
+                            <p class="font-medium text-sm">Pomocí koučinku najdeme správný směr a objevíme váš skrytý potenciál.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bento Kurzy a Program -->
+        <section class="py-24 container mx-auto px-6">
+            <div class="grid lg:grid-cols-3 gap-6">
+                <!-- Velká karta programu -->
+                <div class="lg:col-span-2 rounded-[2rem] bg-[var(--color-card)] p-12 border border-white/5">
+                    <div class="w-16 h-16 rounded-2xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center mb-8"><i data-lucide="route" class="w-8 h-8"></i></div>
+                    <h2 class="text-4xl font-extrabold text-white mb-4">Růstový Program</h2>
+                    <p class="text-xl text-white font-light mb-8">4 jasné kroky k výsledku. Od analýzy až po růst obratu a osobní klid.</p>
+                    
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="bg-white/5 p-6 rounded-2xl">
+                            <h4 class="font-bold text-[var(--color-accent)] mb-2">1. Startovní analýza</h4>
+                            <p class="text-white text-sm">Audit podnikání a definice cílů.</p>
+                        </div>
+                        <div class="bg-white/5 p-6 rounded-2xl">
+                            <h4 class="font-bold text-[var(--color-accent)] mb-2">2. Plán růstu</h4>
+                            <p class="text-white text-sm">Konkrétní kroky a finanční plán.</p>
+                        </div>
+                        <div class="bg-white/5 p-6 rounded-2xl">
+                            <h4 class="font-bold text-[var(--color-accent)] mb-2">3. Pravidelná podpora</h4>
+                            <p class="text-white text-sm">Koučink, mentoring, setkání.</p>
+                        </div>
+                        <div class="bg-white/5 p-6 rounded-2xl">
+                            <h4 class="font-bold text-[var(--color-accent)] mb-2">4. Výsledky</h4>
+                            <p class="text-white text-sm">Stabilita, klid a růst ziskovosti.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kurzy a Klub (Vertikální Bento) -->
+                <div class="flex flex-col gap-6">
+                    <div class="flex-1 rounded-[2rem] bg-gradient-to-br from-[var(--color-card)] to-[#111111] p-10 border border-white/5 flex flex-col justify-center">
+                        <div class="inline-block px-3 py-1 bg-[var(--color-accent)] text-black text-xs font-bold rounded-full mb-6 self-start">Připravujeme</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Vzdělávání & Kurzy</h3>
+                        <p class="text-white text-sm font-light">Online kurzy od úplných základů až po pokročilé řízení.</p>
+                    </div>
+                    <div class="flex-1 rounded-[2rem] bg-gradient-to-tr from-[var(--color-accent)] to-[#8b6b15] p-10 text-black flex flex-col justify-center">
+                        <div class="inline-block px-3 py-1 bg-black text-[var(--color-accent)] text-xs font-bold rounded-full mb-6 self-start">Připravujeme</div>
+                        <h3 class="text-2xl font-bold mb-2">Byznys & Networking Klub</h3>
+                        <p class="text-sm font-medium">Exkluzivní komunita, sdílení zkušeností a nové příležitosti.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================================================================= -->
+    <!-- KONCEPT 3: EDITORIAL (Kreativní, Ostré hrany, Posuvné texty, Asymetrie) -->
+    <!-- ========================================================================================= -->
+    <div id="concept-3" class="concept-layer relative z-20 bg-[var(--color-bg)]">
+        
+        <!-- Běžící text (Marquee) -->
+        <div class="w-full bg-[var(--color-accent)] py-4 border-y-4 border-black">
+            <div class="marquee-container">
+                <div class="marquee-content text-2xl font-black uppercase tracking-widest text-black flex gap-12">
+                    <span>Certifikovaný Mentor</span> <span>•</span> <span>Rozvoj Podnikatele</span> <span>•</span> <span>Koučink</span> <span>•</span> <span>Osobní Briliant</span> <span>•</span> <span>Externí Manažer</span> <span>•</span> <span>Certifikovaný Mentor</span> <span>•</span> <span>Rozvoj Podnikatele</span>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <!-- --- S ČÍM POMŮŽU --- -->
-    <section id="rozcestnik" class="py-24 relative overflow-hidden">
-        <!-- Video na pozadí -->
-        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-80">
-            <source src="video2.mp4" type="video/mp4">
-        </video>
-        <!-- Přechod do ztracena nahoře a dole + celkové ztmavení pro čitelnost textů -->
-        <div class="absolute inset-0 bg-gradient-to-b from-[#050814] via-[#050814]/60 to-[#050814] z-0 pointer-events-none"></div>
+        <section id="manazer-3" class="py-32 container mx-auto px-6 relative">
+            <div class="grid lg:grid-cols-2 gap-20">
+                <div class="relative z-10">
+                    <h2 class="text-7xl font-black text-white leading-none uppercase tracking-tighter mb-10 border-l-8 border-[var(--color-accent)] pl-8">Váš<br>Externí<br><span class="text-[var(--color-accent)]">Manažer.</span></h2>
+                    
+                    <div class="space-y-12 pl-10 border-l px-8 border-white/20">
+                        <div>
+                            <h3 class="text-3xl font-bold text-white mb-4">Mentoring & Byznys</h3>
+                            <p class="text-xl text-white font-light">Srovnejte si směr. Optimalizujeme náklady a ziskovost, nastavíme vizi a naučíme vás řídit peníze i čas.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold text-white mb-4">Osobní rozvoj</h3>
+                            <p class="text-xl text-white font-light">Nejste na to sami. Zapojíme celý náš tým, abyste dosáhli svých cílů a našli svůj osobní briliant.</p>
+                        </div>
+                        <div class="bg-[var(--color-accent)] p-8 text-black -ml-8">
+                            <p class="font-black tracking-widest uppercase mb-2">Exkluzivní bonus</p>
+                            <p class="text-lg font-bold">Přístup do kurzů, klubu a VIP knihovny je pro klienty v mentoringu zdarma.</p>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="text-center mb-16 animate-fade-in-up">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-white">S čím Vám mohu pomoci?</h2>
-                <p class="text-white mt-4 text-lg font-light">Vyberte si fázi, ve které se právě nacházíte.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                <!-- Card 1 -->
-                <div data-ui="card" data-base-class="p-8 flex flex-col gap-4 group cursor-pointer" class="">
-                    <div class="p-4 inline-flex self-start rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]"><i data-lucide="compass" class="w-8 h-8"></i></div>
-                    <h3 class="text-2xl font-bold mt-2 text-white">Chci začít</h3>
-                    <p class="text-white leading-relaxed font-light">Začínáte podnikat nebo měníte směr. Správný a&nbsp;bezpečný start je klíčový pro budoucí úspěch.</p>
-                    <div class="mt-auto pt-4 flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-                </div>
-                <!-- Card 2 -->
-                <div data-ui="card" data-base-class="p-8 flex flex-col gap-4 group cursor-pointer" class="">
-                    <div class="p-4 inline-flex self-start rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]"><i data-lucide="trending-up" class="w-8 h-8"></i></div>
-                    <h3 class="text-2xl font-bold mt-2 text-white">Už podnikám</h3>
-                    <p class="text-white leading-relaxed font-light">Potřebujete navést v&nbsp;oblastech financí, řízení externích příjmů a&nbsp;optimalizace nákladů. Vytvoříme stabilní systém.</p>
-                    <div class="mt-auto pt-4 flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-                </div>
-                <!-- Card 3 -->
-                <div data-ui="card" data-base-class="p-8 flex flex-col gap-4 group cursor-pointer" class="">
-                    <div class="p-4 inline-flex self-start rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]"><i data-lucide="users" class="w-8 h-8"></i></div>
-                    <h3 class="text-2xl font-bold mt-2 text-white">Řídím lidi</h3>
-                    <p class="text-white leading-relaxed font-light">Podpora pro manažery a&nbsp;teamleadery. Budování týmu, delegování odpovědnosti a&nbsp;efektivní zvyšování výkonu.</p>
-                    <div class="mt-auto pt-4 flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-                </div>
-                <!-- Card 4 (Highlighted) -->
-                <div data-ui="card-highlight" data-base-class="p-8 flex flex-col gap-4 group cursor-pointer" class="">
-                    <div class="p-4 inline-flex self-start rounded-xl bg-white/20"><i data-lucide="briefcase" class="w-8 h-8 text-white"></i></div>
-                    <h3 class="text-2xl font-bold mt-2 text-white">Chci pomoc&nbsp;přímo</h3>
-                    <p class="text-white leading-relaxed font-light">Služba Externí manažer. Osobní a&nbsp;byznys mentoring pro maximální urychlení Vašeho postupu.</p>
-                    <div class="mt-auto pt-4 flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-white group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-                </div>
-                <!-- Card 5 -->
-                <div data-ui="card" data-base-class="p-8 flex flex-col gap-4 group cursor-pointer" class="">
-                    <div class="p-4 inline-flex self-start rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]"><i data-lucide="layers" class="w-8 h-8"></i></div>
-                    <h3 class="text-2xl font-bold mt-2 text-white">Chci komunitu</h3>
-                    <p class="text-white leading-relaxed font-light">Obchodní klub, sdílení zkušeností s&nbsp;ostatními lídry a&nbsp;budování nových byznys kontaktů.</p>
-                    <div class="mt-auto pt-4 flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                <div class="relative flex items-center justify-center">
+                    <div class="absolute inset-0 bg-[var(--color-card)] -rotate-6 scale-105 border border-white/10"></div>
+                    <img src="michal-vyhnalek.jfif" class="relative z-10 w-full h-auto grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl mix-blend-luminosity hover:mix-blend-normal" alt="Michal" />
+                    <div class="absolute -bottom-10 -left-10 text-[10rem] font-black text-[var(--color-accent)] opacity-50 pointer-events-none select-none">M.</div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- --- NAJDĚTE SVŮJ BRILIANT --- -->
-    <section class="pt-12 pb-24 relative overflow-hidden bg-[var(--color-card)] border-y border-white/5">
-        <div class="container mx-auto px-6 relative z-10 text-center">
-            <!-- VLOŽENÉ MALÉ LOGO DIAMANTU -->
-            <img src="logo-small.png" alt="Briliant" class="mx-auto mb-8 h-20 md:h-24 w-auto object-contain animate-pulse hover:scale-105 transition-transform duration-500" />
+        <!-- Velké bloky rozcestníku -->
+        <section class="border-t-4 border-white/10">
+            <div class="group flex flex-col md:flex-row border-b-4 border-white/10 hover:bg-white/5 transition-colors cursor-pointer">
+                <div class="w-full md:w-1/3 p-12 md:p-20 md:border-r-4 border-white/10 flex flex-col justify-center">
+                    <div class="text-[var(--color-accent)] font-black text-2xl mb-4">01</div>
+                    <h3 class="text-5xl font-black text-white uppercase tracking-tighter">Začínám</h3>
+                </div>
+                <div class="w-full md:w-2/3 p-12 md:p-20 flex items-center">
+                    <p class="text-3xl text-white font-light leading-snug">Získání bezpečného startu. Ideální, pokud měníte směr nebo stojíte na prahu nového byznysu.</p>
+                </div>
+            </div>
             
-            <h2 class="text-4xl md:text-5xl font-extrabold mb-8 uppercase tracking-wider text-white">
-                Hledání osobního briliantu
-            </h2>
-            <p class="text-xl md:text-2xl text-white max-w-3xl mx-auto leading-relaxed font-light mb-12">
-                "Každý z&nbsp;nás má obrovský potenciál. Většina ho ale neumí <span class="whitespace-nowrap">naplno využít</span>. Pomohu Vám Váš skrytý potenciál objevit a&nbsp;přetavit ho v&nbsp;reálný příjem, růst a&nbsp;osobní spokojenost."
-            </p>
-        </div>
-    </section>
-
-    <!-- --- RŮSTOVÝ PROGRAM --- -->
-    <section id="program" class="py-24 relative bg-[var(--color-bg)]">
-        <div class="container mx-auto px-6">
-            <!-- Struktura -->
-            <h3 class="text-3xl font-bold text-center mb-10 text-white">Jak program funguje – Co vás s námi čeká</h3>
-            <div class="grid md:grid-cols-4 gap-6 mb-20 relative">
-                <!-- Spojovací linka (viditelná jen na větších obrazovkách) -->
-                <div class="hidden md:block absolute top-8 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent opacity-30 z-0"></div>
-                
-                <div data-ui="card" data-base-class="p-6 relative z-10 text-center" class="">
-                    <div class="w-16 h-16 mx-auto rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center font-bold text-xl mb-4 border border-[var(--color-accent)]/20 shadow-lg shadow-[var(--color-accent)]/10">1</div>
-                    <h4 class="font-bold text-lg mb-2 text-white">Startovní analýza</h4>
-                    <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Dle dohody</p>
-                    <ul class="text-sm text-white space-y-2 text-left font-light">
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Audit podnikání</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Finanční rozvaha</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Identifikace slabých míst</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Definice vašich cílů</li>
-                    </ul>
+            <div class="group flex flex-col md:flex-row border-b-4 border-white/10 hover:bg-white/5 transition-colors cursor-pointer">
+                <div class="w-full md:w-1/3 p-12 md:p-20 md:border-r-4 border-white/10 flex flex-col justify-center">
+                    <div class="text-[var(--color-accent)] font-black text-2xl mb-4">02</div>
+                    <h3 class="text-5xl font-black text-white uppercase tracking-tighter">Už podnikám</h3>
                 </div>
-
-                <div data-ui="card" data-base-class="p-6 relative z-10 text-center" class="">
-                    <div class="w-16 h-16 mx-auto rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center font-bold text-xl mb-4 border border-[var(--color-accent)]/20 shadow-lg shadow-[var(--color-accent)]/10">2</div>
-                    <h4 class="font-bold text-lg mb-2 text-white">Plán růstu</h4>
-                    <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Orientačně</p>
-                    <ul class="text-sm text-white space-y-2 text-left font-light">
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Konkrétní kroky</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Časový a finanční plán</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Strategie pro váš vývoj</li>
-                    </ul>
-                </div>
-
-                <div data-ui="card" data-base-class="p-6 relative z-10 text-center" class="">
-                    <div class="w-16 h-16 mx-auto rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center font-bold text-xl mb-4 border border-[var(--color-accent)]/20 shadow-lg shadow-[var(--color-accent)]/10">3</div>
-                    <h4 class="font-bold text-lg mb-2 text-white">Pravidelná podpora</h4>
-                    <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Kontinuálně</p>
-                    <ul class="text-sm text-white space-y-2 text-left font-light">
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Pravidelná setkání</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Osobní přístup a know-how</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Zapojení našeho týmu</li>
-                        <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Mentoring + koučink</li>
-                    </ul>
-                </div>
-
-                <div data-ui="card-highlight" data-base-class="p-6 relative z-10 text-center" class="">
-                    <div class="w-16 h-16 mx-auto rounded-full bg-white/20 flex items-center justify-center font-bold text-xl mb-4 text-white">4</div>
-                    <h4 class="font-bold text-lg mb-2 text-white">Výsledky</h4>
-                    <p class="text-xs font-bold text-white/70 uppercase tracking-wider mb-4">Váš cíl</p>
-                    <ul class="text-sm text-white space-y-3 text-left font-medium">
-                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Nebudete na to už sami</li>
-                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Odhalíte svůj briliant</li>
-                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Růst obratu a osobní klid</li>
-                        <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Stabilní time management</li>
-                    </ul>
+                <div class="w-full md:w-2/3 p-12 md:p-20 flex items-center">
+                    <p class="text-3xl text-white font-light leading-snug">Vytvoření stabilního systému pro vaše peníze a čas. Optimalizace a řízení výnosů.</p>
                 </div>
             </div>
 
-            <!-- Program CTA -->
-            <div class="mt-16 text-center">
-                <h3 class="text-3xl font-extrabold mb-6 text-white">Chcete posunout své podnikání a nebýt na to sami?</h3>
-                <p class="text-xl text-white mb-8 max-w-2xl mx-auto font-light">Napište si o úvodní konzultaci zdarma a pojďme zjistit váš potenciál.</p>
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-                    <a href="#kontakt" data-ui="btn-primary" data-base-class="" class="px-10 py-5 text-lg shadow-xl shadow-[var(--color-accent)]/20 hover:-translate-y-1">
-                        Domluvit konzultaci zdarma
-                    </a>
+            <div class="group flex flex-col md:flex-row border-b-4 border-white/10 bg-[var(--color-accent)] hover:bg-[#b38728] transition-colors cursor-pointer text-black">
+                <div class="w-full md:w-1/3 p-12 md:p-20 md:border-r-4 border-black/20 flex flex-col justify-center">
+                    <div class="font-black text-2xl mb-4 opacity-50">03 / Exkluzivně</div>
+                    <h3 class="text-5xl font-black uppercase tracking-tighter">Chci pomoc přímo</h3>
+                </div>
+                <div class="w-full md:w-2/3 p-12 md:p-20 flex items-center">
+                    <p class="text-3xl font-medium leading-snug">Osobní a byznys mentoring pro maximální urychlení. Externí manažer jako váš partner.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- --- KURZY A KLUB --- -->
-    <section id="kurzy" class="py-24 relative border-t border-white/5 bg-[var(--color-card)]">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-12">
-                
-                <div data-ui="card" data-base-class="p-10 md:p-14 flex flex-col" class="">
-                    <div class="flex justify-between items-start mb-8">
-                        <i data-lucide="book-open" class="text-[var(--color-accent)] w-10 h-10"></i>
-                        <span class="text-xs font-black tracking-widest uppercase bg-[var(--color-accent)] text-black px-3 py-1 rounded-full">Plánujeme rozvinout</span>
+        <!-- Program Editorial -->
+        <section class="py-32 container mx-auto px-6">
+            <h2 class="text-6xl font-black text-white text-center uppercase tracking-widest mb-24">Růstový Program</h2>
+            
+            <div class="space-y-0">
+                <div class="grid md:grid-cols-2 border-y-2 border-white/20">
+                    <div class="p-16 border-b-2 md:border-b-0 md:border-r-2 border-white/20 bg-[var(--color-card)]/50">
+                        <div class="text-[var(--color-accent)] text-8xl font-black opacity-20 mb-4 -ml-4">01</div>
+                        <h4 class="text-4xl font-bold text-white mb-4">Startovní analýza</h4>
+                        <p class="text-xl text-white font-light">Dle dohody. Audit podnikání, financí a slabých míst. Definice jasných cílů.</p>
                     </div>
-                    <h2 class="text-3xl font-extrabold mb-4 text-white">Online a osobní Kurzy</h2>
-                    <p class="text-white mb-8 font-light leading-relaxed">Plánujeme rozvinout komplexní vzdělávání. Od úplných základů až po pokročilé řízení firmy a leadership. Praktické online kurzy i osobní workshopy z reálné praxe.</p>
-                    
-                    <div class="space-y-4 mb-8">
-                        <div class="p-4 border border-white/10 rounded-xl bg-white/5">
-                            <h4 class="font-bold text-[var(--color-accent)]">Startovní &&nbsp;Základní</h4>
-                            <p class="text-sm text-white font-light mt-1">Začátky v&nbsp;podnikání, cashflow, osobní <span class="whitespace-nowrap">time-management</span>.</p>
-                        </div>
-                        <div class="p-4 border border-white/10 rounded-xl bg-white/5">
-                            <h4 class="font-bold text-[var(--color-accent)]">Pokročilé &&nbsp;Manažerské</h4>
-                            <p class="text-sm text-white font-light mt-1">Obchod, systém, řízení lidí, delegování pro manažery.</p>
-                        </div>
+                    <div class="p-16">
+                        <div class="text-[var(--color-accent)] text-8xl font-black opacity-20 mb-4 -ml-4">02</div>
+                        <h4 class="text-4xl font-bold text-white mb-4">Plán růstu</h4>
+                        <p class="text-xl text-white font-light">Nastavení konkrétních kroků, finančního a časového plánu pro stabilní rozvoj.</p>
                     </div>
-                    <button data-ui="btn-outline" data-base-class="w-full mt-auto" class="">Chci vědět o spuštění jako první</button>
                 </div>
-
-                <div data-ui="card" data-base-class="p-10 md:p-14 flex flex-col" class="">
-                    <div class="flex justify-between items-start mb-8">
-                        <i data-lucide="users" class="text-[var(--color-accent)] w-10 h-10"></i>
-                        <span class="text-xs font-black tracking-widest uppercase bg-[var(--color-accent)] text-black px-3 py-1 rounded-full">Připravujeme otevření</span>
+                <div class="grid md:grid-cols-2 border-b-2 border-white/20">
+                    <div class="p-16 border-b-2 md:border-b-0 md:border-r-2 border-white/20">
+                        <div class="text-[var(--color-accent)] text-8xl font-black opacity-20 mb-4 -ml-4">03</div>
+                        <h4 class="text-4xl font-bold text-white mb-4">Pravidelná podpora</h4>
+                        <p class="text-xl text-white font-light">Mentoring, koučink, pravidelná osobní setkání a plné zapojení našeho týmu.</p>
                     </div>
-                    <h2 class="text-3xl font-extrabold mb-4 text-white">Byznys a Networking Klub</h2>
-                    <p class="text-white mb-8 font-light leading-relaxed">Rozvíjíme komunitu lidí, kteří chtějí růst. Plánujeme vytvořit networkingové a obchodní skupiny pro sdílení zkušeností, kontakty a byznys příležitosti.</p>
-                    
-                    <ul class="space-y-4 mb-12 text-white font-medium">
-                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Exkluzivní osobní setkání s&nbsp;lídry</li>
-                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Cílené networkingové a obchodní skupiny</li>
-                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Vzájemná pomoc nebýt na věci sám</li>
-                    </ul>
-                    
-                    <button data-ui="btn-outline" data-base-class="w-full mt-auto" class="">Předběžná registrace do klubu</button>
+                    <div class="p-16 bg-[var(--color-accent)] text-black">
+                        <div class="text-black text-8xl font-black opacity-20 mb-4 -ml-4">04</div>
+                        <h4 class="text-4xl font-black mb-4 uppercase">Výsledky</h4>
+                        <p class="text-xl font-bold">Zvýšení obratu a ziskovosti. Odhalení osobního briliantu. Zisk klidu a času.</p>
+                    </div>
                 </div>
-
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- --- KONTAKT --- -->
-    <section id="kontakt" class="py-24 px-6 border-t border-white/5">
-        <div class="container mx-auto max-w-5xl">
-            <div data-ui="card" data-base-class="grid md:grid-cols-2 overflow-hidden" class="">
+    </div>
+
+    <!-- ========================================================================================= -->
+    <!-- KONTAKT A PATIČKA (Zobrazí se všude) -->
+    <!-- ========================================================================================= -->
+
+    <!-- KONTAKT -->
+    <section id="kontakt" class="py-24 px-6 relative z-30 bg-[var(--color-bg)]">
+        <div class="container mx-auto max-w-5xl reveal">
+            <div class="grid md:grid-cols-2 overflow-hidden rounded-[3rem] bg-[var(--color-card)] border border-white/10 shadow-2xl">
                 
                 <div class="p-12 md:p-16">
-                    <div class="font-bold tracking-widest uppercase text-sm mb-4 text-[var(--color-accent)]">Krok k&nbsp;cíli</div>
-                    <h2 class="text-4xl font-extrabold mb-4 text-white">Udělejte první krok.</h2>
-                    <p class="text-white mb-10 text-lg font-light leading-relaxed">První schůzka slouží k&nbsp;tomu zjistit, zda si oboustranně sedneme a&nbsp;jestli Vám a&nbsp;Vašemu byznysu dokáži skutečně pomoci.</p>
+                    <div class="font-bold tracking-widest uppercase text-sm mb-4 text-[var(--color-accent)]">Krok k cíli</div>
+                    <h2 class="text-4xl font-extrabold text-white mb-4">Udělejte první krok.</h2>
+                    <p class="text-white mb-10 text-lg font-light leading-relaxed">První schůzka slouží k tomu zjistit, zda si oboustranně sedneme a jestli Vám a Vašemu byznysu dokáži skutečně pomoci.</p>
                     
-                    <form class="space-y-6">
+                    <form class="space-y-6 relative z-10">
                         <div>
-                            <label class="block text-sm font-bold text-white mb-2">Jméno a&nbsp;příjmení</label>
-                            <input type="text" class="w-full bg-white/5 border border-white/10 rounded-lg p-3 focus:outline-none focus:border-[var(--color-accent)] transition-colors text-white" />
+                            <label class="block text-sm font-bold text-white mb-2">Jméno a příjmení</label>
+                            <input type="text" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-[var(--color-accent)] focus:bg-white/10 transition-all text-white" />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-white mb-2">Telefon /&nbsp;E-mail</label>
-                            <input type="text" class="w-full bg-white/5 border border-white/10 rounded-lg p-3 focus:outline-none focus:border-[var(--color-accent)] transition-colors text-white" />
+                            <label class="block text-sm font-bold text-white mb-2">Telefon / E-mail</label>
+                            <input type="text" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 focus:outline-none focus:border-[var(--color-accent)] focus:bg-white/10 transition-all text-white" />
                         </div>
-                        <button type="button" data-ui="btn-primary" data-base-class="w-full mt-4" class="">
-                            Odeslat a&nbsp;domluvit schůzku <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        <button type="button" class="w-full mt-4 px-8 py-5 bg-[var(--color-accent)] text-black font-bold rounded-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+                            Odeslat a domluvit schůzku <i data-lucide="arrow-right" class="w-5 h-5"></i>
                         </button>
                     </form>
                 </div>
                 
-                <div class="p-12 md:p-16 flex flex-col justify-center bg-[var(--color-card)]/50 border-l border-white/5">
+                <div class="p-12 md:p-16 flex flex-col justify-center bg-black/20 border-l border-white/5">
                     <div class="space-y-10">
-                        <h3 class="text-2xl font-extrabold mb-4 text-white">Nebo se ozvěte rovnou:</h3>
+                        <h3 class="text-2xl font-extrabold text-white mb-4">Nebo se ozvěte rovnou:</h3>
                         
-                        <a href="tel:+420732212628" class="flex items-center gap-6 group cursor-pointer hover:bg-white/5 p-4 rounded-xl transition-all -ml-4">
-                            <div class="p-4 bg-[var(--color-accent)]/10 text-[var(--color-accent)] rounded-xl group-hover:bg-[var(--color-accent)] group-hover:text-black transition-all"><i data-lucide="phone" class="w-6 h-6"></i></div>
+                        <a href="tel:+420732212628" class="flex items-center gap-6 group cursor-pointer hover:bg-white/5 p-4 rounded-2xl transition-all -ml-4">
+                            <div class="w-14 h-14 bg-[var(--color-accent)]/10 text-[var(--color-accent)] rounded-2xl flex items-center justify-center group-hover:bg-[var(--color-accent)] group-hover:text-black transition-colors"><i data-lucide="phone" class="w-6 h-6"></i></div>
                             <div>
                                 <p class="text-xs font-bold tracking-widest uppercase text-white/50 mb-1">Zavolejte mi</p>
-                                <p class="font-extrabold text-xl text-white">+420 732 212 628</p>
+                                <p class="font-extrabold text-2xl text-white">+420 732 212 628</p>
                             </div>
                         </a>
                         
-                        <a href="mailto:info@michalvyhnalek.cz" class="flex items-center gap-6 group cursor-pointer hover:bg-white/5 p-4 rounded-xl transition-all -ml-4">
-                            <div class="p-4 bg-[var(--color-accent)]/10 text-[var(--color-accent)] rounded-xl group-hover:bg-[var(--color-accent)] group-hover:text-black transition-all"><i data-lucide="mail" class="w-6 h-6"></i></div>
+                        <a href="mailto:info@michalvyhnalek.cz" class="flex items-center gap-6 group cursor-pointer hover:bg-white/5 p-4 rounded-2xl transition-all -ml-4">
+                            <div class="w-14 h-14 bg-[var(--color-accent)]/10 text-[var(--color-accent)] rounded-2xl flex items-center justify-center group-hover:bg-[var(--color-accent)] group-hover:text-black transition-colors"><i data-lucide="mail" class="w-6 h-6"></i></div>
                             <div>
                                 <p class="text-xs font-bold tracking-widest uppercase text-white/50 mb-1">Napište e-mail</p>
-                                <p class="font-extrabold text-xl text-white">info@michalvyhnalek.cz</p>
+                                <p class="font-extrabold text-2xl text-white">info@michalvyhnalek.cz</p>
                             </div>
                         </a>
                     </div>
@@ -665,81 +1000,76 @@
         </div>
     </section>
 
-    <!-- --- FOOTER --- -->
-    <footer class="pt-20 pb-10 border-t border-white/10 bg-[var(--color-bg)]">
+    <!-- PATIČKA S GDPR A SOCIÁLNÍMI SÍTĚMI -->
+    <footer class="pt-24 pb-12 border-t border-white/10 bg-[var(--color-bg)] relative z-30">
         <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-3 gap-12 mb-16">
-                <!-- Sloupec 1: Logo a info -->
-                <div>
-                    <a href="#" class="inline-flex items-center gap-4 group mb-6">
-                        <img src="logo-menu.png" alt="Michal Vyhnálek" class="h-12 md:h-14 w-auto object-contain transition-transform group-hover:scale-105" />
+            <div class="grid md:grid-cols-12 gap-12 mb-16">
+                <!-- Sloupec 1: Info a Provozovatel (Zvětšeno pro GDPR info) -->
+                <div class="md:col-span-5 text-white font-light text-sm leading-relaxed space-y-2 opacity-80">
+                    <a href="#" class="inline-block mb-6">
+                        <img src="logo-menu.png" alt="Michal Vyhnálek" class="h-12 w-auto object-contain hover:opacity-80 transition-opacity" />
                     </a>
-                    <p class="text-white text-sm font-light leading-relaxed mb-4">
-                        Pomáhám podnikatelům růst, stabilizovat finance a vybudovat tým, který funguje. Jsem tu, abyste už na nic nebyli sami.
-                    </p>
-                    <p class="text-[var(--color-accent)] font-bold text-sm">Najděte svůj briliant.</p>
+                    <p><strong class="font-bold">Provozovatel webu:</strong> xxxx s.r.o.</p>
+                    <p><strong class="font-bold">Sídlo:</strong> xxxx</p>
+                    <p><strong class="font-bold">IČO:</strong> xxxx</p>
+                    <p><strong class="font-bold">DIČ:</strong> xxxx</p>
+                    <p><strong class="font-bold">Zápis:</strong> xxxx</p>
+                    <p><strong class="font-bold">Vznik společnosti:</strong> xxxx</p>
+                    <p><strong class="font-bold">Jednatel:</strong> Michal Vyhnálek</p>
+                    <div class="mt-6 pt-6 border-t border-white/10 opacity-70 text-xs">
+                        <p class="mb-2">Poskytujeme poradenské a konzultační služby v souladu s občanským zákoníkem. Nejsme advokátní kancelář ani daňový poradce. V případě potřeby doporučíme ověřené odborníky.</p>
+                        <p><strong>Pojištění profesní odpovědnosti:</strong> Jsme pojištěni pro případ škody způsobené klientům v souvislosti s poradenskými službami.</p>
+                    </div>
                 </div>
                 
-                <!-- Sloupec 2: Rychlé odkazy a Právní info -->
-                <div class="md:pl-10">
-                    <h4 class="font-bold text-white mb-6 uppercase tracking-widest text-sm">Informace</h4>
-                    <ul class="space-y-3 text-sm text-white font-light">
+                <!-- Sloupec 2: Kontakty -->
+                <div class="md:col-span-4">
+                    <h4 class="font-bold text-white mb-6 uppercase tracking-widest text-sm">Kontakty</h4>
+                    <ul class="space-y-4 text-white text-lg font-light">
+                        <li><a href="mailto:info@michalvyhnalek.cz" class="hover:text-[var(--color-accent)] transition-colors">info@michalvyhnalek.cz</a></li>
+                        <li><a href="tel:+420732212628" class="hover:text-[var(--color-accent)] transition-colors">+420 732 212 628</a></li>
+                        <li><a href="#" class="hover:text-[var(--color-accent)] transition-colors">www.michalvyhnalek.cz</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Sloupec 3: Odkazy a Sítě -->
+                <div class="md:col-span-3 flex flex-col md:items-end text-left md:text-right">
+                    <h4 class="font-bold text-white mb-6 uppercase tracking-widest text-sm">Důležité odkazy</h4>
+                    <ul class="space-y-3 text-white font-light text-sm mb-10">
                         <li><a href="#" class="hover:text-[var(--color-accent)] transition-colors">Ochrana osobních údajů</a></li>
                         <li><a href="#" class="hover:text-[var(--color-accent)] transition-colors">Zásady cookies</a></li>
                         <li><a href="#kontakt" class="hover:text-[var(--color-accent)] transition-colors">Napište nám</a></li>
                     </ul>
-                    
-                    <div class="mt-8 pt-6 border-t border-white/10 text-xs text-white font-light leading-relaxed">
-                        <p class="font-bold text-white mb-1">Provozovatel webu: xxxx s.r.o.</p>
-                        <p>Sídlo: xxxx</p>
-                        <p>IČO: xxxx</p>
-                        <p>DIČ: xxxx</p>
-                        <p class="mt-2">Poskytujeme poradenské a konzultační služby v souladu s občanským zákoníkem. Nejsme advokátní kancelář ani daňový poradce. V případě potřeby doporučíme ověřené odborníky.</p>
-                    </div>
-                </div>
-                
-                <!-- Sloupec 3: Kontakty a sítě -->
-                <div>
-                    <h4 class="font-bold text-white mb-6 uppercase tracking-widest text-sm">Kontaktujte nás</h4>
-                    <ul class="space-y-4 text-sm text-white font-light mb-8">
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="mail" class="w-4 h-4 text-[var(--color-accent)]"></i> info@michalvyhnalek.cz
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="phone" class="w-4 h-4 text-[var(--color-accent)]"></i> +420 732 212 628
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="globe" class="w-4 h-4 text-[var(--color-accent)]"></i> www.michalvyhnalek.cz
-                        </li>
-                    </ul>
 
                     <h4 class="font-bold text-white mb-4 uppercase tracking-widest text-sm">Sledujte nás</h4>
                     <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                        <!-- Facebook SVG -->
+                        <a href="#" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M22 12C22 6.477 17.523 2 12 2C6.477 2 2 6.477 2 12C2 16.991 5.657 21.128 10.438 21.878V14.89H7.898V12H10.438V9.797C10.438 7.291 11.93 5.907 14.215 5.907C15.309 5.907 16.453 6.102 16.453 6.102V8.562H15.193C13.95 8.562 13.563 9.333 13.563 10.124V12H16.336L15.893 14.89H13.563V21.878C18.343 21.128 22 16.991 22 12Z"/></svg>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                        <!-- Instagram SVG -->
+                        <a href="#" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.315 2C14.745 2 15.099 2.013 16.123 2.06C17.187 2.109 17.914 2.278 18.55 2.525C19.208 2.78 19.771 3.14 20.329 3.698C20.887 4.256 21.247 4.819 21.502 5.477C21.749 6.113 21.918 6.84 21.967 7.904C22.014 8.928 22.026 9.282 22.026 12C22.026 14.718 22.014 15.072 21.967 16.096C21.918 17.16 21.749 17.887 21.502 18.523C21.247 19.181 20.887 19.744 20.329 20.302C19.771 20.86 19.208 21.22 18.55 21.475C17.914 21.722 17.187 21.891 16.123 21.94C15.099 21.987 14.745 22 12.315 22H11.685C9.255 22 8.901 21.987 7.877 21.94C6.813 21.891 6.086 21.722 5.45 21.475C4.792 21.22 4.229 20.86 3.671 20.302C3.113 19.744 2.753 19.181 2.498 18.523C2.251 17.887 2.082 17.16 2.033 16.096C1.986 15.072 1.974 14.718 1.974 12C1.974 9.282 1.986 8.928 2.033 7.904C2.082 6.84 2.251 6.113 2.498 5.477C2.753 4.819 3.113 4.256 3.671 3.698C4.229 3.14 4.792 2.78 5.45 2.525C6.086 2.278 6.813 2.109 7.877 2.06C8.901 2.013 9.255 2 11.685 2H12.315ZM11.604 3.802H12.072C14.528 3.802 14.856 3.813 15.879 3.86C16.854 3.905 17.383 4.067 17.736 4.204C18.203 4.386 18.536 4.602 18.886 4.952C19.236 5.302 19.452 5.635 19.634 6.102C19.771 6.455 19.933 6.984 19.978 7.959C20.025 8.982 20.036 9.31 20.036 11.766V12.234C20.036 14.69 20.025 15.018 19.978 16.041C19.933 17.016 19.771 17.545 19.634 17.898C19.452 18.365 19.236 18.698 18.886 19.048C18.536 19.398 18.203 19.614 17.736 19.796C17.383 19.933 16.854 20.095 15.879 20.14C14.856 20.187 14.528 20.198 12.072 20.198H11.604C9.148 20.198 8.82 20.187 7.797 20.14C6.822 20.095 6.293 19.933 5.94 19.796C5.473 19.614 5.14 19.398 4.79 19.048C4.44 18.698 4.224 18.365 4.042 17.898C3.905 17.545 3.743 17.016 3.698 16.041C3.651 15.018 3.64 14.69 3.64 12.234V11.766C3.64 9.31 3.651 8.982 3.698 7.959C3.743 6.984 3.905 6.455 4.042 6.102C4.224 5.635 4.44 5.302 4.79 4.952C5.14 4.602 5.473 4.386 5.94 4.204C6.293 4.067 6.822 3.905 7.797 3.86C8.82 3.813 9.148 3.802 11.604 3.802ZM12 6.865C9.163 6.865 6.865 9.163 6.865 12C6.865 14.837 9.163 17.135 12 17.135C14.837 17.135 17.135 14.837 17.135 12C17.135 9.163 14.837 6.865 12 6.865ZM12 15.333C10.159 15.333 8.667 13.841 8.667 12C8.667 10.159 10.159 8.667 12 8.667C13.841 8.667 15.333 10.159 15.333 12C15.333 13.841 13.841 15.333 12 15.333ZM17.338 5.457C16.675 5.457 16.138 5.994 16.138 6.657C16.138 7.32 16.675 7.857 17.338 7.857C18.001 7.857 18.538 7.32 18.538 6.657C18.538 5.994 18.001 5.457 17.338 5.457Z"/></svg>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" /></svg>
+                        <!-- LinkedIn SVG -->
+                        <a href="#" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19 0H5C2.239 0 0 2.239 0 5V19C0 21.761 2.239 24 5 24H19C21.762 24 24 21.761 24 19V5C24 2.239 21.762 0 19 0ZM8 19H5V8H8V19ZM6.5 6.732C5.534 6.732 4.75 5.942 4.75 4.968C4.75 3.994 5.534 3.204 6.5 3.204C7.466 3.204 8.25 3.994 8.25 4.968C8.25 5.942 7.467 6.732 6.5 6.732ZM20 19H17V13.396C17 10.028 13 10.283 13 13.396V19H10V8H13V9.765C14.396 7.179 20 6.988 20 12.241V19Z"/></svg>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center font-light text-white/50 border-t border-white/10 pt-8 text-xs">
+            <div class="text-center font-bold text-white/50 border-t border-white/10 pt-8 text-xs tracking-widest">
                 <p>&copy; 2026 xxxx s.r.o. Všechna práva vyhrazena.</p>
             </div>
         </div>
     </footer>
 
-    <!-- --- JAVASCRIPT PRO INTERAKCI A CUSTOMIZER --- -->
     <script>
-        // Inicializace Lucide ikon
+        // Inicializace Lucide Ikon
         lucide.createIcons();
 
-        // 1. DATA PRO DESIGN STUDIO
+        // 1. DATA A LOGIKA PRO DESIGN STUDIO (FONTY A BARVY)
         const FONTS = [
             { id: 'Inter', name: 'Inter (Čistý & Moderní)' },
             { id: 'Space Grotesk', name: 'Space Grotesk (Tech)' },
@@ -753,204 +1083,76 @@
             { id: 'Cinzel', name: 'Cinzel (Luxusní & Filmový)' }
         ];
 
-        const VARIANTS = [
-            { id: 'minimal', name: 'Moderní Minimalismus', desc: 'Zaoblené rohy, jemné stíny.' },
-            { id: 'corporate', name: 'Ostrý Korporát', desc: 'Ostré hrany, seriózní vzhled.' },
-            { id: 'elegant', name: 'Prémiová Elegance', desc: 'Tenké linky, sofistikovaný dojem.' },
-            { id: 'creative', name: 'Kreativní & Asymetrický', desc: 'Výrazné tvary, hravost.' },
-            { id: 'neobrutal', name: 'Neo-Brutalismus', desc: 'Ostré hrany, vysoký kontrast.' },
-            { id: 'glass', name: 'Skleněný (Glass)', desc: 'Rozostřené pozadí.' },
-            { id: 'soft', name: 'Měkký & Pastelový', desc: 'Extrémní zaoblení, jemné stíny.' },
-            { id: 'outline', name: 'Technický Nákres', desc: 'Přerušované čáry.' },
-            { id: 'playful', name: 'Hravé Bubliny', desc: 'Organické tvary a rotace.' },
-            { id: 'retro', name: 'Retro Pop', desc: 'Posunuté stíny, vintage vibe.' }
-        ];
-
-        let currentVariant = 'elegant';
+        let currentConcept = 1;
         let currentFont = 'Plus Jakarta Sans';
 
-        // 2. LOGIKA STYLŮ (Převedeno z Reactu do CSS stringů)
-        function getCardStyle(variant, highlighted) {
-            const base = 'transition-all duration-300';
-            const defaultBg = 'bg-[var(--color-card)] text-[var(--color-text)]';
-            const highlightBg = 'bg-[var(--color-primary)] text-white border border-[var(--color-accent)]';
-
-            switch(variant) {
-                case 'corporate': return `${base} rounded-none border border-white/10 shadow-sm ${highlighted ? highlightBg : defaultBg}`;
-                case 'elegant': return `${base} rounded-sm shadow-lg border-t-2 ${highlighted ? 'bg-[var(--color-primary)] text-white border-[var(--color-accent)]' : 'bg-[var(--color-card)] text-[var(--color-text)] border-white/10 hover:border-[var(--color-accent)]/50'}`;
-                case 'creative': return `${base} rounded-[2rem_4rem_2rem_1rem] border-2 border-transparent shadow-2xl hover:-rotate-1 ${highlighted ? highlightBg : defaultBg}`;
-                case 'neobrutal': return `${base} rounded-none border-2 border-[var(--color-accent)] shadow-[8px_8px_0px_0px_var(--color-accent)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_var(--color-accent)] ${highlighted ? 'bg-[var(--color-accent)] text-black' : 'bg-[var(--color-card)] text-[var(--color-text)]'}`;
-                case 'glass': return `${base} rounded-3xl border backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] ${highlighted ? 'border-[var(--color-accent)]/50 bg-[var(--color-primary)]/80 text-white' : 'border-white/10 bg-white/5 text-[var(--color-text)]'}`;
-                case 'soft': return `${base} rounded-[3rem] border-none shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] hover:-translate-y-2 ${highlighted ? highlightBg : defaultBg}`;
-                case 'outline': return `${base} rounded-xl border-2 ${highlighted ? 'border-solid border-[var(--color-accent)] bg-[var(--color-accent)]/10 text-[var(--color-text)]' : 'border-dashed border-white/20 bg-transparent hover:border-[var(--color-accent)] hover:bg-[var(--color-accent)]/5 text-[var(--color-text)]'}`;
-                case 'playful': return `${base} rounded-[3rem_1rem_3rem_1rem] border border-white/10 shadow-xl hover:rotate-2 ${highlighted ? highlightBg : defaultBg}`;
-                case 'retro': return `${base} rounded-none border-2 border-[var(--color-text)] hover:translate-x-1 hover:translate-y-1 ${highlighted ? 'bg-[var(--color-accent)] text-black shadow-[6px_6px_0px_0px_var(--color-text)]' : 'bg-[var(--color-card)] text-[var(--color-text)] shadow-[6px_6px_0px_0px_var(--color-accent)] hover:shadow-[2px_2px_0px_var(--color-accent)]'}`;
-                case 'minimal': default: return `${base} rounded-2xl border border-white/5 shadow-xl hover:-translate-y-2 ${highlighted ? highlightBg : defaultBg}`;
-            }
-        }
-
-        function getButtonStyle(variant, type) {
-            const base = 'font-bold flex items-center justify-center gap-2 transition-all duration-300';
-            const primaryColors = 'bg-[var(--color-accent)] text-black border-2 border-transparent';
-            const secondaryColors = 'bg-transparent text-[var(--color-text)] border-2 border-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-black';
-            const outlineColors = 'bg-transparent text-[var(--color-text)] border-2 border-white/20 hover:border-white/60';
-
-            switch(variant) {
-                case 'corporate': return `${base} rounded-sm px-8 py-4 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors} hover:brightness-110`;
-                case 'elegant': return `${base} rounded-none px-8 py-4 border-b-2 hover:px-10 ${type === 'primary' ? 'border-[var(--color-accent)] text-[var(--color-accent)] bg-transparent hover:bg-[var(--color-accent)] hover:text-black' : type === 'outline' ? 'border-white/30 text-white bg-transparent' : secondaryColors}`;
-                case 'creative': return `${base} rounded-[1rem_2rem_1rem_0.5rem] px-8 py-4 shadow-lg hover:scale-105 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors}`;
-                case 'neobrutal': return `${base} rounded-none border-2 border-white px-8 py-4 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[0px_0px_0px_0px_rgba(255,255,255,1)] ${type === 'secondary' ? 'bg-transparent text-white' : type === 'outline' ? 'bg-transparent border-dashed text-white' : primaryColors}`;
-                case 'glass': return `${base} rounded-2xl border border-white/20 backdrop-blur-md px-8 py-4 shadow-lg hover:scale-105 ${type === 'secondary' ? 'bg-white/5 text-[var(--color-text)]' : type === 'outline' ? outlineColors : 'bg-[var(--color-accent)] text-black border-none'}`;
-                case 'soft': return `${base} rounded-full px-8 py-4 shadow-[0_10px_20px_-10px_var(--color-accent)] hover:-translate-y-1 hover:shadow-[0_15px_25px_-10px_var(--color-accent)] ${type === 'secondary' ? 'bg-[var(--color-card)] text-[var(--color-text)] border-none shadow-none hover:bg-white/5' : type === 'outline' ? outlineColors : primaryColors}`;
-                case 'outline': return `${base} rounded-xl border-2 border-dashed px-8 py-4 hover:border-solid transition-all ${type === 'primary' ? 'border-[var(--color-accent)] bg-transparent text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-black' : type === 'outline' ? 'border-white/30 bg-transparent text-white hover:border-white' : secondaryColors}`;
-                case 'playful': return `${base} rounded-[2rem_0.5rem_2rem_0.5rem] px-8 py-4 shadow-md hover:scale-110 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors}`;
-                case 'retro': return `${base} rounded-none border-2 border-[var(--color-text)] px-8 py-4 shadow-[4px_4px_0px_0px_var(--color-accent)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none ${type === 'secondary' ? 'bg-[var(--color-card)] text-[var(--color-text)]' : type === 'outline' ? outlineColors : primaryColors}`;
-                case 'minimal': default: return `${base} rounded-full px-8 py-4 shadow-xl hover:scale-105 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors}`;
-            }
-        }
-
-        function getImageStyle(variant) {
-            switch(variant) {
-                case 'corporate': return 'rounded-none';
-                case 'elegant': return 'rounded-t-[10rem] rounded-b-md';
-                case 'creative': return 'rounded-[40%_60%_70%_30%/40%_50%_60%_50%]';
-                case 'neobrutal': return 'rounded-none border-2 border-white shadow-[12px_12px_0px_0px_var(--color-accent)] bg-white/5';
-                case 'glass': return 'rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] bg-white/5 backdrop-blur-sm border border-white/10';
-                case 'soft': return 'rounded-[4rem]';
-                case 'outline': return 'rounded-3xl border-2 border-dashed border-[var(--color-accent)] p-2 !bg-transparent';
-                case 'playful': return 'rounded-[50%_50%_50%_50%/60%_60%_40%_40%] shadow-2xl';
-                case 'retro': return 'rounded-none border-2 border-white shadow-[12px_12px_0px_0px_var(--color-accent)] bg-white/5';
-                case 'minimal': default: return 'rounded-[2.5rem]';
-            }
-        }
-
-        function getLogoNavStyle(variant) {
-            const base = "w-10 h-10 flex items-center justify-center font-bold text-black text-xl transition-transform group-hover:rotate-12 bg-[var(--color-accent)]";
-            if (variant === 'neobrutal') return base + ' border-2 border-white';
-            if (variant === 'corporate') return base + ' rounded-none';
-            return base + ' rounded-xl';
-        }
-        
-        function getBtnNavStyle(variant) {
-            const base = "hidden md:flex items-center gap-2 px-6 py-2.5 text-sm font-bold transition-all bg-[var(--color-accent)] text-black";
-            if (variant === 'neobrutal') return base + ' border-2 border-white shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none';
-            if (variant === 'corporate') return base + ' rounded-sm';
-            return base + ' rounded-full hover:shadow-[0_0_15px_var(--color-accent)]';
-        }
-
-        // 3. APLIKACE STYLŮ NA DOM
-        function applyStyles() {
-            // Aplikace fontu
-            document.body.style.fontFamily = `"${currentFont}", sans-serif`;
-
-            // Aplikace vzhledu na prvky pomocí data atributů
-            document.querySelectorAll('[data-ui]').forEach(el => {
-                const type = el.getAttribute('data-ui');
-                const baseClass = el.getAttribute('data-base-class');
-                let newClass = '';
-
-                if (type === 'card') newClass = getCardStyle(currentVariant, false);
-                if (type === 'card-highlight') newClass = getCardStyle(currentVariant, true);
-                if (type === 'btn-primary') newClass = getButtonStyle(currentVariant, 'primary');
-                if (type === 'btn-secondary') newClass = getButtonStyle(currentVariant, 'secondary');
-                if (type === 'btn-outline') newClass = getButtonStyle(currentVariant, 'outline');
-                if (type === 'image-bg') newClass = getImageStyle(currentVariant);
-                if (type === 'logo') newClass = getLogoNavStyle(currentVariant);
-                if (type === 'btn-nav') newClass = getBtnNavStyle(currentVariant);
-
-                el.className = `${baseClass} ${newClass}`;
-            });
-
-            // Speciální pravidlo pro nadpis v hero sekci
-            const heroHighlight = document.getElementById('hero-highlight');
-            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
-            if(primaryColor === '#0a1128' || primaryColor === '#000000') {
-                heroHighlight.className = 'text-gold-gradient';
-            } else {
-                heroHighlight.className = 'text-[var(--color-accent)]';
-            }
-        }
-
-        // 4. FUNKCE CUSTOMIZERU
         function toggleCustomizer() {
             const panel = document.getElementById('customizer-panel');
             const btn = document.getElementById('customizer-toggle-btn');
-            
             if (panel.classList.contains('translate-x-full')) {
-                panel.classList.remove('translate-x-full');
-                panel.classList.add('translate-x-0');
-                btn.classList.add('translate-x-full', 'opacity-0');
-                btn.classList.remove('translate-x-0', 'opacity-100');
+                panel.classList.remove('translate-x-full'); panel.classList.add('translate-x-0');
+                btn.classList.add('translate-x-full', 'opacity-0'); btn.classList.remove('translate-x-0', 'opacity-100');
             } else {
-                panel.classList.add('translate-x-full');
-                panel.classList.remove('translate-x-0');
-                btn.classList.remove('translate-x-full', 'opacity-0');
-                btn.classList.add('translate-x-0', 'opacity-100');
+                panel.classList.add('translate-x-full'); panel.classList.remove('translate-x-0');
+                btn.classList.remove('translate-x-full', 'opacity-0'); btn.classList.add('translate-x-0', 'opacity-100');
             }
         }
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById(`tab-${tabId}`).classList.add('active');
-            
             document.querySelectorAll('[id^="tab-btn-"]').forEach(btn => {
                 btn.className = "flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-gray-500 hover:bg-gray-200/50";
             });
             document.getElementById(`tab-btn-${tabId}`).className = "flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all bg-white shadow-sm text-blue-600";
         }
 
-        function setVariant(variantId) {
-            currentVariant = variantId;
-            renderStyleButtons();
-            applyStyles();
+        // PŘEPÍNAČ KONCEPTŮ (Hlavní tahák - mění celé HTML bloky)
+        function setConcept(id) {
+            currentConcept = id;
+            
+            // 1. Zvýraznění aktivního tlačítka v Customizeru
+            for(let i=1; i<=3; i++) {
+                const btn = document.getElementById(`btn-concept-${i}`);
+                const icon = document.getElementById(`icon-concept-${i}`);
+                if(i === id) {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 transition-all border-blue-500 bg-blue-50 relative overflow-hidden group";
+                    icon.className = "text-blue-500 opacity-100 transition-opacity";
+                    icon.parentElement.className = "absolute right-0 top-0 bottom-0 w-12 bg-blue-100 flex items-center justify-center";
+                } else {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 transition-all border-gray-200 hover:border-blue-300 relative overflow-hidden group";
+                    icon.className = "text-blue-500 opacity-0 transition-opacity";
+                    icon.parentElement.className = "absolute right-0 top-0 bottom-0 w-12 bg-gray-50 flex items-center justify-center group-hover:bg-blue-50";
+                }
+            }
+
+            // 2. Přepnutí zobrazení HTML vrstev
+            document.querySelectorAll('.concept-layer').forEach(layer => {
+                layer.classList.remove('active');
+            });
+            
+            // Malé zpoždění pro plynulejší fade efekt
+            setTimeout(() => {
+                document.getElementById(`concept-${id}`).classList.add('active');
+                
+                // 3. Restartovat Intersection Observer pro nový koncept!
+                // Skryjeme všechny prvky a znovu spustíme observer, aby se načetly animace
+                document.querySelectorAll(`#concept-${id} .reveal`).forEach(el => {
+                    el.classList.remove('active');
+                    scrollObserver.observe(el);
+                });
+                // Skrolování trochu nahoru, aby uživatel viděl začátek konceptu
+                window.scrollTo({ top: document.querySelector('header').offsetHeight, behavior: 'smooth' });
+                
+                lucide.createIcons();
+            }, 50);
         }
 
+        // Fonty
         function setFontFamily(fontId) {
             currentFont = fontId;
+            document.body.style.fontFamily = `"${currentFont}", sans-serif`;
             renderFontButtons();
-            applyStyles();
-        }
-
-        function handleColorChange(key, value) {
-            document.documentElement.style.setProperty(`--color-${key}`, value);
-            if (key === 'accent') document.getElementById('color-accent-label').innerText = value;
-            applyStyles(); // Přepočítá efekty závislé na barvě (např. hero nadpis)
-        }
-
-        function setPreset(presetName) {
-            const presets = {
-                default: { primary: '#0a1128', accent: '#d4af37', bg: '#050814', text: '#ffffff', cardBg: '#111827' },
-                light: { primary: '#f8fafc', accent: '#d4af37', bg: '#ffffff', text: '#000000', cardBg: '#f1f5f9' },
-                sapphire: { primary: '#0f172a', accent: '#38bdf8', bg: '#020617', text: '#ffffff', cardBg: '#1e293b' },
-                emerald: { primary: '#064e3b', accent: '#34d399', bg: '#022c22', text: '#ffffff', cardBg: '#065f46' },
-                monochrome: { primary: '#000000', accent: '#ffffff', bg: '#000000', text: '#ffffff', cardBg: '#111111' }
-            };
-            const p = presets[presetName];
-            if(p) {
-                handleColorChange('primary', p.primary);
-                handleColorChange('accent', p.accent);
-                handleColorChange('bg', p.bg);
-                handleColorChange('text', p.text);
-                handleColorChange('cardBg', p.cardBg); // CSS variable is --color-card, updating that
-                document.documentElement.style.setProperty('--color-card', p.cardBg);
-                
-                // Update inputs
-                document.getElementById('color-bg').value = p.bg;
-                document.getElementById('color-card').value = p.cardBg;
-                document.getElementById('color-accent').value = p.accent;
-                document.getElementById('color-accent-label').innerText = p.accent;
-            }
-        }
-
-        // 5. RENDEROVÁNÍ TLAČÍTEK V MENU
-        function renderStyleButtons() {
-            const container = document.getElementById('style-buttons-container');
-            container.innerHTML = VARIANTS.map(v => `
-                <button onclick="setVariant('${v.id}')" class="w-full text-left p-3 rounded-xl border transition-all mb-2 ${currentVariant === v.id ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500/20' : 'border-gray-200 hover:border-blue-300'}">
-                    <div class="font-bold text-sm ${currentVariant === v.id ? 'text-blue-800' : ''}">${v.name}</div>
-                    <div class="text-[10px] text-gray-500 mt-1">${v.desc}</div>
-                </button>
-            `).join('');
         }
 
         function renderFontButtons() {
@@ -962,133 +1164,146 @@
             `).join('');
         }
 
-        // LOGIKA PRO INTERAKTIVNÍ MAPU (Varianta 1)
-        const problems = [
-            {
-                title: "Podnikání",
-                heading: "Nastavíme tvrdá data a směr",
-                desc: "Nekreslím pouze hezké grafy. Podíváme se na vaši vizi a nastavíme funkční procesy a řád, aby firma pracovala pro vás, ne vy pro ni.",
-                iconCenter: "workflow"
-            },
-            {
-                title: "Peníze",
-                heading: "Optimalizace a reálná ziskovost",
-                desc: "Opřeme se o tvrdá data a finanční rozvahu. Zoptimalizujeme náklady a ukážeme si reálnou ziskovost vašeho podnikání.",
-                iconCenter: "pie-chart"
-            },
-            {
-                title: "Výkonnost",
-                heading: "Delegování a efektivita",
-                desc: "Time management a delegování. Zapojíme náš tým a naučíme vás, jak řídit lidi efektivně, abyste nebyli na vše sami.",
-                iconCenter: "users"
-            },
-            {
-                title: "Rozhodování",
-                heading: "Nalezení osobního briliantu",
-                desc: "Pomocí certifikovaného koučinku a mentoringu nastavíme kroky, které přinesou výsledek, a najdeme váš 'osobní briliant'.",
-                iconCenter: "compass"
+        // Barvy
+        function handleColorChange(key, value) {
+            document.documentElement.style.setProperty(`--color-${key}`, value);
+            if (key === 'accent') {
+                const label = document.getElementById('color-accent-label');
+                if(label) label.innerText = value;
             }
+        }
+
+        function setPreset(presetName) {
+            const presets = {
+                default: { accent: '#d4af37', bg: '#050814', card: '#111827' },
+                sapphire: { accent: '#38bdf8', bg: '#020617', card: '#0f172a' },
+                emerald: { accent: '#34d399', bg: '#022c22', card: '#064e3b' },
+                monochrome: { accent: '#ffffff', bg: '#000000', card: '#111111' },
+                purple: { accent: '#a855f7', bg: '#170229', card: '#2e1065' }
+            };
+            const p = presets[presetName];
+            if(p) {
+                handleColorChange('accent', p.accent);
+                handleColorChange('bg', p.bg);
+                handleColorChange('card', p.card);
+                document.getElementById('color-bg').value = p.bg;
+                document.getElementById('color-card').value = p.card;
+                document.getElementById('color-accent').value = p.accent;
+            }
+        }
+
+        renderFontButtons();
+
+        // 2. INTERAKTIVNÍ MAPA PRO KONCEPT 1
+        const problemsC1 = [
+            { title: "Podnikání", heading: "Nastavíme tvrdá data a směr", desc: "Nekreslím pouze hezké grafy. Podíváme se na vaši vizi a nastavíme funkční procesy a řád, aby firma pracovala pro vás, ne vy pro ni.", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>` },
+            { title: "Peníze", heading: "Optimalizace a reálná ziskovost", desc: "Opřeme se o tvrdá data a finanční rozvahu. Zoptimalizujeme náklady a ukážeme si reálnou ziskovost vašeho podnikání.", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>` },
+            { title: "Výkonnost", heading: "Delegování a efektivita", desc: "Time management a delegování. Zapojíme náš tým a naučíme vás, jak řídit lidi efektivně, abyste nebyli na vše sami.", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>` },
+            { title: "Rozhodování", heading: "Nalezení osobního briliantu", desc: "Pomocí certifikovaného koučinku a mentoringu nastavíme kroky, které přinesou výsledek, a najdeme váš 'osobní briliant'.", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>` }
         ];
 
-        function setInteractiveMap(index) {
-            // Obnovení prémiového vzhledu tlačítek
-            document.querySelectorAll('.int-btn').forEach((btn, i) => {
-                const line = btn.querySelector('.line-indicator');
-                const text = btn.querySelector('.btn-text');
+        function setInteractiveMapC1(index) {
+            document.querySelectorAll('.c1-int-btn').forEach((btn, i) => {
+                const line = btn.querySelector('.c1-line');
+                const text = btn.querySelector('.c1-text');
+                const highlight = btn.querySelector('.c1-bg-highlight');
 
                 if (i === index) {
-                    btn.classList.remove('opacity-50');
-                    line.className = 'line-indicator absolute left-0 top-0 bottom-0 w-1 bg-[var(--color-accent)] shadow-[0_0_12px_var(--color-accent)] transition-all duration-500';
-                    text.className = 'btn-text font-light text-xl md:text-2xl text-white pl-6 translate-x-2 transition-transform duration-500';
+                    highlight.classList.add('opacity-100'); highlight.classList.remove('opacity-0', 'group-hover:opacity-100');
+                    line.className = 'c1-line absolute left-0 top-0 bottom-0 w-1 rounded-full bg-[var(--color-accent)] shadow-[0_0_15px_var(--color-accent)] transition-all duration-500';
+                    text.className = 'c1-text relative z-10 font-light text-xl text-white pl-6 translate-x-2 transition-transform duration-500';
                 } else {
-                    btn.classList.add('opacity-50');
-                    line.className = 'line-indicator absolute left-0 top-1/4 bottom-1/4 w-0.5 bg-white/20 group-hover:bg-white/50 group-hover:top-0 group-hover:bottom-0 transition-all duration-500';
-                    text.className = 'btn-text font-light text-xl md:text-2xl text-white pl-6 group-hover:translate-x-1 transition-transform duration-500';
+                    highlight.classList.remove('opacity-100'); highlight.classList.add('opacity-0', 'group-hover:opacity-100');
+                    line.className = 'c1-line absolute left-0 top-1/3 bottom-1/3 w-0.5 rounded-full bg-white/20 group-hover:bg-white/50 transition-all duration-500';
+                    text.className = 'c1-text relative z-10 font-light text-xl text-white/50 group-hover:text-white pl-6 transition-all duration-500';
                 }
             });
 
-            // Změna obsahu
-            const data = problems[index];
-            const headingEl = document.getElementById('int-heading');
-            const descEl = document.getElementById('int-desc');
-            const titleEl = document.getElementById('int-title');
-
-            // Jemný fade out
-            headingEl.style.opacity = 0;
-            descEl.style.opacity = 0;
-            titleEl.style.opacity = 0;
+            const data = problemsC1[index];
+            const headingEl = document.getElementById('c1-heading');
+            const descEl = document.getElementById('c1-desc');
+            const titleEl = document.getElementById('c1-title');
+            
+            headingEl.style.opacity = 0; descEl.style.opacity = 0; titleEl.style.opacity = 0;
 
             setTimeout(() => {
-                titleEl.innerText = data.title;
-                headingEl.innerText = data.heading;
-                descEl.innerText = data.desc;
-                
-                // Fade in
-                headingEl.style.opacity = 1;
-                descEl.style.opacity = 1;
-                titleEl.style.opacity = 1;
-                headingEl.style.transition = 'opacity 0.5s ease';
-                descEl.style.transition = 'opacity 0.5s ease';
-                titleEl.style.transition = 'opacity 0.5s ease';
+                titleEl.innerText = data.title; headingEl.innerText = data.heading; descEl.innerText = data.desc;
+                headingEl.style.opacity = 1; descEl.style.opacity = 1; titleEl.style.opacity = 1;
             }, 300);
 
-            // Animace ikon
-            const centerContainer = document.getElementById('icon-center-container');
-            const glow = document.getElementById('glow-effect');
-            
-            centerContainer.classList.add('scale-50', 'opacity-0');
+            const iconContainer = document.getElementById('c1-icon-container');
+            const glow = document.getElementById('c1-glow');
+            iconContainer.classList.add('scale-50', 'opacity-0');
             glow.classList.add('opacity-50', 'scale-150');
 
             setTimeout(() => {
-                centerContainer.innerHTML = `<i data-lucide="${data.iconCenter}" class="w-8 h-8 text-[var(--color-accent)] drop-shadow-[0_0_10px_var(--color-accent)]"></i>`;
-                lucide.createIcons();
-                centerContainer.classList.remove('scale-50', 'opacity-0');
+                iconContainer.innerHTML = data.icon;
+                iconContainer.classList.remove('scale-50', 'opacity-0');
                 glow.classList.remove('opacity-50', 'scale-150');
             }, 300);
         }
 
-        // Přepínání UI variant pro sekci Znáte tento pocit
-        function switchInteractiveVariant(variant) {
-            document.getElementById('interactive-variant-1').style.display = variant === 1 ? 'block' : 'none';
-            document.getElementById('interactive-variant-2').style.display = variant === 2 ? 'block' : 'none';
-            
-            // Styl tlačítek
-            document.getElementById('btn-var-1').className = variant === 1 
-                ? 'px-6 py-3 rounded-xl font-bold bg-[var(--color-accent)] text-black shadow-lg transition-all' 
-                : 'px-6 py-3 rounded-xl font-bold bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all';
-            document.getElementById('btn-var-2').className = variant === 2 
-                ? 'px-6 py-3 rounded-xl font-bold bg-[var(--color-accent)] text-black shadow-lg transition-all' 
-                : 'px-6 py-3 rounded-xl font-bold bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all';
-        }
+        // 3. ANIMACE A EFEKTY PŘI SCROLLOVÁNÍ (OŽIVENÍ WEBU)
+        
+        // Sledujeme prvky a přidáváme třídu active, když vstoupí na obrazovku
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Můžeme ho přestat sledovat, pokud chceme animaci jen poprvé (odkomentovat radek nize)
+                    // observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
 
-        // Inicializace po načtení
-        renderStyleButtons();
-        renderFontButtons();
-        applyStyles();
+        document.querySelectorAll('.reveal').forEach(el => {
+            scrollObserver.observe(el);
+        });
 
-        // SCROLL SPY LOGIKA
-        document.addEventListener("DOMContentLoaded", function() {
-            const sections = document.querySelectorAll("section[id]");
-            const navLinks = document.querySelectorAll(".nav-link");
+        // Scroll Spy (Podtrhávání menu)
+        window.addEventListener("scroll", () => {
+            // Skrývání backgroundu menu pokud jsme nahoře
+            const nav = document.getElementById('navbar');
+            if(window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-[var(--color-bg)]/95');
+                nav.classList.remove('bg-[var(--color-bg)]/80');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-[var(--color-bg)]/95');
+                nav.classList.add('bg-[var(--color-bg)]/80');
+            }
 
-            window.addEventListener("scroll", () => {
-                let current = "";
-                sections.forEach((section) => {
-                    const sectionTop = section.offsetTop;
-                    // Odchytí sekci chvíli předtím, než se dostane úplně nahoru
-                    if (window.scrollY >= sectionTop - 200) { 
-                        current = section.getAttribute("id");
-                    }
-                });
+            // Scroll spy pro aktivní linky podle aktivního konceptu!
+            let current = "";
+            const activeConcept = document.querySelector(`.concept-layer.active`);
+            if(!activeConcept) return;
 
-                navLinks.forEach((link) => {
-                    link.classList.remove("active", "text-[var(--color-accent)]");
-                    if (link.getAttribute("href") === `#${current}`) {
-                        link.classList.add("active", "text-[var(--color-accent)]");
-                    }
-                });
+            const sections = activeConcept.querySelectorAll("section[id]");
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                // Odečteme výšku hero a navigace
+                if (window.scrollY >= sectionTop - 300) { 
+                    current = section.getAttribute("id");
+                    // Ošklivý hack pro koncept 2 a 3, abychom zmapovali ID (manazer-2 -> manazer)
+                    if(current.includes('-')) current = current.split('-')[0];
+                }
+            });
+
+            document.querySelectorAll(".nav-link").forEach((link) => {
+                link.classList.remove("active", "text-[var(--color-accent)]");
+                if (link.getAttribute("href") === `#${current}`) {
+                    link.classList.add("active", "text-[var(--color-accent)]");
+                }
             });
         });
+
+        // 4. MAGICKÝ KURZOR (Glow effect sledující myš)
+        const cursorGlow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+
     </script>
 </body>
 </html>
