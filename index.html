@@ -42,7 +42,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Zlatý gradient text pro prémiový vzhled */
+        /* Zlatý gradient text pro prémiový vzhled s plynulým přeléváním */
         .text-gold-gradient {
             background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             -webkit-background-clip: text;
@@ -51,8 +51,7 @@
             animation: shine 8s ease-in-out infinite alternate;
         }
         @keyframes shine {
-            0% { background-position: 0% center; }
-            100% { background-position: 100% center; }
+            to { background-position: 200% center; }
         }
 
         /* Skrývání záložek v customizeru */
@@ -185,18 +184,21 @@
     </div>
 
     <!-- --- HERO SECTION --- -->
-    <header class="relative pt-32 pb-32 md:pt-48 md:pb-40 overflow-hidden flex items-center justify-center min-h-[80vh]">
-        <!-- Video na pozadí (Smyčka jednoho videa) -->
-        <div class="absolute inset-0 z-0 w-full h-full opacity-60">
-            <video id="hero-video" src="video1.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
-        </div>
-        <!-- Tmavý překryv pro čitelnost textu -->
-        <div class="absolute inset-0 z-0 bg-gradient-to-b from-[var(--color-bg)]/90 via-[var(--color-bg)]/60 to-[var(--color-bg)]"></div>
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] opacity-10 blur-[120px] pointer-events-none rounded-full" style="background-color: var(--color-accent)"></div>
+    <header class="relative pt-32 pb-24 md:pt-48 md:pb-36 overflow-hidden min-h-[80vh] flex items-center justify-center text-center">
+        <!-- Video 1 na pozadí ve smyčce -->
+        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+            <source src="video1.mp4" type="video/mp4">
+        </video>
         
-        <div class="container mx-auto px-6 relative z-10 text-center flex flex-col items-center">
-            <div class="animate-fade-in-up flex flex-col items-center w-full max-w-4xl">
-                <div class="font-bold tracking-widest uppercase text-xs md:text-sm mb-6 flex items-center justify-center gap-3 text-[var(--color-accent)] w-full">
+        <!-- Překryv pro zajištění čitelnosti textu -->
+        <div class="absolute inset-0 z-0 bg-black/60 backdrop-blur-[2px]"></div>
+        
+        <!-- Dekorativní odlesk -->
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] opacity-20 blur-[120px] pointer-events-none rounded-full" style="background-color: var(--color-accent)"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center">
+            <div class="animate-fade-in-up flex flex-col items-center max-w-4xl">
+                <div class="font-bold tracking-widest uppercase text-xs md:text-sm mb-6 flex items-center gap-3 text-[var(--color-accent)]">
                     <span class="w-8 h-0.5 bg-current"></span> Váš Externí manažer <span class="w-8 h-0.5 bg-current"></span>
                 </div>
                 <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1] text-white">
@@ -207,10 +209,10 @@
                     Pomáhám lidem začít, podnikatelům stabilizovat finance a&nbsp;manažerům s&nbsp;řízením týmů. Jsem Váš externí manažer, který spojuje tvrdá data s&nbsp;certifikovaným koučinkem a&nbsp;mentoringem.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-                    <a href="#kontakt" data-ui="btn-primary" data-base-class="" class="">
+                    <a href="#kontakt" data-ui="btn-primary" data-base-class="" class="px-8 py-4">
                         Domluvit schůzku <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </a>
-                    <a href="#rozcestnik" data-ui="btn-outline" data-base-class="" class="">
+                    <a href="#manazer" data-ui="btn-outline" data-base-class="" class="px-8 py-4">
                         Zobrazit možnosti
                     </a>
                 </div>
@@ -218,75 +220,56 @@
         </div>
     </header>
 
-    <!-- --- VÁŠ EXTERNÍ MANAŽER --- -->
-    <section id="manazer" class="py-24 relative overflow-hidden border-t border-white/5 bg-[var(--color-bg)]">
-        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-5 blur-[100px] rounded-full pointer-events-none" style="background-color: var(--color-accent)"></div>
-        
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+    <!-- --- VÁŠ EXTERNÍ MANAŽER (FOTKA + OBSAH) --- -->
+    <section id="manazer" class="py-24 relative border-t border-white/5 bg-[var(--color-bg)]">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
                 
-                <!-- Levý sloupec: Fotka -->
-                <div class="lg:col-span-5 relative w-full flex justify-center animate-fade-in-up">
-                    <!-- Rámeček pro fotografii - čtverec (aspect-square) -->
-                    <div class="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
-                        <!-- Výplň pozadí pro případ, že má fotka průhlednost -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-card)] to-[var(--color-bg)]"></div>
-                        
-                        <!-- Zde vložíte vaši fotografii. object-cover zajistí, že vyplní celý čtverec. object-top ji zarovná nahoru. -->
-                        <img src="michal-vyhnalek.jfif" alt="Michal Vyhnálek" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
-                        
-                        <!-- Jemný stín přes spodní část fotky pro hezčí zasazení do stránky -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-transparent opacity-80 pointer-events-none"></div>
+                <!-- Levý sloupec: Profilová fotka ve čtverci -->
+                <div class="relative animate-fade-in-up">
+                    <div class="absolute inset-0 bg-[var(--color-accent)] opacity-10 blur-[50px] rounded-full"></div>
+                    <div class="relative aspect-square max-w-md mx-auto lg:mx-0 overflow-hidden rounded-[2.5rem] border border-white/10 bg-[var(--color-card)] shadow-2xl group">
+                        <!-- ZDE VLOŽTE FOTKU MICHALA -->
+                        <img src="https://michalvyhnalek.cz/wp-content/uploads/2023/11/o_mne-800x883.png" alt="Michal Vyhnálek" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     </div>
-                    
-                    <!-- Dekorativní odlesk za fotkou -->
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-[var(--color-accent)]/10 blur-3xl rounded-full -z-10 pointer-events-none"></div>
                 </div>
 
-                <!-- Pravý sloupec: Text a Karty -->
-                <div class="lg:col-span-7 animate-fade-in-up delay-200">
-                    <div class="mb-10 text-left">
-                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-white">Váš Externí Manažer</h2>
-                        <p class="text-lg md:text-xl text-white leading-relaxed font-light">
-                            Externí služba pro všechny podnikavce a manažery, <strong>kteří jsou na vše sami</strong>. 
-                            Pomocí osobního přístupu, koučinku a mentoringu (podloženého tvrdými zkušenostmi z praxe) vás provedeme nástrahami byznysu. Získáte nejen mé know-how, ale i expertízu celého mého týmu, abyste na svá rozhodnutí už nikdy nebyli sami.
-                        </p>
-                    </div>
+                <!-- Pravý sloupec: Texty -->
+                <div class="animate-fade-in-up delay-200">
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-white">Váš Externí Manažer</h2>
+                    <p class="text-lg text-white mb-8 leading-relaxed">
+                        Externí služba pro všechny podnikavce a manažery, <strong>kteří jsou na vše sami</strong>. 
+                        Pomocí osobního přístupu, koučinku a mentoringu (podloženého tvrdými zkušenostmi z praxe) vás provedeme nástrahami byznysu. Získáte nejen mé know-how, ale i expertízu celého mého týmu, abyste na svá rozhodnutí už nikdy nebyli sami.
+                    </p>
 
-                    <div class="grid sm:grid-cols-2 gap-6 mb-10">
-                        <div data-ui="card" data-base-class="p-8" class="">
-                            <div class="flex items-center gap-4 mb-5">
-                                <i data-lucide="briefcase" class="text-[var(--color-accent)] w-6 h-6"></i>
-                                <h3 class="text-xl font-bold text-white">Mentoring &&nbsp;Byznys</h3>
-                            </div>
-                            <ul class="space-y-3 text-white font-medium text-sm">
-                                <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Řízení externích příjmů a&nbsp;výnosů</li>
-                                <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Optimalizace nákladů a&nbsp;ziskovosti</li>
-                                <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Nalezení správného směru a&nbsp;vize</li>
-                                <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Výuka time managementu a řízení financí</li>
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4 flex items-center gap-3 text-[var(--color-accent)]"><i data-lucide="briefcase"></i> Mentoring & Byznys</h3>
+                            <ul class="space-y-3 font-medium text-white">
+                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Řízení externích příjmů a výnosů</li>
+                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Optimalizace nákladů a ziskovosti</li>
+                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Nalezení správného směru a vize</li>
+                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Výuka time managementu a řízení financí</li>
                             </ul>
                         </div>
 
-                        <div data-ui="card" data-base-class="p-8" class="">
-                            <div class="flex items-center gap-4 mb-5">
-                                <i data-lucide="brain-circuit" class="text-[var(--color-accent)] w-6 h-6"></i>
-                                <h3 class="text-xl font-bold text-white">Osobní rozvoj &&nbsp;Podpora</h3>
-                            </div>
-                            <ul class="space-y-3 text-white font-medium text-sm">
-                                <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Zapojení celého našeho týmu do řešení</li>
-                                <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Pomoc s dosahováním vašich cílů a plánů</li>
-                                <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Hledání "osobního briliantu" u jednotlivců</li>
-                                <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Osobní i podnikatelský kontinuální rozvoj</li>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4 flex items-center gap-3 text-[var(--color-accent)]"><i data-lucide="brain-circuit"></i> Osobní rozvoj & Podpora</h3>
+                            <ul class="space-y-3 font-medium text-white">
+                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Zapojení celého našeho týmu do řešení</li>
+                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Pomoc s dosahováním vašich cílů a plánů</li>
+                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Hledání "osobního briliantu" u jednotlivců</li>
+                                <li class="flex gap-3 items-start"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0 mt-0.5"></i> Osobní i podnikatelský kontinuální rozvoj</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-                        <p class="text-sm font-bold uppercase tracking-widest text-white mb-4 text-center sm:text-left">Klienti v&nbsp;individuální spolupráci mají automaticky:</p>
-                        <div class="flex flex-wrap justify-center sm:justify-start gap-3 text-white">
-                            <span class="px-4 py-2 rounded-full border border-white/10 bg-[var(--color-accent)]/10 text-[var(--color-accent)] text-sm font-semibold">Přístup ke kurzům</span>
-                            <span class="px-4 py-2 rounded-full border border-white/10 bg-[var(--color-accent)]/10 text-[var(--color-accent)] text-sm font-semibold">Přístup do klubu</span>
-                            <span class="px-4 py-2 rounded-full border border-white/10 bg-[var(--color-accent)]/10 text-[var(--color-accent)] text-sm font-semibold">VIP Knihovna</span>
+                    <div class="mt-10 p-6 bg-[var(--color-card)] rounded-2xl border border-white/10">
+                        <p class="text-sm font-bold uppercase tracking-widest text-white mb-4">Klienti v individuální spolupráci mají automaticky:</p>
+                        <div class="flex flex-wrap gap-4">
+                            <span class="px-4 py-2 rounded-lg bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-semibold text-sm">Přístup ke kurzům</span>
+                            <span class="px-4 py-2 rounded-lg bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-semibold text-sm">Přístup do klubu</span>
+                            <span class="px-4 py-2 rounded-lg bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-semibold text-sm">VIP Knihovna</span>
                         </div>
                     </div>
                 </div>
@@ -294,13 +277,11 @@
         </div>
     </section>
 
-    <!-- --- ZNÁTE TENTO POCIT? (INTERAKTIVNÍ SEKCE) --- -->
+    <!-- --- INTERAKTIVNÍ SEKCE --- -->
     <section class="py-20 relative border-t border-white/5 bg-[var(--color-card)]">
-        <div class="container mx-auto px-6 relative z-10">
-            <h2 class="text-4xl md:text-5xl font-extrabold mb-4 text-center text-white">Znáte tento pocit?</h2>
-            <p class="text-lg text-white mb-12 text-center max-w-2xl mx-auto">Vyberte variantu interaktivity, která se vám nejvíce líbí. Přebytečné varianty následně v kódu snadno smažete.</p>
-
-            <!-- Tlačítka pro přepínání variant -->
+        <div class="container mx-auto px-6">
+            
+            <!-- Tlačítka pro přepínání variant (Zrušte, až vyberete favorita) -->
             <div class="flex flex-wrap justify-center gap-4 mb-16">
                 <button onclick="switchInteractiveVariant(1)" id="btn-var-1" class="px-6 py-3 rounded-xl font-bold bg-[var(--color-accent)] text-black shadow-lg transition-all">Varianta 1: Prémiová mapa</button>
                 <button onclick="switchInteractiveVariant(2)" id="btn-var-2" class="px-6 py-3 rounded-xl font-bold bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all">Varianta 2: Flip Karty</button>
@@ -354,8 +335,8 @@
                                 </span>
                             </div>
                             
-                            <h3 id="int-heading" class="text-2xl md:text-3xl font-light text-white mb-6 leading-tight">Nastavíme tvrdá data a směr</h3>
-                            <p id="int-desc" class="text-white/80 text-lg leading-relaxed font-light">
+                            <h3 id="int-heading" class="text-3xl md:text-4xl font-light text-white mb-6 leading-tight">Nastavíme tvrdá data a směr</h3>
+                            <p id="int-desc" class="text-white text-lg leading-relaxed font-light">
                                 Nekreslím pouze hezké grafy. Podíváme se na vaši vizi a nastavíme funkční procesy a řád, aby firma pracovala pro vás, ne vy pro ni.
                             </p>
                         </div>
@@ -367,122 +348,143 @@
             <div id="interactive-variant-2" class="hidden animate-fade-in-up">
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Karta 1 -->
-                    <div class="group perspective-1000 h-80 w-full cursor-pointer">
+                    <div class="group perspective-1000 h-[350px] cursor-pointer">
                         <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
-                            <!-- Přední strana (Problém) -->
-                            <div class="absolute w-full h-full backface-hidden bg-[var(--color-bg)] border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-xl">
-                                <i data-lucide="layout-dashboard" class="text-[var(--color-accent)] w-12 h-12 mb-4"></i>
-                                <h3 class="text-xl font-bold text-white mb-2">Chaos v podnikání</h3>
-                                <p class="text-white text-sm">Nemáte v podnikání řád a jasný systém.</p>
-                                <div class="mt-auto pt-4 text-[var(--color-accent)] text-sm font-bold animate-pulse">Najetím odhalíte řešení</div>
+                            <!-- Přední strana -->
+                            <div class="absolute inset-0 backface-hidden bg-[var(--color-bg)] border border-white/5 p-8 rounded-2xl flex flex-col justify-center items-center text-center shadow-lg">
+                                <i data-lucide="alert-circle" class="text-[var(--color-accent)] w-12 h-12 mb-6"></i>
+                                <h3 class="text-xl font-bold text-white mb-4">Nemáte v podnikání řád a jasný systém.</h3>
+                                <span class="mt-4 text-sm font-bold text-[var(--color-accent)] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Odhalit řešení</span>
                             </div>
-                            <!-- Zadní strana (Řešení) -->
-                            <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-[var(--color-accent)] rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-xl border border-[var(--color-accent)]">
-                                <i data-lucide="briefcase" class="text-black w-10 h-10 mb-3"></i>
-                                <h3 class="text-lg font-black text-black uppercase tracking-widest mb-2">Podnikání</h3>
-                                <p class="text-black font-medium text-sm leading-relaxed">Nekreslím pouze hezké grafy. Podíváme se na vaši vizi a nastavíme funkční procesy a řád.</p>
+                            <!-- Zadní strana -->
+                            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] p-8 rounded-2xl flex flex-col justify-center shadow-2xl overflow-hidden">
+                                <div class="absolute -right-10 -bottom-10 opacity-10"><i data-lucide="workflow" class="w-40 h-40 text-black"></i></div>
+                                <div class="relative z-10">
+                                    <div class="text-xs font-black tracking-widest uppercase text-black/60 mb-2">Podnikání</div>
+                                    <h3 class="text-2xl font-bold text-black mb-4">Nastavíme tvrdá data a směr</h3>
+                                    <p class="text-black font-medium leading-relaxed">Nekreslím pouze hezké grafy. Nastavíme procesy, aby firma pracovala pro vás.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
                     <!-- Karta 2 -->
-                    <div class="group perspective-1000 h-80 w-full cursor-pointer">
+                    <div class="group perspective-1000 h-[350px] cursor-pointer">
                         <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
-                            <div class="absolute w-full h-full backface-hidden bg-[var(--color-bg)] border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-xl">
-                                <i data-lucide="pie-chart" class="text-[var(--color-accent)] w-12 h-12 mb-4"></i>
-                                <h3 class="text-xl font-bold text-white mb-2">Slepá místa ve financích</h3>
-                                <p class="text-white text-sm">Nevíte přesně, kolik reálně vyděláváte a jaké jsou náklady.</p>
-                                <div class="mt-auto pt-4 text-[var(--color-accent)] text-sm font-bold animate-pulse">Najetím odhalíte řešení</div>
+                            <div class="absolute inset-0 backface-hidden bg-[var(--color-bg)] border border-white/5 p-8 rounded-2xl flex flex-col justify-center items-center text-center shadow-lg">
+                                <i data-lucide="alert-circle" class="text-[var(--color-accent)] w-12 h-12 mb-6"></i>
+                                <h3 class="text-xl font-bold text-white mb-4">Nevíte přesně, kolik vyděláváte a jaké jsou náklady.</h3>
                             </div>
-                            <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-[var(--color-accent)] rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-xl border border-[var(--color-accent)]">
-                                <i data-lucide="coins" class="text-black w-10 h-10 mb-3"></i>
-                                <h3 class="text-lg font-black text-black uppercase tracking-widest mb-2">Peníze</h3>
-                                <p class="text-black font-medium text-sm leading-relaxed">Tvrdá data a finanční rozvaha. Zoptimalizujeme náklady a ukážeme si reálnou ziskovost.</p>
+                            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] p-8 rounded-2xl flex flex-col justify-center shadow-2xl overflow-hidden">
+                                <div class="absolute -right-10 -bottom-10 opacity-10"><i data-lucide="pie-chart" class="w-40 h-40 text-black"></i></div>
+                                <div class="relative z-10">
+                                    <div class="text-xs font-black tracking-widest uppercase text-black/60 mb-2">Peníze</div>
+                                    <h3 class="text-2xl font-bold text-black mb-4">Optimalizace a ziskovost</h3>
+                                    <p class="text-black font-medium leading-relaxed">Zoptimalizujeme náklady a ukážeme si reálnou ziskovost vašeho podnikání.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <!-- Karta 3 -->
-                    <div class="group perspective-1000 h-80 w-full cursor-pointer">
+                    <div class="group perspective-1000 h-[350px] cursor-pointer">
                         <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
-                            <div class="absolute w-full h-full backface-hidden bg-[var(--color-bg)] border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-xl">
-                                <i data-lucide="clock" class="text-[var(--color-accent)] w-12 h-12 mb-4"></i>
-                                <h3 class="text-xl font-bold text-white mb-2">Jste na vše sami</h3>
-                                <p class="text-white text-sm">Jako manažer či teamleader řešíte vše sami a nestíháte.</p>
-                                <div class="mt-auto pt-4 text-[var(--color-accent)] text-sm font-bold animate-pulse">Najetím odhalíte řešení</div>
+                            <div class="absolute inset-0 backface-hidden bg-[var(--color-bg)] border border-white/5 p-8 rounded-2xl flex flex-col justify-center items-center text-center shadow-lg">
+                                <i data-lucide="alert-circle" class="text-[var(--color-accent)] w-12 h-12 mb-6"></i>
+                                <h3 class="text-xl font-bold text-white mb-4">Řešíte vše sami a nestíháte (manažeři/leadři).</h3>
                             </div>
-                            <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-[var(--color-accent)] rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-xl border border-[var(--color-accent)]">
-                                <i data-lucide="users" class="text-black w-10 h-10 mb-3"></i>
-                                <h3 class="text-lg font-black text-black uppercase tracking-widest mb-2">Výkonnost</h3>
-                                <p class="text-black font-medium text-sm leading-relaxed">Time management a delegování. Zapojíme náš tým a naučíme vás, jak řídit lidi efektivně.</p>
+                            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] p-8 rounded-2xl flex flex-col justify-center shadow-2xl overflow-hidden">
+                                <div class="absolute -right-10 -bottom-10 opacity-10"><i data-lucide="users" class="w-40 h-40 text-black"></i></div>
+                                <div class="relative z-10">
+                                    <div class="text-xs font-black tracking-widest uppercase text-black/60 mb-2">Výkonnost</div>
+                                    <h3 class="text-2xl font-bold text-black mb-4">Delegování a efektivita</h3>
+                                    <p class="text-black font-medium leading-relaxed">Time management. Naučíme vás, jak řídit lidi efektivně, abyste nebyli na vše sami.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <!-- Karta 4 -->
-                    <div class="group perspective-1000 h-80 w-full cursor-pointer">
+                    <div class="group perspective-1000 h-[350px] cursor-pointer">
                         <div class="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
-                            <div class="absolute w-full h-full backface-hidden bg-[var(--color-bg)] border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-xl">
-                                <i data-lucide="map" class="text-[var(--color-accent)] w-12 h-12 mb-4"></i>
-                                <h3 class="text-xl font-bold text-white mb-2">Chybí vám směr</h3>
-                                <p class="text-white text-sm">Chcete více, chcete růst, ale nevíte přesně kudy dál.</p>
-                                <div class="mt-auto pt-4 text-[var(--color-accent)] text-sm font-bold animate-pulse">Najetím odhalíte řešení</div>
+                            <div class="absolute inset-0 backface-hidden bg-[var(--color-bg)] border border-white/5 p-8 rounded-2xl flex flex-col justify-center items-center text-center shadow-lg">
+                                <i data-lucide="alert-circle" class="text-[var(--color-accent)] w-12 h-12 mb-6"></i>
+                                <h3 class="text-xl font-bold text-white mb-4">Chcete více růst, ale nevíte kudy dál.</h3>
                             </div>
-                            <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-[var(--color-accent)] rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-xl border border-[var(--color-accent)]">
-                                <i data-lucide="compass" class="text-black w-10 h-10 mb-3"></i>
-                                <h3 class="text-lg font-black text-black uppercase tracking-widest mb-2">Rozhodování</h3>
-                                <p class="text-black font-medium text-sm leading-relaxed">Pomocí mentoringu nastavíme kroky, které přinesou výsledek, a najdeme váš "osobní briliant".</p>
+                            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-[var(--color-accent)] p-8 rounded-2xl flex flex-col justify-center shadow-2xl overflow-hidden">
+                                <div class="absolute -right-10 -bottom-10 opacity-10"><i data-lucide="compass" class="w-40 h-40 text-black"></i></div>
+                                <div class="relative z-10">
+                                    <div class="text-xs font-black tracking-widest uppercase text-black/60 mb-2">Rozhodování</div>
+                                    <h3 class="text-2xl font-bold text-black mb-4">Osobní briliant</h3>
+                                    <p class="text-black font-medium leading-relaxed">Pomocí koučinku nastavíme kroky a najdeme váš skrytý potenciál.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </section>
 
-    <!-- --- S ČÍM VÁM MOHU POMOCI --- -->
-    <section id="rozcestnik" class="py-24 relative border-t border-white/5 bg-[var(--color-bg)]">
-        <div class="container mx-auto px-6">
+    <!-- --- S ČÍM POMŮŽU --- -->
+    <section id="rozcestnik" class="py-24 relative overflow-hidden">
+        <!-- Video na pozadí s gradientním překryvem pro čitelnost -->
+        <div class="absolute inset-0 z-0">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-30">
+                <source src="video2.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-b from-[var(--color-bg)] via-[var(--color-bg)]/80 to-[var(--color-bg)]"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
             <div class="text-center mb-16 animate-fade-in-up">
                 <h2 class="text-4xl md:text-5xl font-extrabold text-white">S čím Vám mohu pomoci?</h2>
-                <p class="text-white mt-4 text-lg">Vyberte si fázi, ve které se právě nacházíte.</p>
+                <p class="text-white mt-4 text-lg font-light">Vyberte si fázi, ve které se právě nacházíte.</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Card 1 -->
                 <div data-ui="card" data-base-class="p-8 flex flex-col gap-4 group cursor-pointer" class="">
                     <div class="p-4 inline-flex self-start rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]"><i data-lucide="compass" class="w-8 h-8"></i></div>
                     <h3 class="text-2xl font-bold mt-2 text-white">Chci začít</h3>
-                    <p class="text-white leading-relaxed">Začínáte podnikat nebo měníte směr. Správný a&nbsp;bezpečný start je klíčový pro budoucí úspěch.</p>
+                    <p class="text-white leading-relaxed font-light">Začínáte podnikat nebo měníte směr. Správný a&nbsp;bezpečný start je klíčový pro budoucí úspěch.</p>
                     <div class="mt-auto pt-4 flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
                 </div>
+                <!-- Card 2 -->
                 <div data-ui="card" data-base-class="p-8 flex flex-col gap-4 group cursor-pointer" class="">
                     <div class="p-4 inline-flex self-start rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]"><i data-lucide="trending-up" class="w-8 h-8"></i></div>
                     <h3 class="text-2xl font-bold mt-2 text-white">Už podnikám</h3>
-                    <p class="text-white leading-relaxed">Potřebujete navést v&nbsp;oblastech financí, řízení externích příjmů a&nbsp;optimalizace nákladů. Vytvoříme stabilní systém.</p>
+                    <p class="text-white leading-relaxed font-light">Potřebujete navést v&nbsp;oblastech financí, řízení externích příjmů a&nbsp;optimalizace nákladů. Vytvoříme stabilní systém.</p>
                     <div class="mt-auto pt-4 flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
                 </div>
+                <!-- Card 3 -->
                 <div data-ui="card" data-base-class="p-8 flex flex-col gap-4 group cursor-pointer" class="">
                     <div class="p-4 inline-flex self-start rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]"><i data-lucide="users" class="w-8 h-8"></i></div>
                     <h3 class="text-2xl font-bold mt-2 text-white">Řídím lidi</h3>
-                    <p class="text-white leading-relaxed">Podpora pro manažery a&nbsp;teamleadery. Budování týmu, delegování odpovědnosti a&nbsp;efektivní zvyšování výkonu.</p>
+                    <p class="text-white leading-relaxed font-light">Podpora pro manažery a&nbsp;teamleadery. Budování týmu, delegování odpovědnosti a&nbsp;efektivní zvyšování výkonu.</p>
                     <div class="mt-auto pt-4 flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
                 </div>
+                <!-- Card 4 (Highlighted) -->
                 <div data-ui="card-highlight" data-base-class="p-8 flex flex-col gap-4 group cursor-pointer" class="">
-                    <div class="p-4 inline-flex self-start rounded-xl bg-white/20"><i data-lucide="briefcase" class="w-8 h-8"></i></div>
+                    <div class="p-4 inline-flex self-start rounded-xl bg-white/20"><i data-lucide="briefcase" class="w-8 h-8 text-white"></i></div>
                     <h3 class="text-2xl font-bold mt-2 text-white">Chci pomoc&nbsp;přímo</h3>
-                    <p class="text-white leading-relaxed">Služba Externí manažer. Osobní a&nbsp;byznys mentoring pro maximální urychlení Vašeho postupu.</p>
+                    <p class="text-white leading-relaxed font-light">Služba Externí manažer. Osobní a&nbsp;byznys mentoring pro maximální urychlení Vašeho postupu.</p>
                     <div class="mt-auto pt-4 flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-white group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
                 </div>
+                <!-- Card 5 -->
                 <div data-ui="card" data-base-class="p-8 flex flex-col gap-4 group cursor-pointer" class="">
                     <div class="p-4 inline-flex self-start rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]"><i data-lucide="layers" class="w-8 h-8"></i></div>
                     <h3 class="text-2xl font-bold mt-2 text-white">Chci komunitu</h3>
-                    <p class="text-white leading-relaxed">Obchodní klub, sdílení zkušeností s&nbsp;ostatními lídry a&nbsp;budování nových byznys kontaktů.</p>
+                    <p class="text-white leading-relaxed font-light">Obchodní klub, sdílení zkušeností s&nbsp;ostatními lídry a&nbsp;budování nových byznys kontaktů.</p>
                     <div class="mt-auto pt-4 flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-[var(--color-accent)] group-hover:gap-4 transition-all">Zjistit více <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- --- HLEDÁNÍ OSOBNÍHO BRILIANTU --- -->
-    <section class="pt-12 pb-24 relative overflow-hidden bg-[var(--color-card)]">
+    <!-- --- NAJDĚTE SVŮJ BRILIANT --- -->
+    <section class="pt-12 pb-24 relative overflow-hidden bg-[var(--color-card)] border-y border-white/5">
         <div class="container mx-auto px-6 relative z-10 text-center">
             <!-- VLOŽENÉ MALÉ LOGO DIAMANTU -->
             <img src="logo-small.png" alt="Briliant" class="mx-auto mb-8 h-20 md:h-24 w-auto object-contain animate-pulse hover:scale-105 transition-transform duration-500" />
@@ -496,24 +498,20 @@
         </div>
     </section>
 
-    <!-- --- ROČNÍ PROGRAM --- -->
-    <section id="program" class="py-24 relative border-t border-white/5 bg-[var(--color-bg)]">
+    <!-- --- RŮSTOVÝ PROGRAM --- -->
+    <section id="program" class="py-24 relative bg-[var(--color-bg)]">
         <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto text-center mb-16 animate-fade-in-up">
-                <div class="text-[var(--color-accent)] font-bold tracking-widest uppercase text-sm mb-4">Růstový program pro podnikatele</div>
-                <h3 class="text-3xl md:text-4xl font-bold text-white leading-tight">Jak program funguje – Co vás s námi čeká</h3>
-            </div>
-
-            <!-- Struktura ročního programu -->
+            <!-- Struktura -->
+            <h3 class="text-3xl font-bold text-center mb-10 text-white">Jak program funguje – Co vás s námi čeká</h3>
             <div class="grid md:grid-cols-4 gap-6 mb-20 relative">
-                <!-- Spojovací linka -->
+                <!-- Spojovací linka (viditelná jen na větších obrazovkách) -->
                 <div class="hidden md:block absolute top-8 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent opacity-30 z-0"></div>
                 
                 <div data-ui="card" data-base-class="p-6 relative z-10 text-center" class="">
                     <div class="w-16 h-16 mx-auto rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center font-bold text-xl mb-4 border border-[var(--color-accent)]/20 shadow-lg shadow-[var(--color-accent)]/10">1</div>
                     <h4 class="font-bold text-lg mb-2 text-white">Startovní analýza</h4>
                     <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Dle dohody</p>
-                    <ul class="text-sm text-white space-y-2 text-left">
+                    <ul class="text-sm text-white space-y-2 text-left font-light">
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Audit podnikání</li>
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Finanční rozvaha</li>
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Identifikace slabých míst</li>
@@ -525,7 +523,7 @@
                     <div class="w-16 h-16 mx-auto rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center font-bold text-xl mb-4 border border-[var(--color-accent)]/20 shadow-lg shadow-[var(--color-accent)]/10">2</div>
                     <h4 class="font-bold text-lg mb-2 text-white">Plán růstu</h4>
                     <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Orientačně</p>
-                    <ul class="text-sm text-white space-y-2 text-left">
+                    <ul class="text-sm text-white space-y-2 text-left font-light">
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Konkrétní kroky</li>
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Časový a finanční plán</li>
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Strategie pro váš vývoj</li>
@@ -536,7 +534,7 @@
                     <div class="w-16 h-16 mx-auto rounded-full bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center font-bold text-xl mb-4 border border-[var(--color-accent)]/20 shadow-lg shadow-[var(--color-accent)]/10">3</div>
                     <h4 class="font-bold text-lg mb-2 text-white">Pravidelná podpora</h4>
                     <p class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-wider mb-4">Kontinuálně</p>
-                    <ul class="text-sm text-white space-y-2 text-left">
+                    <ul class="text-sm text-white space-y-2 text-left font-light">
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Pravidelná setkání</li>
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Osobní přístup a know-how</li>
                         <li class="flex gap-2"><i data-lucide="minus" class="w-4 h-4 text-[var(--color-accent)] shrink-0"></i> Zapojení našeho týmu</li>
@@ -547,7 +545,7 @@
                 <div data-ui="card-highlight" data-base-class="p-6 relative z-10 text-center" class="">
                     <div class="w-16 h-16 mx-auto rounded-full bg-white/20 flex items-center justify-center font-bold text-xl mb-4 text-white">4</div>
                     <h4 class="font-bold text-lg mb-2 text-white">Výsledky</h4>
-                    <p class="text-xs font-bold text-white uppercase tracking-wider mb-4">Váš cíl</p>
+                    <p class="text-xs font-bold text-white/70 uppercase tracking-wider mb-4">Váš cíl</p>
                     <ul class="text-sm text-white space-y-3 text-left font-medium">
                         <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Nebudete na to už sami</li>
                         <li class="flex gap-3 items-center"><i data-lucide="check-circle-2" class="w-5 h-5 text-[var(--color-accent)] shrink-0"></i> Odhalíte svůj briliant</li>
@@ -560,7 +558,7 @@
             <!-- Program CTA -->
             <div class="mt-16 text-center">
                 <h3 class="text-3xl font-extrabold mb-6 text-white">Chcete posunout své podnikání a nebýt na to sami?</h3>
-                <p class="text-xl text-white mb-8 max-w-2xl mx-auto">Napište si o úvodní konzultaci zdarma a pojďme zjistit váš potenciál.</p>
+                <p class="text-xl text-white mb-8 max-w-2xl mx-auto font-light">Napište si o úvodní konzultaci zdarma a pojďme zjistit váš potenciál.</p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
                     <a href="#kontakt" data-ui="btn-primary" data-base-class="" class="px-10 py-5 text-lg shadow-xl shadow-[var(--color-accent)]/20 hover:-translate-y-1">
                         Domluvit konzultaci zdarma
@@ -571,7 +569,7 @@
     </section>
 
     <!-- --- KURZY A KLUB --- -->
-    <section id="kurzy" class="py-24 relative">
+    <section id="kurzy" class="py-24 relative border-t border-white/5 bg-[var(--color-card)]">
         <div class="container mx-auto px-6">
             <div class="grid lg:grid-cols-2 gap-12">
                 
@@ -581,16 +579,16 @@
                         <span class="text-xs font-black tracking-widest uppercase bg-[var(--color-accent)] text-black px-3 py-1 rounded-full">Plánujeme rozvinout</span>
                     </div>
                     <h2 class="text-3xl font-extrabold mb-4 text-white">Online a osobní Kurzy</h2>
-                    <p class="text-white mb-8">Plánujeme rozvinout komplexní vzdělávání. Od úplných základů až po pokročilé řízení firmy a leadership. Praktické online kurzy i osobní workshopy z reálné praxe.</p>
+                    <p class="text-white mb-8 font-light leading-relaxed">Plánujeme rozvinout komplexní vzdělávání. Od úplných základů až po pokročilé řízení firmy a leadership. Praktické online kurzy i osobní workshopy z reálné praxe.</p>
                     
                     <div class="space-y-4 mb-8">
                         <div class="p-4 border border-white/10 rounded-xl bg-white/5">
                             <h4 class="font-bold text-[var(--color-accent)]">Startovní &&nbsp;Základní</h4>
-                            <p class="text-sm text-white">Začátky v&nbsp;podnikání, cashflow, osobní <span class="whitespace-nowrap">time-management</span>.</p>
+                            <p class="text-sm text-white font-light mt-1">Začátky v&nbsp;podnikání, cashflow, osobní <span class="whitespace-nowrap">time-management</span>.</p>
                         </div>
                         <div class="p-4 border border-white/10 rounded-xl bg-white/5">
                             <h4 class="font-bold text-[var(--color-accent)]">Pokročilé &&nbsp;Manažerské</h4>
-                            <p class="text-sm text-white">Obchod, systém, řízení lidí, delegování pro manažery.</p>
+                            <p class="text-sm text-white font-light mt-1">Obchod, systém, řízení lidí, delegování pro manažery.</p>
                         </div>
                     </div>
                     <button data-ui="btn-outline" data-base-class="w-full mt-auto" class="">Chci vědět o spuštění jako první</button>
@@ -602,7 +600,7 @@
                         <span class="text-xs font-black tracking-widest uppercase bg-[var(--color-accent)] text-black px-3 py-1 rounded-full">Připravujeme otevření</span>
                     </div>
                     <h2 class="text-3xl font-extrabold mb-4 text-white">Byznys a Networking Klub</h2>
-                    <p class="text-white mb-8">Rozvíjíme komunitu lidí, kteří chtějí růst. Plánujeme vytvořit networkingové a obchodní skupiny pro sdílení zkušeností, kontakty a byznys příležitosti.</p>
+                    <p class="text-white mb-8 font-light leading-relaxed">Rozvíjíme komunitu lidí, kteří chtějí růst. Plánujeme vytvořit networkingové a obchodní skupiny pro sdílení zkušeností, kontakty a byznys příležitosti.</p>
                     
                     <ul class="space-y-4 mb-12 text-white font-medium">
                         <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[var(--color-accent)] w-5 h-5 shrink-0"></i> Exkluzivní osobní setkání s&nbsp;lídry</li>
@@ -618,14 +616,14 @@
     </section>
 
     <!-- --- KONTAKT --- -->
-    <section id="kontakt" class="py-24 px-6 border-t border-white/5 bg-[var(--color-card)]">
+    <section id="kontakt" class="py-24 px-6 border-t border-white/5">
         <div class="container mx-auto max-w-5xl">
             <div data-ui="card" data-base-class="grid md:grid-cols-2 overflow-hidden" class="">
                 
                 <div class="p-12 md:p-16">
                     <div class="font-bold tracking-widest uppercase text-sm mb-4 text-[var(--color-accent)]">Krok k&nbsp;cíli</div>
                     <h2 class="text-4xl font-extrabold mb-4 text-white">Udělejte první krok.</h2>
-                    <p class="text-white mb-10 text-lg">První schůzka slouží k&nbsp;tomu zjistit, zda si oboustranně sedneme a&nbsp;jestli Vám a&nbsp;Vašemu byznysu dokáži skutečně pomoci.</p>
+                    <p class="text-white mb-10 text-lg font-light leading-relaxed">První schůzka slouží k&nbsp;tomu zjistit, zda si oboustranně sedneme a&nbsp;jestli Vám a&nbsp;Vašemu byznysu dokáži skutečně pomoci.</p>
                     
                     <form class="space-y-6">
                         <div>
@@ -642,7 +640,7 @@
                     </form>
                 </div>
                 
-                <div class="p-12 md:p-16 flex flex-col justify-center bg-[var(--color-bg)]/50 border-l border-white/5">
+                <div class="p-12 md:p-16 flex flex-col justify-center bg-[var(--color-card)]/50 border-l border-white/5">
                     <div class="space-y-10">
                         <h3 class="text-2xl font-extrabold mb-4 text-white">Nebo se ozvěte rovnou:</h3>
                         
@@ -671,53 +669,67 @@
     <!-- --- FOOTER --- -->
     <footer class="pt-20 pb-10 border-t border-white/10 bg-[var(--color-bg)]">
         <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-12 gap-12 mb-16">
-                <!-- Informace o firmě -->
-                <div class="md:col-span-4 text-sm text-white leading-relaxed space-y-1">
-                    <a href="#" class="inline-block mb-6 group">
-                        <img src="logo-menu.png" alt="Michal Vyhnálek" class="h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+            <div class="grid md:grid-cols-3 gap-12 mb-16">
+                <!-- Sloupec 1: Logo a info -->
+                <div>
+                    <a href="#" class="inline-flex items-center gap-4 group mb-6">
+                        <img src="logo-menu.png" alt="Michal Vyhnálek" class="h-12 md:h-14 w-auto object-contain transition-transform group-hover:scale-105" />
                     </a>
-                    <p class="font-bold text-lg mb-2">xxxx</p>
-                    <p>Provozovatel webu: xxxx s.r.o.</p>
-                    <p>Sídlo: xxxx</p>
-                    <p>IČO: xxxx</p>
-                    <p>DIČ: neplátce DPH</p>
-                    <p>Zápis: xxxx</p>
-                    <p>Vznik společnosti: xxxx</p>
-                    <p>Jednatel: Michal Vyhnálek, nar. 9. 3. 1979</p>
+                    <p class="text-white text-sm font-light leading-relaxed mb-4">
+                        Pomáhám podnikatelům růst, stabilizovat finance a vybudovat tým, který funguje. Jsem tu, abyste už na nic nebyli sami.
+                    </p>
+                    <p class="text-[var(--color-accent)] font-bold text-sm">Najděte svůj briliant.</p>
                 </div>
-
-                <!-- Texty a upozornění -->
-                <div class="md:col-span-5 text-sm text-white leading-relaxed space-y-4 pt-12 md:pt-16">
-                    <p>Poskytujeme poradenské a konzultační služby v souladu s občanským zákoníkem. Nejsme advokátní kancelář ani daňový poradce. V případě potřeby doporučíme ověřené odborníky.</p>
-                    <p>Pojištění profesní odpovědnosti: Jsme pojištěni pro případ škody způsobené klientům v souvislosti s našimi službami.</p>
-                </div>
-
-                <!-- Kontakty, Odkazy, Sítě -->
-                <div class="md:col-span-3 pt-12 md:pt-16">
-                    <h4 class="font-bold text-white mb-4 uppercase tracking-widest text-xs text-[var(--color-accent)]">Důležité odkazy</h4>
-                    <ul class="space-y-2 text-sm text-white font-medium mb-8">
+                
+                <!-- Sloupec 2: Rychlé odkazy a Právní info -->
+                <div class="md:pl-10">
+                    <h4 class="font-bold text-white mb-6 uppercase tracking-widest text-sm">Informace</h4>
+                    <ul class="space-y-3 text-sm text-white font-light">
                         <li><a href="#" class="hover:text-[var(--color-accent)] transition-colors">Ochrana osobních údajů</a></li>
                         <li><a href="#" class="hover:text-[var(--color-accent)] transition-colors">Zásady cookies</a></li>
                         <li><a href="#kontakt" class="hover:text-[var(--color-accent)] transition-colors">Napište nám</a></li>
                     </ul>
+                    
+                    <div class="mt-8 pt-6 border-t border-white/10 text-xs text-white font-light leading-relaxed">
+                        <p class="font-bold text-white mb-1">Provozovatel webu: xxxx s.r.o.</p>
+                        <p>Sídlo: xxxx</p>
+                        <p>IČO: xxxx</p>
+                        <p>DIČ: xxxx</p>
+                        <p class="mt-2">Poskytujeme poradenské a konzultační služby v souladu s občanským zákoníkem. Nejsme advokátní kancelář ani daňový poradce. V případě potřeby doporučíme ověřené odborníky.</p>
+                    </div>
+                </div>
+                
+                <!-- Sloupec 3: Kontakty a sítě -->
+                <div>
+                    <h4 class="font-bold text-white mb-6 uppercase tracking-widest text-sm">Kontaktujte nás</h4>
+                    <ul class="space-y-4 text-sm text-white font-light mb-8">
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="mail" class="w-4 h-4 text-[var(--color-accent)]"></i> info@michalvyhnalek.cz
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-4 h-4 text-[var(--color-accent)]"></i> +420 732 212 628
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="globe" class="w-4 h-4 text-[var(--color-accent)]"></i> www.michalvyhnalek.cz
+                        </li>
+                    </ul>
 
-                    <h4 class="font-bold text-white mb-4 uppercase tracking-widest text-xs text-[var(--color-accent)]">Sledujte nás</h4>
+                    <h4 class="font-bold text-white mb-4 uppercase tracking-widest text-sm">Sledujte nás</h4>
                     <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all hover:-translate-y-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all hover:-translate-y-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all hover:-translate-y-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" /></svg>
                         </a>
                     </div>
                 </div>
             </div>
-            
-            <div class="text-center font-medium text-white/50 border-t border-white/10 pt-8 text-xs">
+
+            <div class="text-center font-light text-white/50 border-t border-white/10 pt-8 text-xs">
                 <p>&copy; 2026 xxxx s.r.o. Všechna práva vyhrazena.</p>
             </div>
         </div>
@@ -725,8 +737,231 @@
 
     <!-- --- JAVASCRIPT PRO INTERAKCI A CUSTOMIZER --- -->
     <script>
-        // Inicializace Lucide ikon pro statický obsah
+        // Inicializace Lucide ikon
         lucide.createIcons();
+
+        // 1. DATA PRO DESIGN STUDIO
+        const FONTS = [
+            { id: 'Inter', name: 'Inter (Čistý & Moderní)' },
+            { id: 'Space Grotesk', name: 'Space Grotesk (Tech)' },
+            { id: 'Plus Jakarta Sans', name: 'Plus Jakarta (Geometrický)' },
+            { id: 'Playfair Display', name: 'Playfair (Elegantní)' },
+            { id: 'Lora', name: 'Lora (Akademický)' },
+            { id: 'Syne', name: 'Syne (Extravagantní)' },
+            { id: 'Oswald', name: 'Oswald (Úderný & Úzký)' },
+            { id: 'Outfit', name: 'Outfit (Trendy & Kulatý)' },
+            { id: 'DM Sans', name: 'DM Sans (Profesionální)' },
+            { id: 'Cinzel', name: 'Cinzel (Luxusní & Filmový)' }
+        ];
+
+        const VARIANTS = [
+            { id: 'minimal', name: 'Moderní Minimalismus', desc: 'Zaoblené rohy, jemné stíny.' },
+            { id: 'corporate', name: 'Ostrý Korporát', desc: 'Ostré hrany, seriózní vzhled.' },
+            { id: 'elegant', name: 'Prémiová Elegance', desc: 'Tenké linky, sofistikovaný dojem.' },
+            { id: 'creative', name: 'Kreativní & Asymetrický', desc: 'Výrazné tvary, hravost.' },
+            { id: 'neobrutal', name: 'Neo-Brutalismus', desc: 'Ostré hrany, vysoký kontrast.' },
+            { id: 'glass', name: 'Skleněný (Glass)', desc: 'Rozostřené pozadí.' },
+            { id: 'soft', name: 'Měkký & Pastelový', desc: 'Extrémní zaoblení, jemné stíny.' },
+            { id: 'outline', name: 'Technický Nákres', desc: 'Přerušované čáry.' },
+            { id: 'playful', name: 'Hravé Bubliny', desc: 'Organické tvary a rotace.' },
+            { id: 'retro', name: 'Retro Pop', desc: 'Posunuté stíny, vintage vibe.' }
+        ];
+
+        let currentVariant = 'elegant';
+        let currentFont = 'Plus Jakarta Sans';
+
+        // 2. LOGIKA STYLŮ (Převedeno z Reactu do CSS stringů)
+        function getCardStyle(variant, highlighted) {
+            const base = 'transition-all duration-300';
+            const defaultBg = 'bg-[var(--color-card)] text-[var(--color-text)]';
+            const highlightBg = 'bg-[var(--color-primary)] text-white border border-[var(--color-accent)]';
+
+            switch(variant) {
+                case 'corporate': return `${base} rounded-none border border-white/10 shadow-sm ${highlighted ? highlightBg : defaultBg}`;
+                case 'elegant': return `${base} rounded-sm shadow-lg border-t-2 ${highlighted ? 'bg-[var(--color-primary)] text-white border-[var(--color-accent)]' : 'bg-[var(--color-card)] text-[var(--color-text)] border-white/10 hover:border-[var(--color-accent)]/50'}`;
+                case 'creative': return `${base} rounded-[2rem_4rem_2rem_1rem] border-2 border-transparent shadow-2xl hover:-rotate-1 ${highlighted ? highlightBg : defaultBg}`;
+                case 'neobrutal': return `${base} rounded-none border-2 border-[var(--color-accent)] shadow-[8px_8px_0px_0px_var(--color-accent)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_var(--color-accent)] ${highlighted ? 'bg-[var(--color-accent)] text-black' : 'bg-[var(--color-card)] text-[var(--color-text)]'}`;
+                case 'glass': return `${base} rounded-3xl border backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] ${highlighted ? 'border-[var(--color-accent)]/50 bg-[var(--color-primary)]/80 text-white' : 'border-white/10 bg-white/5 text-[var(--color-text)]'}`;
+                case 'soft': return `${base} rounded-[3rem] border-none shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] hover:-translate-y-2 ${highlighted ? highlightBg : defaultBg}`;
+                case 'outline': return `${base} rounded-xl border-2 ${highlighted ? 'border-solid border-[var(--color-accent)] bg-[var(--color-accent)]/10 text-[var(--color-text)]' : 'border-dashed border-white/20 bg-transparent hover:border-[var(--color-accent)] hover:bg-[var(--color-accent)]/5 text-[var(--color-text)]'}`;
+                case 'playful': return `${base} rounded-[3rem_1rem_3rem_1rem] border border-white/10 shadow-xl hover:rotate-2 ${highlighted ? highlightBg : defaultBg}`;
+                case 'retro': return `${base} rounded-none border-2 border-[var(--color-text)] hover:translate-x-1 hover:translate-y-1 ${highlighted ? 'bg-[var(--color-accent)] text-black shadow-[6px_6px_0px_0px_var(--color-text)]' : 'bg-[var(--color-card)] text-[var(--color-text)] shadow-[6px_6px_0px_0px_var(--color-accent)] hover:shadow-[2px_2px_0px_var(--color-accent)]'}`;
+                case 'minimal': default: return `${base} rounded-2xl border border-white/5 shadow-xl hover:-translate-y-2 ${highlighted ? highlightBg : defaultBg}`;
+            }
+        }
+
+        function getButtonStyle(variant, type) {
+            const base = 'font-bold flex items-center justify-center gap-2 transition-all duration-300';
+            const primaryColors = 'bg-[var(--color-accent)] text-black border-2 border-transparent';
+            const secondaryColors = 'bg-transparent text-[var(--color-text)] border-2 border-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-black';
+            const outlineColors = 'bg-transparent text-[var(--color-text)] border-2 border-white/20 hover:border-white/60';
+
+            switch(variant) {
+                case 'corporate': return `${base} rounded-sm px-8 py-4 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors} hover:brightness-110`;
+                case 'elegant': return `${base} rounded-none px-8 py-4 border-b-2 hover:px-10 ${type === 'primary' ? 'border-[var(--color-accent)] text-[var(--color-accent)] bg-transparent hover:bg-[var(--color-accent)] hover:text-black' : type === 'outline' ? 'border-white/30 text-white bg-transparent' : secondaryColors}`;
+                case 'creative': return `${base} rounded-[1rem_2rem_1rem_0.5rem] px-8 py-4 shadow-lg hover:scale-105 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors}`;
+                case 'neobrutal': return `${base} rounded-none border-2 border-white px-8 py-4 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[0px_0px_0px_0px_rgba(255,255,255,1)] ${type === 'secondary' ? 'bg-transparent text-white' : type === 'outline' ? 'bg-transparent border-dashed text-white' : primaryColors}`;
+                case 'glass': return `${base} rounded-2xl border border-white/20 backdrop-blur-md px-8 py-4 shadow-lg hover:scale-105 ${type === 'secondary' ? 'bg-white/5 text-[var(--color-text)]' : type === 'outline' ? outlineColors : 'bg-[var(--color-accent)] text-black border-none'}`;
+                case 'soft': return `${base} rounded-full px-8 py-4 shadow-[0_10px_20px_-10px_var(--color-accent)] hover:-translate-y-1 hover:shadow-[0_15px_25px_-10px_var(--color-accent)] ${type === 'secondary' ? 'bg-[var(--color-card)] text-[var(--color-text)] border-none shadow-none hover:bg-white/5' : type === 'outline' ? outlineColors : primaryColors}`;
+                case 'outline': return `${base} rounded-xl border-2 border-dashed px-8 py-4 hover:border-solid transition-all ${type === 'primary' ? 'border-[var(--color-accent)] bg-transparent text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-black' : type === 'outline' ? 'border-white/30 bg-transparent text-white hover:border-white' : secondaryColors}`;
+                case 'playful': return `${base} rounded-[2rem_0.5rem_2rem_0.5rem] px-8 py-4 shadow-md hover:scale-110 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors}`;
+                case 'retro': return `${base} rounded-none border-2 border-[var(--color-text)] px-8 py-4 shadow-[4px_4px_0px_0px_var(--color-accent)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none ${type === 'secondary' ? 'bg-[var(--color-card)] text-[var(--color-text)]' : type === 'outline' ? outlineColors : primaryColors}`;
+                case 'minimal': default: return `${base} rounded-full px-8 py-4 shadow-xl hover:scale-105 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors}`;
+            }
+        }
+
+        function getImageStyle(variant) {
+            switch(variant) {
+                case 'corporate': return 'rounded-none';
+                case 'elegant': return 'rounded-t-[10rem] rounded-b-md';
+                case 'creative': return 'rounded-[40%_60%_70%_30%/40%_50%_60%_50%]';
+                case 'neobrutal': return 'rounded-none border-2 border-white shadow-[12px_12px_0px_0px_var(--color-accent)] bg-white/5';
+                case 'glass': return 'rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] bg-white/5 backdrop-blur-sm border border-white/10';
+                case 'soft': return 'rounded-[4rem]';
+                case 'outline': return 'rounded-3xl border-2 border-dashed border-[var(--color-accent)] p-2 !bg-transparent';
+                case 'playful': return 'rounded-[50%_50%_50%_50%/60%_60%_40%_40%] shadow-2xl';
+                case 'retro': return 'rounded-none border-2 border-white shadow-[12px_12px_0px_0px_var(--color-accent)] bg-white/5';
+                case 'minimal': default: return 'rounded-[2.5rem]';
+            }
+        }
+
+        function getLogoNavStyle(variant) {
+            const base = "w-10 h-10 flex items-center justify-center font-bold text-black text-xl transition-transform group-hover:rotate-12 bg-[var(--color-accent)]";
+            if (variant === 'neobrutal') return base + ' border-2 border-white';
+            if (variant === 'corporate') return base + ' rounded-none';
+            return base + ' rounded-xl';
+        }
+        
+        function getBtnNavStyle(variant) {
+            const base = "hidden md:flex items-center gap-2 px-6 py-2.5 text-sm font-bold transition-all bg-[var(--color-accent)] text-black";
+            if (variant === 'neobrutal') return base + ' border-2 border-white shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none';
+            if (variant === 'corporate') return base + ' rounded-sm';
+            return base + ' rounded-full hover:shadow-[0_0_15px_var(--color-accent)]';
+        }
+
+        // 3. APLIKACE STYLŮ NA DOM
+        function applyStyles() {
+            // Aplikace fontu
+            document.body.style.fontFamily = `"${currentFont}", sans-serif`;
+
+            // Aplikace vzhledu na prvky pomocí data atributů
+            document.querySelectorAll('[data-ui]').forEach(el => {
+                const type = el.getAttribute('data-ui');
+                const baseClass = el.getAttribute('data-base-class');
+                let newClass = '';
+
+                if (type === 'card') newClass = getCardStyle(currentVariant, false);
+                if (type === 'card-highlight') newClass = getCardStyle(currentVariant, true);
+                if (type === 'btn-primary') newClass = getButtonStyle(currentVariant, 'primary');
+                if (type === 'btn-secondary') newClass = getButtonStyle(currentVariant, 'secondary');
+                if (type === 'btn-outline') newClass = getButtonStyle(currentVariant, 'outline');
+                if (type === 'image-bg') newClass = getImageStyle(currentVariant);
+                if (type === 'logo') newClass = getLogoNavStyle(currentVariant);
+                if (type === 'btn-nav') newClass = getBtnNavStyle(currentVariant);
+
+                el.className = `${baseClass} ${newClass}`;
+            });
+
+            // Speciální pravidlo pro nadpis v hero sekci
+            const heroHighlight = document.getElementById('hero-highlight');
+            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
+            if(primaryColor === '#0a1128' || primaryColor === '#000000') {
+                heroHighlight.className = 'text-gold-gradient';
+            } else {
+                heroHighlight.className = 'text-[var(--color-accent)]';
+            }
+        }
+
+        // 4. FUNKCE CUSTOMIZERU
+        function toggleCustomizer() {
+            const panel = document.getElementById('customizer-panel');
+            const btn = document.getElementById('customizer-toggle-btn');
+            
+            if (panel.classList.contains('translate-x-full')) {
+                panel.classList.remove('translate-x-full');
+                panel.classList.add('translate-x-0');
+                btn.classList.add('translate-x-full', 'opacity-0');
+                btn.classList.remove('translate-x-0', 'opacity-100');
+            } else {
+                panel.classList.add('translate-x-full');
+                panel.classList.remove('translate-x-0');
+                btn.classList.remove('translate-x-full', 'opacity-0');
+                btn.classList.add('translate-x-0', 'opacity-100');
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            
+            document.querySelectorAll('[id^="tab-btn-"]').forEach(btn => {
+                btn.className = "flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-gray-500 hover:bg-gray-200/50";
+            });
+            document.getElementById(`tab-btn-${tabId}`).className = "flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all bg-white shadow-sm text-blue-600";
+        }
+
+        function setVariant(variantId) {
+            currentVariant = variantId;
+            renderStyleButtons();
+            applyStyles();
+        }
+
+        function setFontFamily(fontId) {
+            currentFont = fontId;
+            renderFontButtons();
+            applyStyles();
+        }
+
+        function handleColorChange(key, value) {
+            document.documentElement.style.setProperty(`--color-${key}`, value);
+            if (key === 'accent') document.getElementById('color-accent-label').innerText = value;
+            applyStyles(); // Přepočítá efekty závislé na barvě (např. hero nadpis)
+        }
+
+        function setPreset(presetName) {
+            const presets = {
+                default: { primary: '#0a1128', accent: '#d4af37', bg: '#050814', text: '#ffffff', cardBg: '#111827' },
+                light: { primary: '#f8fafc', accent: '#d4af37', bg: '#ffffff', text: '#000000', cardBg: '#f1f5f9' },
+                sapphire: { primary: '#0f172a', accent: '#38bdf8', bg: '#020617', text: '#ffffff', cardBg: '#1e293b' },
+                emerald: { primary: '#064e3b', accent: '#34d399', bg: '#022c22', text: '#ffffff', cardBg: '#065f46' },
+                monochrome: { primary: '#000000', accent: '#ffffff', bg: '#000000', text: '#ffffff', cardBg: '#111111' }
+            };
+            const p = presets[presetName];
+            if(p) {
+                handleColorChange('primary', p.primary);
+                handleColorChange('accent', p.accent);
+                handleColorChange('bg', p.bg);
+                handleColorChange('text', p.text);
+                handleColorChange('cardBg', p.cardBg); // CSS variable is --color-card, updating that
+                document.documentElement.style.setProperty('--color-card', p.cardBg);
+                
+                // Update inputs
+                document.getElementById('color-bg').value = p.bg;
+                document.getElementById('color-card').value = p.cardBg;
+                document.getElementById('color-accent').value = p.accent;
+                document.getElementById('color-accent-label').innerText = p.accent;
+            }
+        }
+
+        // 5. RENDEROVÁNÍ TLAČÍTEK V MENU
+        function renderStyleButtons() {
+            const container = document.getElementById('style-buttons-container');
+            container.innerHTML = VARIANTS.map(v => `
+                <button onclick="setVariant('${v.id}')" class="w-full text-left p-3 rounded-xl border transition-all mb-2 ${currentVariant === v.id ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500/20' : 'border-gray-200 hover:border-blue-300'}">
+                    <div class="font-bold text-sm ${currentVariant === v.id ? 'text-blue-800' : ''}">${v.name}</div>
+                    <div class="text-[10px] text-gray-500 mt-1">${v.desc}</div>
+                </button>
+            `).join('');
+        }
+
+        function renderFontButtons() {
+            const container = document.getElementById('fonts-buttons-container');
+            container.innerHTML = FONTS.map(f => `
+                <button onclick="setFontFamily('${f.id}')" style="font-family: '${f.id}', sans-serif;" class="w-full text-left p-3 rounded-xl border transition-all text-sm mb-2 ${currentFont === f.id ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500/20 text-blue-800' : 'border-gray-200 hover:bg-gray-50 text-gray-700'}">
+                    ${f.name}
+                </button>
+            `).join('');
+        }
 
         // LOGIKA PRO INTERAKTIVNÍ MAPU (Varianta 1)
         const problems = [
@@ -815,239 +1050,16 @@
 
         // Přepínání UI variant pro sekci Znáte tento pocit
         function switchInteractiveVariant(variant) {
-            document.getElementById('interactive-variant-1').classList.add('hidden');
-            document.getElementById('interactive-variant-2').classList.add('hidden');
+            document.getElementById('interactive-variant-1').style.display = variant === 1 ? 'block' : 'none';
+            document.getElementById('interactive-variant-2').style.display = variant === 2 ? 'block' : 'none';
             
-            document.getElementById('interactive-variant-' + variant).classList.remove('hidden');
-
-            // Reset tlačítek
-            for(let i=1; i<=2; i++) {
-                const btn = document.getElementById('btn-var-' + i);
-                if(i === variant) {
-                    btn.className = "px-6 py-3 rounded-xl font-bold bg-[var(--color-accent)] text-black shadow-lg transition-all";
-                } else {
-                    btn.className = "px-6 py-3 rounded-xl font-bold bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all";
-                }
-            }
-        }
-
-        // DATA PRO DESIGN STUDIO
-        const FONTS = [
-            { id: 'Inter', name: 'Inter (Čistý & Moderní)' },
-            { id: 'Space Grotesk', name: 'Space Grotesk (Tech)' },
-            { id: 'Plus Jakarta Sans', name: 'Plus Jakarta (Geometrický)' },
-            { id: 'Playfair Display', name: 'Playfair (Elegantní)' },
-            { id: 'Lora', name: 'Lora (Akademický)' },
-            { id: 'Syne', name: 'Syne (Extravagantní)' },
-            { id: 'Oswald', name: 'Oswald (Úderný & Úzký)' },
-            { id: 'Outfit', name: 'Outfit (Trendy & Kulatý)' },
-            { id: 'DM Sans', name: 'DM Sans (Profesionální)' },
-            { id: 'Cinzel', name: 'Cinzel (Luxusní & Filmový)' }
-        ];
-
-        const VARIANTS = [
-            { id: 'minimal', name: 'Moderní Minimalismus', desc: 'Zaoblené rohy, jemné stíny.' },
-            { id: 'corporate', name: 'Ostrý Korporát', desc: 'Ostré hrany, seriózní vzhled.' },
-            { id: 'elegant', name: 'Prémiová Elegance', desc: 'Tenké linky, sofistikovaný dojem.' },
-            { id: 'creative', name: 'Kreativní & Asymetrický', desc: 'Výrazné tvary, hravost.' },
-            { id: 'neobrutal', name: 'Neo-Brutalismus', desc: 'Ostré hrany, vysoký kontrast.' },
-            { id: 'glass', name: 'Skleněný (Glass)', desc: 'Rozostřené pozadí.' },
-            { id: 'soft', name: 'Měkký & Pastelový', desc: 'Extrémní zaoblení, jemné stíny.' },
-            { id: 'outline', name: 'Technický Nákres', desc: 'Přerušované čáry.' },
-            { id: 'playful', name: 'Hravé Bubliny', desc: 'Organické tvary a rotace.' },
-            { id: 'retro', name: 'Retro Pop', desc: 'Posunuté stíny, vintage vibe.' }
-        ];
-
-        let currentVariant = 'elegant';
-        let currentFont = 'Plus Jakarta Sans';
-
-        // LOGIKA STYLŮ (Převedeno z Reactu do CSS stringů)
-        function getCardStyle(variant, highlighted) {
-            const base = 'transition-all duration-300';
-            const defaultBg = 'bg-[var(--color-card)]';
-            const highlightBg = 'bg-[var(--color-primary)] border border-[var(--color-accent)]';
-
-            switch(variant) {
-                case 'corporate': return `${base} rounded-none border border-white/10 shadow-sm ${highlighted ? highlightBg : defaultBg}`;
-                case 'elegant': return `${base} rounded-sm shadow-lg border-t-2 ${highlighted ? 'bg-[var(--color-primary)] border-[var(--color-accent)]' : 'bg-[var(--color-card)] border-white/10 hover:border-[var(--color-accent)]/50'}`;
-                case 'creative': return `${base} rounded-[2rem_4rem_2rem_1rem] border-2 border-transparent shadow-2xl hover:-rotate-1 ${highlighted ? highlightBg : defaultBg}`;
-                case 'neobrutal': return `${base} rounded-none border-2 border-[var(--color-accent)] shadow-[8px_8px_0px_0px_var(--color-accent)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_var(--color-accent)] ${highlighted ? 'bg-[var(--color-accent)] !text-black' : 'bg-[var(--color-card)]'}`;
-                case 'glass': return `${base} rounded-3xl border backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] ${highlighted ? 'border-[var(--color-accent)]/50 bg-[var(--color-primary)]/80' : 'border-white/10 bg-white/5'}`;
-                case 'soft': return `${base} rounded-[3rem] border-none shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] hover:-translate-y-2 ${highlighted ? highlightBg : defaultBg}`;
-                case 'outline': return `${base} rounded-xl border-2 ${highlighted ? 'border-solid border-[var(--color-accent)] bg-[var(--color-accent)]/10' : 'border-dashed border-white/20 bg-transparent hover:border-[var(--color-accent)] hover:bg-[var(--color-accent)]/5'}`;
-                case 'playful': return `${base} rounded-[3rem_1rem_3rem_1rem] border border-white/10 shadow-xl hover:rotate-2 ${highlighted ? highlightBg : defaultBg}`;
-                case 'retro': return `${base} rounded-none border-2 border-white hover:translate-x-1 hover:translate-y-1 ${highlighted ? 'bg-[var(--color-accent)] !text-black shadow-[6px_6px_0px_0px_white]' : 'bg-[var(--color-card)] shadow-[6px_6px_0px_0px_var(--color-accent)] hover:shadow-[2px_2px_0px_var(--color-accent)]'}`;
-                case 'minimal': default: return `${base} rounded-2xl border border-white/5 shadow-xl hover:-translate-y-2 ${highlighted ? highlightBg : defaultBg}`;
-            }
-        }
-
-        function getButtonStyle(variant, type) {
-            const base = 'font-bold flex items-center justify-center gap-2 transition-all duration-300';
-            const primaryColors = 'bg-[var(--color-accent)] !text-black border-2 border-transparent';
-            const secondaryColors = 'bg-transparent border-2 border-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:!text-black';
-            const outlineColors = 'bg-transparent border-2 border-white/20 hover:border-white/60';
-
-            switch(variant) {
-                case 'corporate': return `${base} rounded-sm px-8 py-4 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors} hover:brightness-110`;
-                case 'elegant': return `${base} rounded-none px-8 py-4 border-b-2 hover:px-10 ${type === 'primary' ? 'border-[var(--color-accent)] !text-[var(--color-accent)] bg-transparent hover:bg-[var(--color-accent)] hover:!text-black' : type === 'outline' ? 'border-white/30 bg-transparent' : secondaryColors}`;
-                case 'creative': return `${base} rounded-[1rem_2rem_1rem_0.5rem] px-8 py-4 shadow-lg hover:scale-105 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors}`;
-                case 'neobrutal': return `${base} rounded-none border-2 border-white px-8 py-4 shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[0px_0px_0px_0px_rgba(255,255,255,1)] ${type === 'secondary' ? 'bg-transparent' : type === 'outline' ? 'bg-transparent border-dashed' : primaryColors}`;
-                case 'glass': return `${base} rounded-2xl border border-white/20 backdrop-blur-md px-8 py-4 shadow-lg hover:scale-105 ${type === 'secondary' ? 'bg-white/5' : type === 'outline' ? outlineColors : 'bg-[var(--color-accent)] !text-black border-none'}`;
-                case 'soft': return `${base} rounded-full px-8 py-4 shadow-[0_10px_20px_-10px_var(--color-accent)] hover:-translate-y-1 hover:shadow-[0_15px_25px_-10px_var(--color-accent)] ${type === 'secondary' ? 'bg-[var(--color-card)] border-none shadow-none hover:bg-white/5' : type === 'outline' ? outlineColors : primaryColors}`;
-                case 'outline': return `${base} rounded-xl border-2 border-dashed px-8 py-4 hover:border-solid transition-all ${type === 'primary' ? 'border-[var(--color-accent)] bg-transparent !text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:!text-black' : type === 'outline' ? 'border-white/30 bg-transparent hover:border-white' : secondaryColors}`;
-                case 'playful': return `${base} rounded-[2rem_0.5rem_2rem_0.5rem] px-8 py-4 shadow-md hover:scale-110 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors}`;
-                case 'retro': return `${base} rounded-none border-2 border-white px-8 py-4 shadow-[4px_4px_0px_0px_var(--color-accent)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none ${type === 'secondary' ? 'bg-[var(--color-card)]' : type === 'outline' ? outlineColors : primaryColors}`;
-                case 'minimal': default: return `${base} rounded-full px-8 py-4 shadow-xl hover:scale-105 ${type === 'secondary' ? secondaryColors : type === 'outline' ? outlineColors : primaryColors}`;
-            }
-        }
-
-        function getImageStyle(variant) {
-            switch(variant) {
-                case 'corporate': return 'rounded-none';
-                case 'elegant': return 'rounded-t-[10rem] rounded-b-md';
-                case 'creative': return 'rounded-[40%_60%_70%_30%/40%_50%_60%_50%]';
-                case 'neobrutal': return 'rounded-none border-2 border-white shadow-[12px_12px_0px_0px_var(--color-accent)] bg-white/5';
-                case 'glass': return 'rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] bg-white/5 backdrop-blur-sm border border-white/10';
-                case 'soft': return 'rounded-[4rem]';
-                case 'outline': return 'rounded-3xl border-2 border-dashed border-[var(--color-accent)] p-2 !bg-transparent';
-                case 'playful': return 'rounded-[50%_50%_50%_50%/60%_60%_40%_40%] shadow-2xl';
-                case 'retro': return 'rounded-none border-2 border-white shadow-[12px_12px_0px_0px_var(--color-accent)] bg-white/5';
-                case 'minimal': default: return 'rounded-[2.5rem]';
-            }
-        }
-
-        function getLogoNavStyle(variant) {
-            const base = "w-10 h-10 flex items-center justify-center font-bold !text-black text-xl transition-transform group-hover:rotate-12 bg-[var(--color-accent)]";
-            if (variant === 'neobrutal') return base + ' border-2 border-white';
-            if (variant === 'corporate') return base + ' rounded-none';
-            return base + ' rounded-xl';
-        }
-        
-        function getBtnNavStyle(variant) {
-            const base = "hidden md:flex items-center gap-2 px-6 py-2.5 text-sm font-bold transition-all bg-[var(--color-accent)] !text-black";
-            if (variant === 'neobrutal') return base + ' border-2 border-white shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none';
-            if (variant === 'corporate') return base + ' rounded-sm';
-            return base + ' rounded-full hover:shadow-[0_0_15px_var(--color-accent)]';
-        }
-
-        function applyStyles() {
-            document.body.style.fontFamily = `"${currentFont}", sans-serif`;
-
-            document.querySelectorAll('[data-ui]').forEach(el => {
-                const type = el.getAttribute('data-ui');
-                const baseClass = el.getAttribute('data-base-class');
-                let newClass = '';
-
-                if (type === 'card') newClass = getCardStyle(currentVariant, false);
-                if (type === 'card-highlight') newClass = getCardStyle(currentVariant, true);
-                if (type === 'btn-primary') newClass = getButtonStyle(currentVariant, 'primary');
-                if (type === 'btn-secondary') newClass = getButtonStyle(currentVariant, 'secondary');
-                if (type === 'btn-outline') newClass = getButtonStyle(currentVariant, 'outline');
-                if (type === 'image-bg') newClass = getImageStyle(currentVariant);
-                if (type === 'logo') newClass = getLogoNavStyle(currentVariant);
-                if (type === 'btn-nav') newClass = getBtnNavStyle(currentVariant);
-
-                el.className = `${baseClass} ${newClass}`;
-            });
-
-            const heroHighlight = document.getElementById('hero-highlight');
-            if (heroHighlight) {
-                const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
-                if(primaryColor === '#0a1128' || primaryColor === '#000000') {
-                    heroHighlight.className = 'text-gold-gradient';
-                } else {
-                    heroHighlight.className = 'text-[var(--color-accent)]';
-                }
-            }
-        }
-
-        // FUNKCE CUSTOMIZERU
-        function toggleCustomizer() {
-            const panel = document.getElementById('customizer-panel');
-            const btn = document.getElementById('customizer-toggle-btn');
-            
-            if (panel.classList.contains('translate-x-full')) {
-                panel.classList.remove('translate-x-full');
-                panel.classList.add('translate-x-0');
-                btn.classList.add('translate-x-full', 'opacity-0');
-                btn.classList.remove('translate-x-0', 'opacity-100');
-            } else {
-                panel.classList.add('translate-x-full');
-                panel.classList.remove('translate-x-0');
-                btn.classList.remove('translate-x-full', 'opacity-0');
-                btn.classList.add('translate-x-0', 'opacity-100');
-            }
-        }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-            
-            document.querySelectorAll('[id^="tab-btn-"]').forEach(btn => {
-                btn.className = "flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-gray-500 hover:bg-gray-200/50";
-            });
-            document.getElementById(`tab-btn-${tabId}`).className = "flex-1 py-2 rounded-lg flex items-center justify-center gap-2 transition-all bg-white shadow-sm text-blue-600";
-        }
-
-        function setVariant(variantId) {
-            currentVariant = variantId;
-            renderStyleButtons();
-            applyStyles();
-        }
-
-        function setFontFamily(fontId) {
-            currentFont = fontId;
-            renderFontButtons();
-            applyStyles();
-        }
-
-        function handleColorChange(key, value) {
-            document.documentElement.style.setProperty(`--color-${key}`, value);
-            if (key === 'accent') document.getElementById('color-accent-label').innerText = value;
-            applyStyles(); 
-        }
-
-        function setPreset(presetName) {
-            const presets = {
-                default: { primary: '#0a1128', accent: '#d4af37', bg: '#050814', text: '#ffffff', cardBg: '#111827' },
-                light: { primary: '#f8fafc', accent: '#d4af37', bg: '#ffffff', text: '#0f172a', cardBg: '#f1f5f9' },
-                sapphire: { primary: '#0f172a', accent: '#38bdf8', bg: '#020617', text: '#ffffff', cardBg: '#1e293b' },
-                emerald: { primary: '#064e3b', accent: '#34d399', bg: '#022c22', text: '#ffffff', cardBg: '#065f46' },
-                monochrome: { primary: '#000000', accent: '#ffffff', bg: '#000000', text: '#ffffff', cardBg: '#111111' }
-            };
-            const p = presets[presetName];
-            if(p) {
-                handleColorChange('primary', p.primary);
-                handleColorChange('accent', p.accent);
-                handleColorChange('bg', p.bg);
-                handleColorChange('text', p.text);
-                handleColorChange('cardBg', p.cardBg);
-                document.documentElement.style.setProperty('--color-card', p.cardBg);
-                
-                document.getElementById('color-bg').value = p.bg;
-                document.getElementById('color-card').value = p.cardBg;
-                document.getElementById('color-accent').value = p.accent;
-                document.getElementById('color-accent-label').innerText = p.accent;
-            }
-        }
-
-        function renderStyleButtons() {
-            const container = document.getElementById('style-buttons-container');
-            container.innerHTML = VARIANTS.map(v => `
-                <button onclick="setVariant('${v.id}')" class="w-full text-left p-3 rounded-xl border transition-all mb-2 ${currentVariant === v.id ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500/20' : 'border-gray-200 hover:border-blue-300'}">
-                    <div class="font-bold text-sm ${currentVariant === v.id ? 'text-blue-800' : ''}">${v.name}</div>
-                    <div class="text-[10px] text-gray-500 mt-1">${v.desc}</div>
-                </button>
-            `).join('');
-        }
-
-        function renderFontButtons() {
-            const container = document.getElementById('fonts-buttons-container');
-            container.innerHTML = FONTS.map(f => `
-                <button onclick="setFontFamily('${f.id}')" style="font-family: '${f.id}', sans-serif;" class="w-full text-left p-3 rounded-xl border transition-all text-sm mb-2 ${currentFont === f.id ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500/20 text-blue-800' : 'border-gray-200 hover:bg-gray-50 text-gray-700'}">
-                    ${f.name}
-                </button>
-            `).join('');
+            // Styl tlačítek
+            document.getElementById('btn-var-1').className = variant === 1 
+                ? 'px-6 py-3 rounded-xl font-bold bg-[var(--color-accent)] text-black shadow-lg transition-all' 
+                : 'px-6 py-3 rounded-xl font-bold bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all';
+            document.getElementById('btn-var-2').className = variant === 2 
+                ? 'px-6 py-3 rounded-xl font-bold bg-[var(--color-accent)] text-black shadow-lg transition-all' 
+                : 'px-6 py-3 rounded-xl font-bold bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all';
         }
 
         // Inicializace po načtení
