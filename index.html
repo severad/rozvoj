@@ -48,10 +48,11 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 200% auto;
-            animation: shine 5s linear infinite;
+            animation: shine 8s ease-in-out infinite alternate;
         }
         @keyframes shine {
-            to { background-position: 200% center; }
+            0% { background-position: 0% center; }
+            100% { background-position: 100% center; }
         }
 
         /* Skrývání záložek v customizeru */
@@ -165,9 +166,9 @@
 
     <!-- --- HERO SECTION --- -->
     <header class="relative pt-32 pb-32 md:pt-48 md:pb-40 overflow-hidden flex items-center justify-center min-h-[80vh]">
-        <!-- Videa na pozadí (Přehrávají se za sebou) -->
+        <!-- Video na pozadí (Smyčka jednoho videa) -->
         <div class="absolute inset-0 z-0 w-full h-full opacity-60">
-            <video id="hero-video" src="video1.mp4" autoplay muted playsinline class="w-full h-full object-cover"></video>
+            <video id="hero-video" src="video1.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
         </div>
         <!-- Tmavý překryv pro čitelnost textu -->
         <div class="absolute inset-0 z-0 bg-gradient-to-b from-[var(--color-bg)]/90 via-[var(--color-bg)]/60 to-[var(--color-bg)]"></div>
@@ -212,7 +213,7 @@
                         <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-card)] to-[var(--color-bg)]"></div>
                         
                         <!-- Zde vložíte vaši fotografii. object-cover zajistí, že vyplní celý čtverec. object-top ji zarovná nahoru. -->
-                        <img src="michal-vyhnalek.jfif" alt="Michal Vyhnálek" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+                        <img src="https://michalvyhnalek.cz/wp-content/uploads/2023/11/o_mne-800x883.png" alt="Michal Vyhnálek" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
                         
                         <!-- Jemný stín přes spodní část fotky pro hezčí zasazení do stránky -->
                         <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-transparent opacity-80 pointer-events-none"></div>
@@ -679,13 +680,13 @@
                     <h4 class="font-bold text-white mb-4 uppercase tracking-widest text-xs text-[var(--color-accent)]">Sledujte nás</h4>
                     <div class="flex gap-4">
                         <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all hover:-translate-y-1">
-                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                         </a>
                         <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all hover:-translate-y-1">
-                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                         </a>
                         <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[var(--color-accent)] hover:text-black hover:border-[var(--color-accent)] transition-all hover:-translate-y-1">
-                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                         </a>
                     </div>
                 </div>
@@ -699,21 +700,6 @@
 
     <!-- --- JAVASCRIPT PRO INTERAKCI A CUSTOMIZER --- -->
     <script>
-        // Sekvenční přehrávání videí v hlavičce
-        document.addEventListener('DOMContentLoaded', () => {
-            const heroVideo = document.getElementById('hero-video');
-            if (heroVideo) {
-                const playlist = ['video1.mp4', 'video2.mp4'];
-                let currentVideoIndex = 0;
-
-                heroVideo.addEventListener('ended', () => {
-                    currentVideoIndex = (currentVideoIndex + 1) % playlist.length;
-                    heroVideo.src = playlist[currentVideoIndex];
-                    heroVideo.play().catch(e => console.log("Automatické přehrávání bylo zablokováno prohlížečem", e));
-                });
-            }
-        });
-
         // Inicializace Lucide ikon pro statický obsah
         lucide.createIcons();
 
