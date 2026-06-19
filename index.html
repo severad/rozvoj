@@ -180,19 +180,49 @@
 
     <!-- NAVBAR -->
     <div class="fixed top-0 w-full z-40 transition-all duration-300 bg-[var(--color-bg)]/80 backdrop-blur-xl border-b border-white/5" id="navbar">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-4 group cursor-pointer relative z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center relative z-50">
+            <a href="#" class="flex items-center gap-4 group cursor-pointer">
                 <img src="logo-menu.png" alt="Michal Vyhnálek" class="h-10 md:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
             </a>
-            <div class="hidden lg:flex gap-10 text-sm font-bold text-white tracking-wide">
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex gap-10 text-sm font-bold text-white tracking-wide items-center">
                 <a href="#manazer" class="nav-link transition-all">Externí manažer</a>
                 <a href="#program" class="nav-link transition-all">Růstový program</a>
                 <a href="#kurzy" class="nav-link transition-all">Kurzy a Klub</a>
             </div>
+            
             <a href="#kontakt" class="hidden md:flex items-center gap-2 px-6 py-2.5 text-sm font-bold transition-all bg-[var(--color-accent)] text-black rounded-full hover:shadow-[0_0_20px_var(--color-accent)] hover:scale-105">
                 Domluvit schůzku <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
+
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button id="mobile-menu-btn" class="lg:hidden text-white hover:text-[var(--color-accent)] transition-colors p-2 focus:outline-none" aria-label="Menu">
+                <div id="icon-menu"><i data-lucide="menu" class="w-8 h-8"></i></div>
+                <div id="icon-close" class="hidden"><i data-lucide="x" class="w-8 h-8"></i></div>
+            </button>
         </nav>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="fixed inset-0 top-[72px] md:top-[80px] h-[calc(100vh-72px)] bg-[var(--color-bg)]/95 backdrop-blur-2xl transition-transform duration-500 ease-in-out transform translate-x-full lg:hidden z-40 overflow-y-auto border-t border-white/10">
+            <div class="flex flex-col items-center justify-center pt-16 space-y-10 px-6 pb-20">
+                <a href="#manazer" class="mobile-nav-link text-2xl font-bold text-white hover:text-[var(--color-accent)] transition-colors">Externí manažer</a>
+                <a href="#program" class="mobile-nav-link text-2xl font-bold text-white hover:text-[var(--color-accent)] transition-colors">Růstový program</a>
+                <a href="#kurzy" class="mobile-nav-link text-2xl font-bold text-white hover:text-[var(--color-accent)] transition-colors">Kurzy a Klub</a>
+                
+                <div class="w-16 h-px bg-white/20 my-4"></div>
+
+                <a href="#kontakt" class="mobile-nav-link w-full max-w-xs text-center px-8 py-5 text-lg font-bold transition-all bg-[var(--color-accent)] text-black rounded-full shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:scale-105 flex justify-center items-center gap-3">
+                    Domluvit schůzku <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+
+                <!-- Extra kontakty do mobilního menu -->
+                <div class="mt-8 flex gap-6 text-white/50">
+                    <a href="mailto:info@michalvyhnalek.cz" class="hover:text-[var(--color-accent)] transition-colors"><i data-lucide="mail" class="w-6 h-6"></i></a>
+                    <a href="tel:+420732212628" class="hover:text-[var(--color-accent)] transition-colors"><i data-lucide="phone" class="w-6 h-6"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- HERO SECTION -->
@@ -946,6 +976,38 @@
                     }
                 });
             });
+        });
+
+        // MOBILNÍ MENU LOGIKA
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconMenu = document.getElementById('icon-menu');
+        const iconClose = document.getElementById('icon-close');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function toggleMobileMenu() {
+            const isOpen = !mobileMenu.classList.contains('translate-x-full');
+            
+            if (isOpen) {
+                // Zavřít
+                mobileMenu.classList.add('translate-x-full');
+                iconClose.classList.add('hidden');
+                iconMenu.classList.remove('hidden');
+                document.body.style.overflow = ''; // Povolit rolování stránky
+            } else {
+                // Otevřít
+                mobileMenu.classList.remove('translate-x-full');
+                iconMenu.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Zamezit rolování pozadí
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        // Zavřít menu při kliknutí na odkaz
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', toggleMobileMenu);
         });
 
         // MAGICKÝ KURZOR (Glow effect sledující myš)
