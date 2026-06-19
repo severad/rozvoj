@@ -105,11 +105,6 @@
         .tab-content.active { display: block; }
         .writing-vertical { writing-mode: vertical-rl; transform: rotate(180deg); }
 
-        /* Marquee animace pro žlutý pásek */
-        .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; }
-        .marquee-content { display: inline-block; animation: marquee 30s linear infinite; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
         /* Sticky sekce pro Manažera */
         @media (min-width: 1024px) {
             .sticky-element {
@@ -243,15 +238,6 @@
         </div>
     </header>
 
-    <!-- Běžící text (Marquee z konceptu Editorial) -->
-    <div class="w-full bg-[var(--color-accent)] py-4 border-y-4 border-black relative z-20 shadow-2xl">
-        <div class="marquee-container">
-            <div class="marquee-content text-xl md:text-2xl font-black uppercase tracking-widest text-black flex gap-12">
-                <span>Certifikovaný Mentor</span> <span>•</span> <span>Rozvoj Podnikatele</span> <span>•</span> <span>Koučink</span> <span>•</span> <span>Osobní Briliant</span> <span>•</span> <span>Externí Manažer</span> <span>•</span> <span>Certifikovaný Mentor</span> <span>•</span> <span>Rozvoj Podnikatele</span>
-            </div>
-        </div>
-    </div>
-
     <!-- MAIN CONTENT -->
     <main class="relative z-20 bg-[var(--color-bg)]">
         
@@ -269,8 +255,8 @@
                                 <!-- Nakloněný rámeček na pozadí -->
                                 <div class="absolute inset-0 bg-[var(--color-card)] -rotate-6 scale-105 border border-white/10 rounded-3xl shadow-xl"></div>
                                 
-                                <!-- Fotka s Grayscale efektem -->
-                                <img src="michal-vyhnalek.jfif" alt="Michal Vyhnálek" class="relative z-10 w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl mix-blend-luminosity hover:mix-blend-normal rounded-3xl border border-white/5" />
+                                <!-- Fotka v přirozených barvách -->
+                                <img src="michal-vyhnalek.jfif" alt="Michal Vyhnálek" class="relative z-10 w-full aspect-[4/5] object-cover transition-all duration-700 shadow-2xl rounded-3xl border border-white/5 hover:scale-[1.02]" />
                                 
                                 <!-- Obrovské písmeno M v rohu -->
                                 <div class="absolute -bottom-10 -left-6 md:-left-10 text-[8rem] md:text-[10rem] font-black text-[var(--color-accent)] opacity-50 pointer-events-none select-none drop-shadow-lg z-20 transition-transform duration-700 hover:scale-110">M.</div>
