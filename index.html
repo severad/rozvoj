@@ -190,6 +190,7 @@
                 <a href="#manazer" class="nav-link transition-all">Externí manažer</a>
                 <a href="#program" class="nav-link transition-all">Růstový program</a>
                 <a href="#kurzy" class="nav-link transition-all">Kurzy a Klub</a>
+                <a href="#kariera" class="nav-link transition-all text-[var(--color-accent)]">Kariéra</a>
             </div>
             
             <a href="#kontakt" class="hidden md:flex items-center gap-2 px-6 py-2.5 text-sm font-bold transition-all bg-[var(--color-accent)] text-black rounded-full hover:shadow-[0_0_20px_var(--color-accent)] hover:scale-105">
@@ -209,6 +210,7 @@
                 <a href="#manazer" class="mobile-nav-link text-2xl font-bold text-white hover:text-[var(--color-accent)] transition-colors">Externí manažer</a>
                 <a href="#program" class="mobile-nav-link text-2xl font-bold text-white hover:text-[var(--color-accent)] transition-colors">Růstový program</a>
                 <a href="#kurzy" class="mobile-nav-link text-2xl font-bold text-white hover:text-[var(--color-accent)] transition-colors">Kurzy a Klub</a>
+                <a href="#kariera" class="mobile-nav-link text-2xl font-bold text-[var(--color-accent)] hover:text-white transition-colors">Kariéra</a>
                 
                 <div class="w-16 h-px bg-white/20 my-4"></div>
 
@@ -240,7 +242,10 @@
         
         <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
             <div class="reveal max-w-5xl flex flex-col items-center">
-        
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-[var(--color-accent)] text-xs md:text-sm font-bold uppercase tracking-widest mb-8 shadow-xl">
+                    <span class="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
+                    Váš Externí manažer
+                </div>
                 
                 <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-6 leading-[1.1] text-white">
                     Srovnejte si směr. <br/>
@@ -644,6 +649,84 @@
                 </div>
             </div>
         </section>
+
+        <!-- KARIÉRA -->
+        <section id="kariera" class="py-24 relative overflow-hidden bg-[var(--color-bg)]">
+            <!-- Dekorativní odlesky na pozadí -->
+            <div class="absolute top-0 left-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+                <div class="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-[var(--color-accent)]/5 blur-[120px] rounded-full"></div>
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10 reveal">
+                <div class="text-center mb-16">
+                    <div class="text-[var(--color-accent)] font-bold tracking-widest uppercase text-sm mb-4">Hledáme posilu</div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-white">Kariéra v našem týmu</h2>
+                </div>
+
+                <div class="max-w-5xl mx-auto bg-black/40 backdrop-blur-xl border border-white/10 rounded-[3rem] p-8 md:p-14 shadow-2xl relative">
+                    <!-- Textová hlavička inzerátu -->
+                    <div class="mb-16">
+                        <div class="inline-flex items-center gap-2 border border-[var(--color-accent)]/50 rounded-full px-4 py-1.5 mb-6 bg-[var(--color-accent)]/5">
+                            <span class="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
+                            <span class="text-[var(--color-accent)] font-bold uppercase tracking-widest text-xs">Otevřená pozice</span>
+                        </div>
+                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">Obchodník do týmu Externího manažera</h3>
+                        <p class="text-lg text-white/80 leading-relaxed font-light mb-6">
+                            Hledáme obchodníka, který chce růst — profesně i lidsky. Projekt Externí manažer vznikl z dlouholeté praxe v realitách, financích a práci s lidmi. Pomáháme podnikatelům i jednotlivcům dělat rozhodnutí, která dávají smysl, a hledat jejich vlastní „briliant“ — potenciál, který v nich je.
+                        </p>
+                        <p class="text-lg text-white/80 leading-relaxed font-light">
+                            Do našeho týmu hledáme člověka, který chce být součástí smysluplné práce, učit se z reálných situací a aktivně se podílet na růstu projektu. Vaší hlavní náplní bude vyhledávání nových klientů a navazování spoluprací v oblasti financí, realit a podnikatelského rozvoje.
+                        </p>
+                    </div>
+
+                    <!-- Mřížka s benefity a požadavky -->
+                    <div class="grid md:grid-cols-2 gap-8 mb-12">
+                        
+                        <!-- Co nabízíme -->
+                        <div class="bg-white/5 p-8 rounded-3xl border border-white/5 hover:border-[var(--color-accent)]/30 transition-all">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center">
+                                    <i data-lucide="gift" class="w-6 h-6"></i>
+                                </div>
+                                <h4 class="text-2xl font-bold text-white">Co nabízíme</h4>
+                            </div>
+                            <ul class="space-y-4 text-white/80 font-light text-lg">
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Férovou spolupráci na ŽL nebo DPP</li>
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Praxi a přístup k reálným případům z financí, realit i podnikatelského rozvoje</li>
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Možnost růstu v rámci financí i realit</li>
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Odměnu odpovídající vašemu výkonu a přidané hodnotě</li>
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Osobní koučink, mentoring a rozvoj osobnosti přímo od Externího manažera</li>
+                            </ul>
+                        </div>
+
+                        <!-- Co očekáváme -->
+                        <div class="bg-white/5 p-8 rounded-3xl border border-white/5 hover:border-[var(--color-accent)]/30 transition-all">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] flex items-center justify-center">
+                                    <i data-lucide="target" class="w-6 h-6"></i>
+                                </div>
+                                <h4 class="text-2xl font-bold text-white">Co od vás očekáváme</h4>
+                            </div>
+                            <ul class="space-y-4 text-white/80 font-light text-lg">
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Chuť učit se — růst je základ naší práce</li>
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Zodpovědnost a samostatnost — klienti se na vás musí moci spolehnout</li>
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Zájem o finance, reality nebo práci s lidmi</li>
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Schopnost komunikovat a budovat vztahy</li>
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Obchodní myšlení a orientaci na výsledek</li>
+                                <li class="flex gap-4 items-start"><i data-lucide="check" class="text-[var(--color-accent)] w-6 h-6 shrink-0 mt-0.5"></i> Etiku a férový přístup — to je pro nás zásadní</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="flex justify-center border-t border-white/10 pt-10">
+                        <a href="#kontakt" class="inline-flex items-center gap-3 px-10 py-5 text-lg font-bold transition-all bg-[var(--color-accent)] text-black rounded-full hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:scale-105">
+                            Mám zájem o spolupráci <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- KONTAKT -->
@@ -846,31 +929,31 @@
         }
 
         renderFontButtons();
-
-        // LOGIKA PRO INTERAKTIVNÍ MAPU
+        // -----------------------------------------------------------
+        // LOGIKA PRO INTERAKTIVNÍ MAPU (Varianta 1)
         const problems = [
             {
-                title: "Podnikání",
-                heading: "Nastavíme tvrdá data a směr",
-                desc: "Nekreslím pouze hezké grafy. Podíváme se na vaši vizi a nastavíme funkční procesy a řád, aby firma pracovala pro vás, ne vy pro ni.",
+                title: "Řád a klid",
+                heading: "„Dělám všechno, ale mám pocit, že nic pořádně. Všechno stojí na mně a já už nevím, jak to celé uřídit.“",
+                desc: "Společně dáme tvému podnikání řád, který ti vrátí klid. Nezačínáme tabulkami, ale tebou — co chceš, kam jdeš, co ti dává smysl. A teprve potom nastavíme procesy, které ti dovolí dýchat a mít čas na život, ne jen na práci.",
                 iconCenter: "workflow"
             },
             {
-                title: "Peníze",
-                heading: "Optimalizace a reálná ziskovost",
-                desc: "Opřeme se o tvrdá data a finanční rozvahu. Zoptimalizujeme náklady a ukážeme si reálnou ziskovost vašeho podnikání.",
+                title: "Jistota a finance",
+                heading: "„Nevím přesně, kolik vydělávám. Nevím, kde mi peníze utíkají. A bojím se, že jednou přijde průšvih.“",
+                desc: "Ukážeme si pravdu o tvých penězích tak, aby ti přinesla jistotu, ne stres. Podíváme se na čísla jednoduše, srozumitelně a bez studu. A nastavíme systém, díky kterému budeš vědět, kde stojíš — a kam můžeš růst.",
                 iconCenter: "pie-chart"
             },
             {
-                title: "Výkonnost",
-                heading: "Delegování a efektivita",
-                desc: "Time management a delegování. Zapojíme náš tým a naučíme vás, jak řídit lidi efektivně, abyste nebyli na vše sami.",
+                title: "Delegování a svoboda",
+                heading: "„Jsem podnikatel, manažer, obchodník, účetní i uklízečka. A už to nedávám.“",
+                desc: "Naučím tě delegovat tak, aby ses přestal topit v povinnostech. Ukážeme si, jak zapojit lidi kolem tebe, jak jim důvěřovat a jak si uvolnit ruce. Protože podnikání nemá být o přežívání, ale o životě, který tě naplňuje.",
                 iconCenter: "users"
             },
             {
-                title: "Rozhodování",
-                heading: "Nalezení osobního briliantu",
-                desc: "Pomocí certifikovaného koučinku a mentoringu nastavíme kroky, které přinesou výsledek, a najdeme váš 'osobní briliant'.",
+                title: "Směr a růst",
+                heading: "„Mám sny, ale nevím, jak je uchopit. A někdy ani nevěřím, že na to mám.“",
+                desc: "Pomůžu ti najít tvůj Briliant — to nejlepší v tobě, co už tam dávno je. Pomocí koučinku a mentoringu najdeme směr, který je tvůj, ne okoukaný. A nastavíme kroky, které tě k němu dovedou bez zbytečného tlaku.",
                 iconCenter: "compass"
             }
         ];
